@@ -229,83 +229,6 @@ create_results_file <- function(experiments, instances_df, output_file) {
   return(results_df)
 }
 
-# Función para crear gráficos de rankings normalizados
-create_graphs <- function(results_df, output_file) {
-  # Crear carpeta para gráficos individuales
-  graphs_dir <- file.path(dirname(output_file), "individual_graphs")
-  dir.create(graphs_dir, showWarnings = FALSE)
-  
-  # Preparar datos para el gráfico
-  plot_data <- data.frame(
-    CONFIG_ID = as.numeric(results_df$CONFIG_ID),
-    BQRN = as.numeric(results_df$BQRN),
-    MQRN = as.numeric(results_df$MQRN),
-    BGRN = as.numeric(results_df$BGRN),
-    MGRN = as.numeric(results_df$MGRN)
-  )
-  
-  # Transformar a formato largo para ggplot2
-  plot_data_long <- melt(plot_data, id.vars = "CONFIG_ID", 
-                        variable.name = "Metric", value.name = "Value")
-  
-  # Crear el gráfico combinado
-  p <- ggplot(plot_data_long, aes(x = CONFIG_ID, y = Value, color = Metric, group = Metric)) +
-    geom_line(size = 1) +
-    labs(
-      title = "Rankings Normalizados por Configuración",
-      x = "ID de Configuración",
-      y = "Valor de Ranking Normalizado (0-1)",
-      color = "Métrica"
-    ) +
-    scale_color_manual(values = c("BQRN" = "red", "MQRN" = "blue", 
-                                 "BGRN" = "green", "MGRN" = "orange"),
-                      labels = c("BQRN" = "Best Quality Rank", 
-                                "MQRN" = "Mean Quality Rank",
-                                "BGRN" = "Best Gap Rank", 
-                                "MGRN" = "Mean Gap Rank")) +
-    theme_minimal() +
-    theme(
-      panel.background = element_rect(fill = "white", color = NA),
-      plot.background = element_rect(fill = "white", color = NA),
-      panel.grid.major = element_line(color = "grey90"),
-      panel.grid.minor = element_line(color = "grey95"),
-      panel.border = element_blank()
-    )
-  
-  # Guardar el gráfico combinado
-  ggsave(filename = output_file, plot = p, width = 15, height = 6, bg = "white")
-  
-  # Crear gráficos individuales para cada métrica
-  metrics <- c("BQRN", "MQRN", "BGRN", "MGRN")
-  colors <- c("BQRN" = "red", "MQRN" = "blue", "BGRN" = "green", "MGRN" = "orange")
-  labels <- c("BQRN" = "Best Quality Rank", "MQRN" = "Mean Quality Rank",
-              "BGRN" = "Best Gap Rank", "MGRN" = "Mean Gap Rank")
-  
-  for (metric in metrics) {
-    metric_data <- plot_data_long[plot_data_long$Metric == metric, ]
-    
-    p_individual <- ggplot(metric_data, aes(x = CONFIG_ID, y = Value)) +
-      geom_line(color = colors[metric], size = 1) +
-      labs(
-        title = paste("Ranking Normalizado -", labels[metric]),
-        x = "ID de Configuración",
-        y = "Valor de Ranking Normalizado (0-1)"
-      ) +
-      theme_minimal() +
-      theme(
-        panel.background = element_rect(fill = "white", color = NA),
-        plot.background = element_rect(fill = "white", color = NA),
-        panel.grid.major = element_line(color = "grey90"),
-        panel.grid.minor = element_line(color = "grey95"),
-        panel.border = element_blank()
-      )
-    
-    # Guardar gráfico individual con mayor ancho
-    individual_file <- file.path(graphs_dir, paste0(metric, "_individual.png"))
-    ggsave(filename = individual_file, plot = p_individual, width = 20, height = 8, bg = "white")
-  }
-}
-
 # Definir la función para procesar archivos .Rdata
 process_rdata_files <- function(input_dir, parameters_file, optimum_file, results_dir) {
   # Listar todos los archivos .Rdata en el directorio de entrada
@@ -378,24 +301,8 @@ process_rdata_files <- function(input_dir, parameters_file, optimum_file, result
       instances_df = instances_df,
       output_file = file.path(seed_dir, "results.csv")
     )
-
-    # Proceso de creación de gráficos de línea en base a los valores de ranking normalizados
-    # Con colores por cada ranking (BQRN, MQRN, BGRN, MGRN)
-    create_graphs(
-      results_df = results_df,
-      output_file = file.path(seed_dir, "results.png")
-    )
   }
 }
-
-# Definir los directorios y el archivo de parámetros
-# input_directory <- "Experiments/ACOTSP-QGR/TEST/Data"
-# optimum_file <- NULL
-# parameters_file <- "Experiments/ACOTSP-QGR/Parameters.csv"
-# results_directory <- "Experiments/ACOTSP-QGR/TEST/Results"
-
-# Llamar a la función para procesar los archivos
-# process_rdata_files(input_directory, parameters_file, optimum_file, results_directory)
 
 # Definir los directorios y el archivo de parámetros
 input_directory <- "Experiments/ACOTSP-QGR/BH/Data"
