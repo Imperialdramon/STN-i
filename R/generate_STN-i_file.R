@@ -41,7 +41,12 @@ option_list <- list(
   make_option(c("-t", "--instances"),
               type="character",
               default=NULL,
-              help="Archivo CSV con los valores óptimos de las instancias [default= %default]")
+              help="Archivo CSV con los valores óptimos de las instancias [default= %default]"),
+              
+  make_option(c("--na_ranking"),
+              type="logical",
+              default=FALSE,
+              help="Considerar NA como peor valor posible en rankings [default= %default]")
 )
 
 # Parse command line arguments
@@ -75,6 +80,16 @@ if (!file.exists(parameters_file)) {
 output_dir <- normalizePath(opt$output, mustWork = FALSE)
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
+# Validate if best criteria is either 'min' or 'max'
+if (!(opt$best %in% c("min", "max"))) {
+  stop("El criterio 'best' debe ser 'min' o 'max'")
+}
+
+# Validate if quality criteria is valid
+if (!(opt$criteria %in% c("min", "max", "mean", "median", "mode"))) {
+  stop("El criterio 'criteria' debe ser uno de los siguientes: 'min', 'max', 'mean', 'median', 'mode'")
+}
+
 # Validate instances file if provided
 if (!is.null(opt$instances)) {
   instances_file <- normalizePath(opt$instances)
@@ -89,7 +104,12 @@ if (!is.null(opt$instances)) {
 if (is.null(opt$name)) {
   basename_input <- basename(input_dir)
   basename_params <- tools::file_path_sans_ext(basename(parameters_file))
-  opt$name <- sprintf("%s_%s.stn-i", basename_input, basename_params)
+  opt$name <- sprintf("%s_%s.csv", basename_input, basename_params)
+}
+
+# Validate if na_ranking is logical
+if (!is.logical(opt$na_ranking)) {
+  stop("El argumento 'na_ranking' debe ser TRUE o FALSE")
 }
 
 # Create Results directory path
@@ -101,17 +121,19 @@ process_rdata_files(
   input_dir = input_dir,
   parameters_file = parameters_file,
   results_dir = results_dir,
-  optimum_file = instances_file
+  optimum_file = instances_file,
+  best_criteria = opt$best,
+  is_na_ranking = opt$na_ranking
 )
 
 # Then generate STN-i file from processed Results
-cat("Generando archivo STN-i desde Results...\n")
-generate_stn_i(
-  input_dir = results_dir,
-  parameters = read_parameters_file(parameters_file),
-  output_dir = output_dir,
-  output_name = opt$name,
-  best_criteria = opt$best,
-  quality_criteria = opt$criteria,
-  significance = opt$significance
-)
+# cat("Generando archivo STN-i desde Results...\n")
+# generate_stn_i(
+#   input_dir = results_dir,
+#   parameters = read_parameters_file(parameters_file),
+#   output_dir = output_dir,
+#   output_name = opt$name,
+#   best_criteria = opt$best,
+#   quality_criteria = opt$criteria,
+#   significance = opt$significance
+# )

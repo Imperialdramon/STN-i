@@ -3,32 +3,6 @@ library(tools)
 library(irace)
 library(utils)
 
-#' Process irace results and generate STN-i file
-#'
-#' @param input_dir Directory containing .Rdata files
-#' @param parameters_file CSV file with parameter definitions
-#' @param output_dir Output directory for STN-i files
-#' @param output_name Name of the output STN-i file
-#' @param best_criteria Criteria for best value selection ('min' or 'max')
-#' @param quality_criteria Criteria for configuration quality ('min', 'max', 'mean', 'median', 'mode')
-#' @param significance Significance level for numerical parameters
-#' @param instances_file Optional CSV file with instance optimal values
-#' @export
-process_and_generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name,
-                                     best_criteria = "min", quality_criteria = "mean",
-                                     significance = 2, instances_file = NULL) {
-  
-  # Read parameters
-  parameters <- read_parameters_file(parameters_file)
-  
-  # Process Rdata files and collect results
-  results <- process_rdata_files(input_dir, parameters_file, instances_file)
-  
-  # Generate STN-i file
-  generate_stn_i(results, parameters, output_dir, output_name,
-                 best_criteria, quality_criteria, significance)
-}
-
 #' Read and process parameters file
 #'
 #' @param parameters_file Path to CSV parameter definition file
@@ -76,9 +50,11 @@ process_parameter_domains <- function(params) {
 #' @param parameters_file Path to parameters CSV file
 #' @param results_dir Directory for Results files
 #' @param optimum_file Optional path to instance optimum values file
+#' @param best_criteria Criteria for best value selection ('min' or 'max')
+#' @param is_na_ranking Whether to consider NA values in rankings
 #' @return List with processed results
 #' @export
-process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum_file = NULL) {
+process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum_file = NULL, best_criteria = "min", is_na_ranking = FALSE) {
   # List all Rdata files
   files <- list.files(input_dir, pattern = "\\.Rdata$", full.names = TRUE)
   
@@ -139,7 +115,9 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
       results <- create_results_file(
         irace_results$experiments,
         instances_df,
-        results_file
+        results_file,
+        best_criteria,
+        is_na_ranking
       )
       
       # Store results
@@ -159,8 +137,7 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
       )
     })
   }
-  
-  return(all_results)
+  #return(all_results)
 }
 
 #' Create configurations file
@@ -274,115 +251,202 @@ create_instances_file <- function(iraceResults, experiments, optimum_data, outpu
 }
 
 # Create results file
-create_results_file <- function(experiments, instances_df, output_file) {
+create_results_file <- function(experiments, instances_df, output_file, best_criteria = "min", is_na_ranking = FALSE) {
   if (is.null(experiments) || ncol(experiments) == 0) {
     cat("  Advertencia: No hay datos de experimentos\n")
     results_df <- data.frame(
       CONFIG_ID = character(),
       INSTANCES = integer(),
-      BQ = numeric(), BQR = integer(), BQRN = numeric(),
-      MQ = numeric(), MQR = integer(), MQRN = numeric(),
-      BG = numeric(), BGR = integer(), BGRN = numeric(),
-      MG = numeric(), MGR = integer(), MGRN = numeric(),
+      B = numeric(), BR = integer(), BNR = numeric(),
+      M = numeric(), MR = integer(), MNR = numeric(),
+      BG = numeric(), BRG = integer(), BNRG = numeric(),
+      MG = numeric(), MRG = integer(), MNRG = numeric(),
       stringsAsFactors = FALSE
     )
   } else {
     tryCatch({
-      # Get configuration IDs
+      # Get configuration IDs and initialize results dataframe
       config_ids <- colnames(experiments)
+      results_df <- data.frame(CONFIG_ID = config_ids, stringsAsFactors = FALSE)
+
+      # Best quality per configuration (based on best_criteria)
+      results_df$B <- if (best_criteria == "min") {
+        apply(experiments, 2, function(x) min(x, na.rm = TRUE))
+      } else {
+        apply(experiments, 2, function(x) max(x, na.rm = TRUE))
+      }
+      # Mean quality per configuration
+      results_df$M <- apply(experiments, 2, function(x) mean(x, na.rm = TRUE))
+      results_df$INSTANCES <- apply(experiments, 2, function(x) sum(!is.na(x)))
       
-      # Calculate basic quality metrics for each configuration
-      quality_metrics <- lapply(config_ids, function(id) {
-        qualities <- as.numeric(experiments[, id])
-        qualities <- qualities[!is.na(qualities)]
-        if (length(qualities) == 0) {
-          c(
-            CONFIG_ID = id,
-            INSTANCES = 0,
-            BQ = NA,
-            MQ = NA
-          )
-        } else {
-          c(
-            CONFIG_ID = id,
-            INSTANCES = length(qualities),
-            BQ = min(qualities, na.rm = TRUE),
-            MQ = mean(qualities, na.rm = TRUE)
-          )
-        }
-      })
-      results_df <- as.data.frame(do.call(rbind, quality_metrics))
-      
-      if (nrow(results_df) > 0) {
-        # Calculate quality rankings
-        results_df$BQR <- rank(results_df$BQ, ties.method = "min")
-        results_df$MQR <- rank(results_df$MQ, ties.method = "min")
-        
-        # Normalize rankings (0-1)
-        results_df$BQRN <- (results_df$BQR - 1) / (nrow(results_df) - 1)
-        results_df$MQRN <- (results_df$MQR - 1) / (nrow(results_df) - 1)
-        
-        # Calculate GAPs if we have instance data
-        if (!is.null(instances_df) && nrow(instances_df) > 0) {
-          gaps_matrix <- matrix(NA, nrow = nrow(experiments), ncol = ncol(experiments))
-          colnames(gaps_matrix) <- colnames(experiments)
-          rownames(gaps_matrix) <- rownames(experiments)
-          
-          best_qualities <- apply(experiments, 1, min, na.rm = TRUE)
-          
-          for (i in seq_len(nrow(experiments))) {
-            experiment_id <- as.integer(rownames(experiments)[i])
-            opt_value <- instances_df$OPTIMUM[instances_df$EXPERIMENT_ID == experiment_id]
-            best_quality <- if (!is.null(opt_value) && !is.na(opt_value)) opt_value else best_qualities[i]
-            
-            for (j in seq_len(ncol(experiments))) {
-              value <- experiments[i, j]
-              if (!is.na(value) && !is.na(best_quality) && best_quality != 0) {
-                gaps_matrix[i, j] <- 100 * abs(value - best_quality) / best_quality
-              }
-            }
-          }
-          
-          # Calculate GAP metrics
-          gap_metrics <- lapply(config_ids, function(id) {
-            gaps <- gaps_matrix[, id]
-            gaps <- gaps[!is.na(gaps)]
-            if (length(gaps) == 0) {
-              c(BG = NA, MG = NA)
+      # Calculate quality rankings by instance and their aggregations
+      instance_rankings <- matrix(NA, nrow = nrow(experiments), ncol = ncol(experiments))
+      colnames(instance_rankings) <- colnames(experiments)
+      rownames(instance_rankings) <- rownames(experiments)
+      for (i in seq_len(nrow(experiments))) {
+        row <- experiments[i,]
+        valid_values <- !is.na(row)
+        if (sum(valid_values) > 0) {
+          if (is_na_ranking) {
+            # Count non-NA values for worst possible rank
+            valid_count <- sum(valid_values)
+            # Get ranks for non-NA values
+            ranks <- rep(NA, length(row))
+            ranks[valid_values] <- if (best_criteria == "min") {
+              as.integer(rank(row[valid_values], ties.method = "min"))
             } else {
-              c(BG = min(gaps, na.rm = TRUE),
-                MG = mean(gaps, na.rm = TRUE))
+              as.integer(rank(row[valid_values], ties.method = "max"))
             }
-          })
-          gap_df <- as.data.frame(do.call(rbind, gap_metrics))
-          
-          # Add GAP metrics and calculate rankings
-          results_df$BG <- gap_df$BG
-          results_df$MG <- gap_df$MG
-          results_df$BGR <- rank(results_df$BG, ties.method = "min")
-          results_df$MGR <- rank(results_df$MG, ties.method = "min")
-          results_df$BGRN <- (results_df$BGR - 1) / (nrow(results_df) - 1)
-          results_df$MGRN <- (results_df$MGR - 1) / (nrow(results_df) - 1)
-        } else {
-          # Add empty GAP columns
-          results_df$BG <- NA
-          results_df$MG <- NA
-          results_df$BGR <- NA
-          results_df$MGR <- NA
-          results_df$BGRN <- NA
-          results_df$MGRN <- NA
+            # Assign worst rank + 1 to NA values
+            ranks[!valid_values] <- valid_count + 1
+            instance_rankings[i,] <- ranks
+          } else {
+            # Normal ranking ignoring NA
+            ranks <- rep(NA, length(row))
+            ranks[valid_values] <- if (best_criteria == "min") {
+              as.integer(rank(row[valid_values], ties.method = "min"))
+            } else {
+              as.integer(rank(row[valid_values], ties.method = "max"))
+            }
+            instance_rankings[i,] <- ranks
+          }
         }
       }
+      
+      # BR: Best ranking per configuration (based on best_criteria)
+      results_df$BR <- if (best_criteria == "min") {
+        apply(instance_rankings, 2, min, na.rm = TRUE)
+      } else {
+        apply(instance_rankings, 2, max, na.rm = TRUE)
+      }
+      # MR: Mean ranking per configuration
+      results_df$MR <- apply(instance_rankings, 2, mean, na.rm = TRUE)
+      
+      # Calculate normalized rankings by instance
+      instance_rankings_norm <- matrix(NA, nrow = nrow(instance_rankings), ncol = ncol(instance_rankings))
+      colnames(instance_rankings_norm) <- colnames(instance_rankings)
+      rownames(instance_rankings_norm) <- rownames(instance_rankings)
+      for (i in seq_len(nrow(instance_rankings))) {
+        row <- instance_rankings[i,]
+        valid_ranks <- !is.na(row)
+        if (sum(valid_ranks) > 1) {
+          norm_values <- rep(NA, length(row))
+          norm_values[valid_ranks] <- (row[valid_ranks] - 1) / (sum(valid_ranks) - 1)
+          instance_rankings_norm[i,] <- norm_values
+        } else {
+          instance_rankings_norm[i,] <- rep(NA, length(row))
+        }
+      }
+
+      # BNR: Best normalized ranking per configuration (based on best_criteria)
+      results_df$BNR <- if (best_criteria == "min") {
+        apply(instance_rankings_norm, 2, min, na.rm = TRUE)
+      } else {
+        apply(instance_rankings_norm, 2, max, na.rm = TRUE)
+      }
+      # MNR: Mean normalized ranking per configuration
+      results_df$MNR <- apply(instance_rankings_norm, 2, mean, na.rm = TRUE)
+      
+      # Calculate GAPs matrix
+      gaps_matrix <- matrix(NA, nrow = nrow(experiments), ncol = ncol(experiments))
+      colnames(gaps_matrix) <- colnames(experiments)
+      rownames(gaps_matrix) <- rownames(experiments)
+      for (i in seq_len(nrow(experiments))) {
+        experiment_id <- as.integer(rownames(experiments)[i])
+        opt_value <- if(!is.null(instances_df)) {
+          instances_df$OPTIMUM[instances_df$EXPERIMENT_ID == experiment_id]
+        } else {
+          NA
+        }
+        best_quality <- if (!is.null(opt_value) && !is.na(opt_value)) {
+          opt_value
+        } else {
+          if (best_criteria == "min") {
+            min(experiments[i,], na.rm = TRUE)
+          } else {
+            max(experiments[i,], na.rm = TRUE)
+          }
+        }
+        
+        # Calculate GAPs for each configuration in this experiment
+        if (!is.na(best_quality) && best_quality != 0) {
+          row_values <- experiments[i,]
+          gaps_matrix[i,] <- ifelse(!is.na(row_values),
+                                  100 * abs(row_values - best_quality) / best_quality,
+                                  NA)
+        }
+      }
+      
+      # BG: Best GAP per configuration
+      results_df$BG <- apply(gaps_matrix, 2, min, na.rm = TRUE)
+      # MG: Mean GAP per configuration
+      results_df$MG <- apply(gaps_matrix, 2, mean, na.rm = TRUE)
+      
+      # Calculate GAP rankings by instance
+      gap_rankings <- matrix(NA, nrow = nrow(gaps_matrix), ncol = ncol(gaps_matrix))
+      colnames(gap_rankings) <- colnames(gaps_matrix)
+      rownames(gap_rankings) <- rownames(gaps_matrix)
+      
+      # Calculate GAP rankings row by row (by instance)
+      for (i in seq_len(nrow(gaps_matrix))) {
+        row <- gaps_matrix[i,]
+        valid_values <- !is.na(row)
+        
+        if (sum(valid_values) > 0) {  # Solo procesar si hay valores válidos
+          if (is_na_ranking) {
+            # Count non-NA values for worst possible rank
+            valid_count <- sum(valid_values)
+            # Get ranks for non-NA values
+            ranks <- rep(NA, length(row))
+            # Siempre usamos min para gaps porque menor gap es mejor
+            ranks[valid_values] <- as.integer(rank(row[valid_values], ties.method = "min"))
+            # Assign worst rank + 1 to NA values
+            ranks[!valid_values] <- valid_count + 1
+            gap_rankings[i,] <- ranks
+          } else {
+            # Normal ranking ignoring NA
+            ranks <- rep(NA, length(row))
+            ranks[valid_values] <- as.integer(rank(row[valid_values], ties.method = "min"))
+            gap_rankings[i,] <- ranks
+          }
+        }
+      }
+      
+      # BRG: Best GAP ranking per configuration
+      results_df$BRG <- apply(gap_rankings, 2, min, na.rm = TRUE)
+      # MRG: Mean GAP ranking per configuration
+      results_df$MRG <- apply(gap_rankings, 2, mean, na.rm = TRUE)
+      
+      # Calculate normalized GAP rankings by instance
+      gap_rankings_norm <- matrix(NA, nrow = nrow(gap_rankings), ncol = ncol(gap_rankings))
+      colnames(gap_rankings_norm) <- colnames(gap_rankings)
+      rownames(gap_rankings_norm) <- rownames(gap_rankings)
+      for (i in seq_len(nrow(gap_rankings))) {
+        row <- gap_rankings[i,]
+        valid_ranks <- !is.na(row)
+        if (sum(valid_ranks) > 1) {
+          norm_values <- rep(NA, length(row))
+          norm_values[valid_ranks] <- (row[valid_ranks] - 1) / (sum(valid_ranks) - 1)
+          gap_rankings_norm[i,] <- norm_values
+        } else {
+          gap_rankings_norm[i,] <- rep(NA, length(row))
+        }
+      }
+      
+      # BNRG: Best normalized GAP ranking per configuration
+      results_df$BNRG <- apply(gap_rankings_norm, 2, min, na.rm = TRUE)
+      # MNRG: Mean normalized GAP ranking per configuration
+      results_df$MNRG <- apply(gap_rankings_norm, 2, mean, na.rm = TRUE)
       
     }, error = function(e) {
       cat("  Error procesando resultados:", conditionMessage(e), "\n")
       results_df <- data.frame(
         CONFIG_ID = character(),
         INSTANCES = integer(),
-        BQ = numeric(), BQR = integer(), BQRN = numeric(),
-        MQ = numeric(), MQR = integer(), MQRN = numeric(),
-        BG = numeric(), BGR = integer(), BGRN = numeric(),
-        MG = numeric(), MGR = integer(), MGRN = numeric(),
+        B = numeric(), BR = integer(), BNR = numeric(),
+        M = numeric(), MR = integer(), MNR = numeric(),
+        BG = numeric(), BRG = integer(), BNRG = numeric(),
+        MG = numeric(), MRG = integer(), MNRG = numeric(),
         stringsAsFactors = FALSE
       )
     })
