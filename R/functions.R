@@ -3,48 +3,12 @@ library(tools)
 library(irace)
 library(utils)
 
-#' Read and process parameters file
-#'
-#' @param parameters_file Path to CSV parameter definition file
-#' @return List with processed parameters and domains
-#' @export
-read_parameters_file <- function(parameters_file) {
-  params <- read.csv2(parameters_file, header = TRUE, stringsAsFactors = FALSE)
-  
-  # Clean parameter names and types
-  params$NAME <- trimws(params$NAME)
-  params$TYPE <- trimws(params$TYPE)
-  
-  # Process domains and locations
-  domains <- process_parameter_domains(params)
-  
-  list(
-    params = params,
-    domains = domains
-  )
-}
-
-#' Process parameter domains and locations
-#'
-#' @param params Data frame with parameter definitions
-#' @return List of parameter domains
-#' @keywords internal
-process_parameter_domains <- function(params) {
-  domains <- list()
-  
-  for (i in seq_len(nrow(params))) {
-    param <- params[i, ]
-    domains[[param$NAME]] <- list(
-      type = param$TYPE,
-      values = clean_values_array(param$VALUES_ARRAY),
-      locations = clean_locations_array(param$LOCATIONS_ARRAY)
-    )
-  }
-  
-  domains
-}
-
 #' Process Rdata files and create Results structure
+#' 
+#' This function processes all .Rdata files in the specified input directory,
+#' creates a Results directory structure, and generates configurations, trajectories,
+#' instances, and results files for each .Rdata file. It handles errors gracefully
+#' and logs progress to the console.
 #'
 #' @param input_dir Directory containing .Rdata files
 #' @param parameters_file Path to parameters CSV file
@@ -52,7 +16,9 @@ process_parameter_domains <- function(params) {
 #' @param optimum_file Optional path to instance optimum values file
 #' @param best_criteria Criteria for best value selection ('min' or 'max')
 #' @param is_na_ranking Whether to consider NA values in rankings
-#' @return List with processed results
+#' 
+#' @return None
+#' 
 #' @export
 process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum_file = NULL, best_criteria = "min", is_na_ranking = FALSE) {
   # List all Rdata files
@@ -141,7 +107,20 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
 }
 
 #' Create configurations file
-#' @keywords internal
+#' 
+#' This function creates a configurations file that lists all configurations evaluated
+#' in the irace process, indicating whether each configuration was elite in any iteration.
+#' It includes parameter values for each configuration based on the provided parameters data frame.
+#' 
+#' @param allConfigurations The allConfigurations data frame from iraceResults
+#' @param allElites The allElites list from iraceResults
+#' @param iterations Number of iterations
+#' @param parameters The parameters data frame
+#' @param output_file Path to save the configurations CSV file
+#' 
+#' @return Data frame with configurations
+#' 
+#' @export
 create_configurations_file <- function(allConfigurations, allElites, iterations, parameters, output_file) {
   config_ids <- allConfigurations$.ID.
   is_elite <- sapply(config_ids, function(id) {
@@ -182,9 +161,102 @@ create_configurations_file <- function(allConfigurations, allElites, iterations,
   return(config_df)
 }
 
+#' Get location code for a configuration based on parameter values
+#' 
+#' This function generates a unique location code for a configuration by concatenating
+#' the parameter names and their corresponding values. This code is used to identify
+#' configurations with identical parameter values across different runs.
+#' 
+#' @param iraceResults The irace results from read_logfile
+#' @param raceData The raceData list from iraceResults
+#' @param allElites The allElites list from iraceResults
+#' @param iterations Number of iterations
+#' @param output_file Path to save the configurations CSV file
+#' 
+#' @return Data frame with configurations
+#' 
+#' @export
+create_trajectories_file <- function(iraceResults, raceData, allElites, iterations, output_file) {
+  # Initialize data frame for trajectories
+  trajectories <- data.frame(
+    PATH = logical(),
+    ORIGIN_ITER = integer(),
+    ORIGIN_CONFIG_ID = character(),
+    DESTINY_ITER = integer(),
+    DESTINY_CONFIG_ID = character(),
+    stringsAsFactors = FALSE
+  )
+
+  # Process each iteration
+  for (iter in 1:iterations) {
+    configs <- raceData[[iter]]
+    if (!is.null(configs) && nrow(configs) > 0) {
+      # For each configuration in current iteration
+      for (i in 1:nrow(configs)) {
+        config <- configs[i, ]
+        config_id <- as.character(config$.ID.)
+        
+        if (iter == 1) {
+          # First iteration configurations connect to themselves with PATH = FALSE
+          trajectories <- rbind(trajectories, data.frame(
+            PATH = FALSE,
+            ORIGIN_ITER = 1,
+            ORIGIN_CONFIG_ID = config_id,
+            DESTINY_ITER = 1,
+            DESTINY_CONFIG_ID = config_id,
+            stringsAsFactors = FALSE
+          ))
+        } else {
+          parent_id <- as.character(config$.PARENT.)
+          # Check if it was elite in previous iteration
+          is_elite <- config_id %in% allElites[[iter-1]]
+          
+          # If it has a parent in previous iteration, create connection
+          if (!is.na(parent_id) && parent_id %in% rownames(raceData[[iter-1]])) {
+            trajectories <- rbind(trajectories, data.frame(
+              PATH = TRUE,
+              ORIGIN_ITER = iter - 1,
+              ORIGIN_CONFIG_ID = parent_id,
+              DESTINY_ITER = iter,
+              DESTINY_CONFIG_ID = config_id,
+              stringsAsFactors = FALSE
+            ))
+          } else if (is_elite) {
+            # If elite and no connection with previous iteration, connect to itself
+            trajectories <- rbind(trajectories, data.frame(
+              PATH = TRUE,
+              ORIGIN_ITER = iter - 1,
+              ORIGIN_CONFIG_ID = config_id,
+              DESTINY_ITER = iter,
+              DESTINY_CONFIG_ID = config_id,
+              stringsAsFactors = FALSE
+            ))
+          }
+        }
+      }
+    }
+  }
+  
+  # Save file with semicolon separator
+  write.table(trajectories, file = output_file, sep = ";", row.names = FALSE, quote = FALSE)
+  return(trajectories)
+}
+
 #' Create trajectories file
-#' @keywords internal
-# Create instances file
+#' 
+#' This function creates a trajectories file that captures the evolution of configurations
+#' across iterations in the irace process. It records the paths taken by configurations,
+#' including whether they were elite configurations, and connects them based on their
+#' parent-child relationships.
+#' 
+#' @param iraceResults The irace results from read_logfile
+#' @param experiments The experiments matrix from irace
+#' @param optimum_data Data frame with optimum values for instances if exists
+#' @param output_file Path to save the trajectories CSV file
+#' 
+#' @return Data frame with trajectories
+#'
+#' @export
 create_instances_file <- function(iraceResults, experiments, optimum_data, output_file) {
   instances_full <- iraceResults$scenario$instances
   experiment_ids <- as.integer(rownames(experiments))
@@ -250,7 +322,21 @@ create_instances_file <- function(iraceResults, experiments, optimum_data, outpu
   return(instances_df)
 }
 
-# Create results file
+#' Create results file
+#' 
+#' This function processes the experiments matrix and computes various statistics
+#' for each configuration, including best and mean quality, rankings, normalized rankings,
+#' GAPs, and their respective rankings. It handles NA values according to the specified criteria.
+#' 
+#' @param experiments Matrix of experiment results (rows: instances, columns: configurations)
+#' @param instances_df Data frame of instances with optimal values
+#' @param output_file Path to save the results CSV file
+#' @param best_criteria Criteria for best value selection ('min' or 'max')
+#' @param is_na_ranking Whether to consider NA values in rankings
+#' 
+#' @return Data frame with computed results
+#' 
+#' @export
 create_results_file <- function(experiments, instances_df, output_file, best_criteria = "min", is_na_ranking = FALSE) {
   if (is.null(experiments) || ncol(experiments) == 0) {
     cat("  Advertencia: No hay datos de experimentos\n")
@@ -457,512 +543,533 @@ create_results_file <- function(experiments, instances_df, output_file, best_cri
   return(results_df)
 }
 
-# Create trajectories file
-create_trajectories_file <- function(iraceResults, raceData, allElites, iterations, output_file) {
-  # Initialize data frame for trajectories
-  trajectories <- data.frame(
-    PATH = logical(),
-    ORIGIN_ITER = integer(),
-    ORIGIN_CONFIG_ID = character(),
-    DESTINY_ITER = integer(),
-    DESTINY_CONFIG_ID = character(),
-    stringsAsFactors = FALSE
-  )
+#' Generate STN-I structure from processed results
+#' 
+#' This function processes multiple results folders generated by different runs (seeds)
+#' and aggregates configurations and trajectories into a single STN-I structure.
+#' It saves the aggregated configurations and trajectories into specified output files.
+#' The function allows selection of quality and representative criteria for configurations.
+#' It also filters trajectory types based on a significance threshold.
+#' The output files are saved in the specified output directory with a base name.
+#' The function handles configurations with identical parameter values across different runs
+#' by merging them and updating their associated information.
+#' 
+#' @param input_dir Directory containing processed results folders
+#' @param parameters_file Path to parameters CSV file
+#' @param output_dir Directory to save STN-I files
+#' @param output_name Base name for output files
+#' @param quality_criteria Criteria for quality selection ('mean' or 'best')
+#' @param representative_criteria Criteria for representative configuration selection ('min' or 'max')
+#' @param significance Significance threshold for trajectory types
+#'
+#' @return None
+#' 
+#' @export
+generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name,
+                          quality_criteria = "mean", representative_criteria = "min", significance = 2) {
+  # Load the parameters file
+  parameters <- read_parameters_file(parameters_file = parameters_file)
 
-  # Process each iteration
-  for (iter in 1:iterations) {
-    configs <- raceData[[iter]]
-    if (!is.null(configs) && nrow(configs) > 0) {
-      # For each configuration in current iteration
-      for (i in 1:nrow(configs)) {
-        config <- configs[i, ]
-        config_id <- as.character(config$.ID.)
+  # Define the type priority
+  type_priority <- c("STANDARD", "START", "END")
+
+  results_dirs <- list.dirs(path = input_dir, full.names = TRUE, recursive = FALSE)
+
+  # Initialize counters and storage structures
+  run_counter <- 1
+  new_config_id <- 1
+  configurations_list <- list()
+  trajectories_list <- list()
+  location_to_config_idx <- list()
+
+  # Process each results folder (diferents runs by seeds)
+  for (results_folder in results_dirs) {
+    # Read the irace results files
+    configurations_data <- read.csv(file.path(results_folder, "configurations.csv"), sep = ";")
+    results_data <- read.csv(file.path(results_folder, "results.csv"), sep = ";")
+    trajectories_data <- read.csv(file.path(results_folder, "trajectories.csv"), sep = ";")
+
+    # Process the trajectories data on vectorized way 
+    trajectories_batch <- data.frame(
+      RUN_ID = rep(run_counter, nrow(trajectories_data)),
+      PATH = trajectories_data$PATH,
+      ITERATION_1 = trajectories_data$ORIGIN_ITER,
+      CONFIG_ID_1 = trajectories_data$ORIGIN_CONFIG_ID,
+      SOLUTION_1 = NA,
+      QUALITY_1 = NA,
+      ORIGIN_TYPE_1 = NA,
+      TYPE_1 = NA,
+      ORIGIN_IS_ELITE_1 = NA,
+      IS_ELITE_1 = NA,
+      ITERATION_2 = trajectories_data$DESTINY_ITER,
+      CONFIG_ID_2 = trajectories_data$DESTINY_CONFIG_ID,
+      SOLUTION_2 = NA,
+      QUALITY_2 = NA,
+      ORIGIN_TYPE_2 = NA,
+      TYPE_2 = NA,
+      ORIGIN_IS_ELITE_2 = NA,
+      IS_ELITE_2 = NA,
+      stringsAsFactors = FALSE
+    )
+    trajectories_list[[length(trajectories_list) + 1]] <- trajectories_batch
+
+    for (i in seq_len(nrow(configurations_data))) {
+      configuration <- configurations_data[i, ]
+      results <- results_data[results_data$CONFIG_ID == configuration$CONFIG_ID, ]
+
+      # Get only parameter columns
+      param_cols <- setdiff(names(configuration), c("CONFIG_ID", "IS_ELITE"))
+      param_values <- configuration[param_cols]
+      location_code <- get_location_code(param_values, parameters)
+      existing_config_idx <- location_to_config_idx[[location_code]]
+
+      # Find configuration in configurations_list
+      if (is.null(existing_config_idx)) {
+        # Add new configuration
+        config_entry <- list(
+          CONFIG_ID = new_config_id,
+          LOCATION_CODE = location_code,
+          IS_ELITE = as.character(configuration$IS_ELITE),
+          RUN_IDS = list(run_counter),
+          OLD_CONFIG_IDS = list(configuration$CONFIG_ID),
+          MNRG_VALUES = list(results$MNRG),
+          TYPES = list(character(0))
+        )
+        # Add parameter values
+        for (col_name in param_cols) {
+          config_entry[[col_name]] <- configuration[[col_name]]
+        }
+        configurations_list[[length(configurations_list) + 1]] <- config_entry
+        existing_config_idx <- length(configurations_list)
+        location_to_config_idx[[location_code]] <- existing_config_idx
+        new_config_id <- new_config_id + 1
+      } else {
+        # Update lists form existing configuration
+        config_item <- configurations_list[[existing_config_idx]]
+        config_item$RUN_IDS[[1]] <- c(config_item$RUN_IDS[[1]], run_counter)
+        config_item$OLD_CONFIG_IDS[[1]] <- c(config_item$OLD_CONFIG_IDS[[1]], configuration$CONFIG_ID)
+        config_item$MNRG_VALUES[[1]] <- c(config_item$MNRG_VALUES[[1]], results$MNRG)
+
+        # Update IS_ELITE if necessary
+        if (configuration$IS_ELITE == "TRUE" && config_item$IS_ELITE == "FALSE") {
+          config_item$IS_ELITE <- "TRUE"
+        }
+        configurations_list[[existing_config_idx]] <- config_item
+      }
+
+      # Store information for later batch update
+      current_batch_idx <- length(trajectories_list)
+      if (current_batch_idx > 0) {
+        # Update SOLUTION_1, SOLUTION_2 and ORIGIN_IS_ELITE_1, ORIGIN_IS_ELITE_2
+        batch_data <- trajectories_list[[current_batch_idx]]
+        config_id_matches_1 <- batch_data$CONFIG_ID_1 == configuration$CONFIG_ID
+        config_id_matches_2 <- batch_data$CONFIG_ID_2 == configuration$CONFIG_ID
         
-        if (iter == 1) {
-          # First iteration configurations connect to themselves with PATH = FALSE
-          trajectories <- rbind(trajectories, data.frame(
-            PATH = FALSE,
-            ORIGIN_ITER = 1,
-            ORIGIN_CONFIG_ID = config_id,
-            DESTINY_ITER = 1,
-            DESTINY_CONFIG_ID = config_id,
-            stringsAsFactors = FALSE
-          ))
-        } else {
-          parent_id <- as.character(config$.PARENT.)
-          # Check if it was elite in previous iteration
-          is_elite <- config_id %in% allElites[[iter-1]]
-          
-          # If it has a parent in previous iteration, create connection
-          if (!is.na(parent_id) && parent_id %in% rownames(raceData[[iter-1]])) {
-            trajectories <- rbind(trajectories, data.frame(
-              PATH = TRUE,
-              ORIGIN_ITER = iter - 1,
-              ORIGIN_CONFIG_ID = parent_id,
-              DESTINY_ITER = iter,
-              DESTINY_CONFIG_ID = config_id,
-              stringsAsFactors = FALSE
-            ))
-          } else if (is_elite) {
-            # If elite and no connection with previous iteration, connect to itself
-            trajectories <- rbind(trajectories, data.frame(
-              PATH = TRUE,
-              ORIGIN_ITER = iter - 1,
-              ORIGIN_CONFIG_ID = config_id,
-              DESTINY_ITER = iter,
-              DESTINY_CONFIG_ID = config_id,
-              stringsAsFactors = FALSE
-            ))
+        batch_data$SOLUTION_1[config_id_matches_1] <- location_code
+        batch_data$ORIGIN_IS_ELITE_1[config_id_matches_1] <- configuration$IS_ELITE
+        batch_data$SOLUTION_2[config_id_matches_2] <- location_code
+        batch_data$ORIGIN_IS_ELITE_2[config_id_matches_2] <- configuration$IS_ELITE
+        
+        trajectories_list[[current_batch_idx]] <- batch_data
+      }
+
+      # Search configuration in the current batch to determine trajectory types
+      if (current_batch_idx > 0) {
+        batch_data <- trajectories_list[[current_batch_idx]]
+        total_iterations <- max(batch_data$ITERATION_2)
+        trajectory_types <- c()
+        # For CONFIG_ID_1
+        idx_1 <- which(batch_data$CONFIG_ID_1 == configuration$CONFIG_ID)
+        if (length(idx_1) > 0) {
+          for (idx in idx_1) {
+            if (batch_data$ITERATION_1[idx] == 1) {
+              type <- "START"
+            } else if (batch_data$ITERATION_1[idx] == total_iterations) {
+              type <- "END"
+            } else {
+              type <- "STANDARD"
+            }
+            trajectory_types <- c(trajectory_types, type)
+            batch_data$ORIGIN_TYPE_1[idx] <- type
           }
         }
-      }
-    }
-  }
-  
-  # Save file with semicolon separator
-  write.table(trajectories, file = output_file, sep = ";", row.names = FALSE, quote = FALSE)
-  return(trajectories)
-}
-
-#' Generate STN-i file from processed results
-#'
-#' @param input_dir Directory with processed Results
-#' @param parameters Parameter definitions
-#' @param output_dir Output directory
-#' @param output_name Output filename
-#' @param best_criteria Criteria for best value
-#' @param quality_criteria Criteria for quality
-#' @param significance Significance level
-#' @export
-generate_stn_i <- function(input_dir, parameters, output_dir, output_name,
-                          best_criteria, quality_criteria, significance) {
-  
-  # List all result directories
-  result_dirs <- list.dirs(input_dir, full.names = TRUE, recursive = FALSE)
-  
-  # Initialize lists for collecting data
-  all_configs <- list()
-  all_experiments <- list()
-  all_trajectories <- list()
-  
-  # Process each result directory
-  for (dir in result_dirs) {
-    # Read result files
-    configs <- read.csv(file.path(dir, "configurations.csv"), sep = ";", stringsAsFactors = FALSE)
-    experiments <- read.csv(file.path(dir, "results.csv"), sep = ";", stringsAsFactors = FALSE)
-    trajectories <- read.csv(file.path(dir, "trajectories.csv"), sep = ";", stringsAsFactors = FALSE)
-    
-    # Add run identifier
-    run_id <- basename(dir)
-    configs$RUN <- run_id
-    trajectories$RUN <- run_id
-    
-    # Store in lists
-    all_configs[[run_id]] <- configs
-    all_experiments[[run_id]] <- experiments
-    all_trajectories[[run_id]] <- trajectories
-  }
-  
-  # Combine results
-  combined_results <- list(
-    configurations = do.call(rbind, all_configs),
-    experiments = all_experiments[[1]], # Take first one as reference
-    trajectories = do.call(rbind, all_trajectories)
-  )
-  
-  # Process configurations and qualities
-  processed_results <- process_qualities(combined_results, 
-                                      best_criteria,
-                                      quality_criteria)
-  
-  # Generate location codes
-  location_results <- generate_location_codes(processed_results,
-                                           parameters,
-                                           significance)
-  
-  # Write STN-i file
-  write_stn_i_file(location_results, output_dir, output_name)
-}
-
-# Auxiliary functions for data processing
-
-#' Clean values array from parameter definition
-#' @keywords internal
-clean_values_array <- function(values) {
-  values <- gsub("[()]", "", values)
-  trimws(values)
-}
-
-#' Clean locations array from parameter definition
-#' @keywords internal
-clean_locations_array <- function(locations) {
-  locations <- gsub("[()]", "", locations)
-  trimws(locations)
-}
-
-#' Process configurations from irace results
-#' @keywords internal
-process_configurations <- function(configurations, elites) {
-  config_ids <- configurations$.ID.
-  is_elite <- sapply(config_ids, function(id) {
-    any(sapply(elites, function(elite_ids) id %in% elite_ids))
-  })
-  
-  # Extraer columnas de parámetros
-  param_cols <- setdiff(colnames(configurations), 
-                       c(".ID.", ".PARENT.", ".ITERATION.", ".ELITE."))
-  
-  # Crear lista para almacenar configuraciones
-  config_list <- list()
-  
-  # Procesar cada configuración
-  for (i in seq_along(config_ids)) {
-    config <- configurations[configurations$.ID. == config_ids[i], ]
-    
-    # Extraer valores de parámetros
-    param_values <- sapply(param_cols, function(param) {
-      value <- config[[param]]
-      if (is.factor(value)) {
-        as.character(value)
-      } else if (is.integer(value)) {
-        as.character(as.integer(value))
-      } else {
-        as.character(value)
-      }
-    })
-    
-    # Crear entrada de configuración
-    config_entry <- c(
-      CONFIG_ID = as.character(config_ids[i]),
-      IS_ELITE = as.character(is_elite[i]),
-      param_values
-    )
-    
-    config_list[[i]] <- config_entry
-  }
-  
-  # Convertir lista a data frame
-  config_df <- as.data.frame(do.call(rbind, config_list), 
-                            stringsAsFactors = FALSE)
-  
-  return(config_df)
-}
-
-#' Process experiments and results
-#' @keywords internal
-process_experiments <- function(experiments, optimum_file) {
-  # Obtener IDs de configuraciones
-  config_ids <- colnames(experiments)
-  
-  # Calcular métricas de calidad básicas para cada configuración
-  quality_metrics <- lapply(config_ids, function(id) {
-    qualities <- as.numeric(experiments[, id])
-    qualities <- qualities[!is.na(qualities)]
-    c(
-      CONFIG_ID = id,
-      INSTANCES = length(qualities),
-      BQ = min(qualities, na.rm = TRUE),
-      MQ = mean(qualities, na.rm = TRUE)
-    )
-  })
-  results_df <- as.data.frame(do.call(rbind, quality_metrics))
-  
-  # Calcular rankings de calidad
-  results_df$BQR <- rank(results_df$BQ, ties.method = "min")
-  results_df$MQR <- rank(results_df$MQ, ties.method = "min")
-  
-  # Normalizar rankings (0-1)
-  results_df$BQRN <- (results_df$BQR - 1) / (nrow(results_df) - 1)
-  results_df$MQRN <- (results_df$MQR - 1) / (nrow(results_df) - 1)
-  
-  # Procesar GAPs si hay archivo de óptimos
-  if (!is.null(optimum_file) && file.exists(optimum_file)) {
-    optimum_data <- read.csv(optimum_file, header = TRUE, stringsAsFactors = FALSE)
-    
-    # Crear matriz de GAPs
-    gaps_matrix <- matrix(NA, nrow = nrow(experiments), ncol = ncol(experiments))
-    colnames(gaps_matrix) <- colnames(experiments)
-    rownames(gaps_matrix) <- rownames(experiments)
-    
-    # Calcular mejores calidades
-    best_qualities <- apply(experiments, 1, min, na.rm = TRUE)
-    
-    # Calcular GAPs
-    for (i in seq_len(nrow(experiments))) {
-      experiment_id <- as.integer(rownames(experiments)[i])
-      opt_value <- optimum_data$OPTIMUM[optimum_data$INSTANCE == experiment_id]
-      
-      if (!is.null(opt_value) && !is.na(opt_value)) {
-        best_quality <- opt_value
-      } else {
-        best_quality <- best_qualities[i]
-      }
-      
-      for (j in seq_len(ncol(experiments))) {
-        if (!is.na(experiments[i,j])) {
-          gaps_matrix[i,j] <- (experiments[i,j] - best_quality) / best_quality
+        # For CONFIG_ID_2
+        idx_2 <- which(batch_data$CONFIG_ID_2 == configuration$CONFIG_ID)
+        if (length(idx_2) > 0) {
+          for (idx in idx_2) {
+            if (batch_data$ITERATION_2[idx] == 1) {
+              type <- "START"
+            } else if (batch_data$ITERATION_2[idx] == total_iterations) {
+              type <- "END"
+            } else {
+              type <- "STANDARD"
+            }
+            trajectory_types <- c(trajectory_types, type)
+            batch_data$ORIGIN_TYPE_2[idx] <- type
+          }
         }
+        # Update the batch data
+        trajectories_list[[current_batch_idx]] <- batch_data
       }
-    }
-    
-    # Calcular métricas de GAP
-    gap_metrics <- lapply(config_ids, function(id) {
-      gaps <- gaps_matrix[, id]
-      gaps <- gaps[!is.na(gaps)]
-      c(
-        BG = min(gaps),
-        MG = mean(gaps)
-      )
-    })
-    gap_df <- as.data.frame(do.call(rbind, gap_metrics))
-    
-    # Añadir métricas de GAP
-    results_df$BG <- gap_df$BG
-    results_df$MG <- gap_df$MG
-    
-    # Calcular rankings de GAP
-    results_df$BGR <- rank(results_df$BG, ties.method = "min")
-    results_df$MGR <- rank(results_df$MG, ties.method = "min")
-    
-    # Normalizar rankings de GAP
-    results_df$BGRN <- (results_df$BGR - 1) / (nrow(results_df) - 1)
-    results_df$MGRN <- (results_df$MGR - 1) / (nrow(results_df) - 1)
-  }
-  
-  return(results_df)
-}
 
-#' Process trajectories from irace results
-#' @keywords internal
-process_trajectories <- function(irace_results) {
-  trajectories <- data.frame(
-    PATH = logical(),
-    ORIGIN_ITER = integer(),
-    ORIGIN_CONFIG_ID = character(),
-    DESTINY_ITER = integer(),
-    DESTINY_CONFIG_ID = character(),
-    stringsAsFactors = FALSE
-  )
-  
-  # Procesar cada iteración
-  for (iter in seq_along(irace_results$allElites)) {
-    configs <- irace_results$allConfigurations[irace_results$allConfigurations$.ITERATION. == iter, ]
-    
-    # Procesar cada configuración
-    for (i in seq_len(nrow(configs))) {
-      config <- configs[i, ]
-      
-      # Primera iteración
-      if (iter == 1) {
-        trajectories <- rbind(trajectories, data.frame(
-          PATH = TRUE,
-          ORIGIN_ITER = 0,
-          ORIGIN_CONFIG_ID = "0",
-          DESTINY_ITER = iter,
-          DESTINY_CONFIG_ID = as.character(config$.ID.),
-          stringsAsFactors = FALSE
-        ))
-      } else {
-        # Conectar con el padre
-        if (!is.na(config$.PARENT.)) {
-          trajectories <- rbind(trajectories, data.frame(
-            PATH = TRUE,
-            ORIGIN_ITER = iter - 1,
-            ORIGIN_CONFIG_ID = as.character(config$.PARENT.),
-            DESTINY_ITER = iter,
-            DESTINY_CONFIG_ID = as.character(config$.ID.),
-            stringsAsFactors = FALSE
-          ))
-        }
-      }
-    }
-  }
-  
-  return(trajectories)
-}
-
-#' Combine results from multiple runs
-#' @keywords internal
-combine_run_results <- function(results) {
-  # Inicializar listas para almacenar datos combinados
-  all_configs <- list()
-  all_experiments <- list()
-  all_trajectories <- list()
-  
-  # Combinar resultados de todas las ejecuciones
-  for (run_name in names(results)) {
-    run_data <- results[[run_name]]
-    
-    # Verificar y procesar configuraciones si existen
-    if (!is.null(run_data$configurations) && nrow(run_data$configurations) > 0) {
-      configs <- run_data$configurations
-      configs$RUN <- run_name
-      all_configs[[run_name]] <- configs
-    }
-    
-    # Verificar y procesar experimentos si existen
-    if (!is.null(run_data$experiments)) {
-      # Convertir experimentos a data.frame si no lo es
-      if (is.matrix(run_data$experiments)) {
-        run_data$experiments <- as.data.frame(run_data$experiments)
-      }
-      if (is.data.frame(run_data$experiments)) {
-        all_experiments[[run_name]] <- run_data$experiments
-      }
-    }
-    
-    # Verificar y procesar trayectorias si existen
-    if (!is.null(run_data$trajectories) && nrow(run_data$trajectories) > 0) {
-      trajectories <- run_data$trajectories
-      trajectories$RUN <- run_name
-      all_trajectories[[run_name]] <- trajectories
-    }
-  }
-  
-  # Combinar configuraciones
-  combined_configs <- if (length(all_configs) > 0) {
-    do.call(rbind, all_configs)
-  } else {
-    data.frame()
-  }
-  
-  # Combinar experimentos (mantener como data.frame)
-  combined_experiments <- if (length(all_experiments) > 0) {
-    all_experiments[[1]]  # Tomar el primer conjunto como base
-  } else {
-    data.frame()
-  }
-  
-  # Combinar trayectorias
-  combined_trajectories <- if (length(all_trajectories) > 0) {
-    do.call(rbind, all_trajectories)
-  } else {
-    data.frame()
-  }
-  
-  combined <- list(
-    configurations = combined_configs,
-    experiments = combined_experiments,
-    trajectories = combined_trajectories
-  )
-  
-  return(combined)
-}
-
-#' Process configuration qualities
-#' @keywords internal
-process_qualities <- function(results, best_criteria, quality_criteria) {
-  # Verificar que tenemos datos
-  if (is.null(results$configurations) || nrow(results$configurations) == 0) {
-    return(data.frame())
-  }
-
-  # Procesar cada configuración
-  configs <- results$configurations
-  configs$FINAL_QUALITY <- NA
-  
-  # Verificar que experiments es un data.frame
-  if (is.null(results$experiments) || !is.data.frame(results$experiments)) {
-    return(configs)
-  }
-  
-  for (i in seq_len(nrow(configs))) {
-    config <- configs[i, ]
-    
-    # Obtener valores de calidad
-    if (config$CONFIG_ID %in% colnames(results$experiments)) {
-      quality_values <- results$experiments[[config$CONFIG_ID]]
-      quality_values <- as.numeric(quality_values[!is.na(quality_values)])
-      
-      # Calcular calidad final según el criterio
-      if (length(quality_values) == 0) {
-        final_quality <- NA
-      } else if (quality_criteria == "min") {
-        final_quality <- min(quality_values, na.rm = TRUE)
-      } else if (quality_criteria == "max") {
-        final_quality <- max(quality_values, na.rm = TRUE)
-      } else if (quality_criteria == "mean") {
-        final_quality <- mean(quality_values, na.rm = TRUE)
-      } else if (quality_criteria == "median") {
-        final_quality <- median(quality_values, na.rm = TRUE)
-      } else if (quality_criteria == "mode") {
-        tab <- table(quality_values)
-        if (length(tab) > 0) {
-          final_quality <- as.numeric(names(sort(tab, decreasing = TRUE)[1]))
+      # Update TYPES
+      if (length(trajectory_types) > 0) {
+        config_item <- configurations_list[[existing_config_idx]]
+        existing_types <- config_item$TYPES[[1]]
+        if (length(existing_types) == 0) {
+          config_item$TYPES[[1]] <- unique(trajectory_types)
         } else {
-          final_quality <- NA
+          config_item$TYPES[[1]] <- unique(c(existing_types, trajectory_types))
         }
+        configurations_list[[existing_config_idx]] <- config_item
+      }
+    }
+
+    run_counter <- run_counter + 1
+  }
+
+  cat("Convirtiendo listas a data.frames...\n")
+
+  # Transform configurations_list in configurations_df
+  if (length(configurations_list) > 0) {
+    configurations_df <- do.call(rbind, lapply(configurations_list, function(x) {
+      x$RUN_IDS <- I(x$RUN_IDS)
+      x$OLD_CONFIG_IDS <- I(x$OLD_CONFIG_IDS)
+      x$MNRG_VALUES <- I(x$MNRG_VALUES)
+      x$TYPES <- I(x$TYPES)
+      as.data.frame(x, stringsAsFactors = FALSE)
+    }))
+  } else {
+    configurations_df <- data.frame()
+  }
+
+  # Transform trajectories_list in trajectories_df
+  if (length(trajectories_list) > 0) {
+    trajectories_df <- do.call(rbind, trajectories_list)
+  } else {
+    trajectories_df <- data.frame()
+  }
+
+  cat("Conversión completada. Configuraciones:", nrow(configurations_df), "Trayectorias:", nrow(trajectories_df), "\n")
+
+  # Calculate qualities for each configuration and start grouping by locations
+  locations_df <- data.frame()
+  for (i in seq_len(nrow(configurations_df))) {
+    config <- configurations_df[i, ]
+    # Calculate final MNRG value based on quality_criteria
+    mnrg_values <- as.numeric(config$MNRG_VALUES[[1]])
+    mnrg_values <- mnrg_values[!is.na(mnrg_values)]
+    mnrg_values <- round(mnrg_values, significance)
+    if (length(mnrg_values) == 0) {
+      final_mnrg <- NA
+    } else if (quality_criteria == "min") {
+      final_mnrg <- min(mnrg_values)
+    } else if (quality_criteria == "max") {
+      final_mnrg <- max(mnrg_values)
+    } else if (quality_criteria == "mean") {
+      final_mnrg <- mean(mnrg_values)
+    } else if (quality_criteria == "median") {
+      final_mnrg <- median(mnrg_values)
+    } else if (quality_criteria == "mode") {
+      mode_value <- as.numeric(names(sort(table(mnrg_values), decreasing = TRUE)[1]))
+      final_mnrg <- mode_value
+    } else {
+      stop("Error: quality_criteria debe ser 'min', 'max', 'mean', 'median' o 'mode'", call. = FALSE)
+    }
+
+    # Search for existing location in locations_df
+    if (nrow(locations_df) > 0 && config$LOCATION_CODE %in% locations_df$LOCATION_CODE) {
+        # Search for existing location
+        loc_idx <- which(locations_df$LOCATION_CODE == config$LOCATION_CODE)
+        # Update IS_ELITE if necessary
+        if (config$IS_ELITE == "TRUE" && locations_df$IS_ELITE[loc_idx] == "FALSE") {
+          locations_df$IS_ELITE[loc_idx] <- "TRUE"
+        }
+        # Update QUALITIES list
+        locations_df$QUALITIES[[loc_idx]] <- c(locations_df$QUALITIES[[loc_idx]], final_mnrg)
+        # Update TYPE if necessary based on priority
+        config_types <- config$TYPES[[1]]
+        if (length(config_types) > 0) {
+          # Get the best type from the configuration
+          type_priorities <- match(config_types, type_priority)
+          best_config_type <- config_types[which.min(type_priorities)]
+          # Compare type priorities and update if necessary
+          current_type <- locations_df$TYPE[loc_idx]
+          current_priority <- match(current_type, type_priority)
+          best_config_priority <- match(best_config_type, type_priority)
+          if (best_config_priority < current_priority) {
+            locations_df$TYPE[loc_idx] <- best_config_type
+          }
+        }
+    } else {
+      # Create new location entry and select best type
+      config_types <- config$TYPES[[1]]
+      if (length(config_types) > 0) {
+        type_priorities <- match(config_types, type_priority)
+        best_type <- config_types[which.min(type_priorities)]
       } else {
-        final_quality <- NA
+        best_type <- "STANDARD"
       }
       
-      # Añadir calidad final
-      configs$FINAL_QUALITY[i] <- final_quality
+      location_entry <- data.frame(
+        LOCATION_CODE = config$LOCATION_CODE,
+        IS_ELITE = config$IS_ELITE,
+        TYPE = best_type,
+        QUALITIES = I(list(final_mnrg)),
+        FINAL_QUALITY = NA,
+        stringsAsFactors = FALSE
+      )
+      locations_df <- rbind(locations_df, location_entry)
     }
   }
-  
-  # Remover filas con NA si es necesario
-  configs <- configs[!is.na(configs$FINAL_QUALITY), ]
-  
-  # Ordenar según el criterio de mejor valor si hay datos
-  if (nrow(configs) > 0) {
-    if (best_criteria == "min") {
-      configs <- configs[order(configs$FINAL_QUALITY), ]
-    } else {
-      configs <- configs[order(-configs$FINAL_QUALITY), ]
+
+  # Calculate FINAL_QUALITY for each location based on QUALITIES and representative_criteria
+  for (i in seq_len(nrow(locations_df))) {
+    qualities <- as.numeric(locations_df$QUALITIES[[i]])
+    qualities <- qualities[!is.na(qualities)]
+    qualities <- round(qualities, significance)
+    if (length(qualities) == 0) {
+      locations_df$FINAL_QUALITY[i] <- NA
+    } else if (representative_criteria == "min") {
+      locations_df$FINAL_QUALITY[i] <- min(qualities)
+    } else if (representative_criteria == "max") {
+      locations_df$FINAL_QUALITY[i] <- max(qualities)
+    } else if (representative_criteria == "mean") {
+      locations_df$FINAL_QUALITY[i] <- mean(qualities)
+    } else if (representative_criteria == "median") {
+      locations_df$FINAL_QUALITY[i] <- median(qualities)
+    } else if (representative_criteria == "mode") {
+      mode_value <- as.numeric(names(sort(table(qualities), decreasing = TRUE)[1]))
+      locations_df$FINAL_QUALITY[i] <- mode_value
     }
-  }
-  
-  return(configs)
-}
 
-#' Generate location codes
-#' @keywords internal
-generate_location_codes <- function(results, parameters, significance) {
-  processed_configs <- results
-  
-  # Generar códigos de localización para cada configuración
-  for (i in seq_len(nrow(processed_configs))) {
-    config <- processed_configs[i, ]
-    
-    # Obtener valores de parámetros
-    param_values <- as.list(config[parameters$params$NAME])
-    
-    # Generar código de localización
-    location_code <- get_location_code(param_values, parameters, significance)
-    
-    # Añadir código de localización
-    processed_configs$LOCATION_CODE[i] <- location_code
+    # Update trajectories_df with quality and type information
+    loc_code <- locations_df$LOCATION_CODE[i]
+    loc_quality <- locations_df$FINAL_QUALITY[i]
+    loc_type <- locations_df$TYPE[i]
+    loc_elite <- locations_df$IS_ELITE[i]
+    trajectories_df$QUALITY_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_quality
+    trajectories_df$TYPE_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_type
+    trajectories_df$IS_ELITE_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_elite
+    trajectories_df$QUALITY_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_quality
+    trajectories_df$TYPE_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_type
+    trajectories_df$IS_ELITE_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_elite
   }
-  
-  return(processed_configs)
-}
 
-#' Write STN-i file
-#' @keywords internal
-write_stn_i_file <- function(results, output_dir, output_name) {
-  # Asegurar que el directorio existe
+  # Write output files
   dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
-  
-  # Preparar data frame final
-  stn_i_df <- results$trajectories
-  
-  # Añadir información de calidad y tipo
-  stn_i_df$QUALITY <- results$configurations$FINAL_QUALITY[
-    match(stn_i_df$DESTINY_CONFIG_ID, results$configurations$CONFIG_ID)
-  ]
-  
-  # Determinar tipo de nodo
-  stn_i_df$TYPE <- "STANDARD"
-  stn_i_df$TYPE[stn_i_df$ORIGIN_ITER == 0] <- "START"
-  stn_i_df$TYPE[stn_i_df$DESTINY_CONFIG_ID %in% 
-                  results$configurations$CONFIG_ID[results$configurations$IS_ELITE == "TRUE"]] <- "END"
-  
-  # Guardar archivo
-  output_path <- file.path(output_dir, output_name)
-  write.table(stn_i_df, 
-              file = output_path, 
-              sep = ";",
-              row.names = FALSE,
-              quote = FALSE)
+  output_file_path <- file.path(output_dir, output_name)
+  write.table(trajectories_df, file = output_file_path, sep = ";", row.names = FALSE, quote = FALSE)
+}
+
+#' Reads and processes a parameters definition file for irace tuning.
+#'
+#' This function reads a CSV file that defines the parameters to be used in an irace tuning scenario,
+#' processing both categorical/ordinal values and numerical ranges (integer or real).
+#' Additionally, it constructs a structured dictionary (`param_domains`) that includes
+#' the parameter domains and location settings, with built-in validations for correct formats.
+#'
+#' @param parameters_file `character(1)`\cr
+#'   Path to the parameters CSV file (semicolon-separated).
+#'
+#' @return A list with two elements, params and domains:
+#' \item{params}{A data frame with the original parameters and processed VALUES_ARRAY and
+#'   LOCATIONS_ARRAY columns.}
+#' \item{domains}{A list where each element corresponds to a parameter name and contains
+#'   the structured values and locations for that parameter.}
+#'
+#' @export
+read_parameters_file <- function(parameters_file) {
+  # Read the parameters file
+  params <- read.csv2(parameters_file, header = TRUE, stringsAsFactors = FALSE)
+  # Auxiliary function to clean up the values
+  clean_array <- function(x) {
+    x <- gsub("[()]", "", x) # Delete parentheses
+    trimws(x) # Trim leading and trailing whitespace
+  }
+  # Auxiliary function to parse the location dictionary
+  parse_location_dict <- function(loc_vector) {
+    loc_split <- strsplit(loc_vector, ":")
+    # Validate that each element has exactly two parts (name and value)
+    if (any(sapply(loc_split, length) != 2)) {
+      stop("Error: Formato incorrecto en LOCATIONS_ARRAY (debe ser 'name:value')", call. = FALSE)
+    }
+    # Convert to named list
+    loc_list <- sapply(loc_split, function(x) as.numeric(x[2]))
+    names(loc_list) <- sapply(loc_split, function(x) x[1])
+    return(loc_list)
+  }
+  # Initialize the domains list
+  domains <- list()
+  # Iterate through each parameter and process the values and locations
+  params$VALUES_ARRAY <- mapply(function(type, values, locations, name) {
+    values <- clean_array(values)
+    locations <- clean_array(locations)
+    # If the parameter is categorical or ordinal
+    # then interpret the values and locations as vectors
+    if (type %in% c("c", "o")) {
+      values_vec <- strsplit(values, ",")[[1]]
+      loc_vector <- strsplit(locations, ",")[[1]]
+      loc_dict <- parse_location_dict(loc_vector)
+      # Validate that the number of values matches the number of locations
+      if (length(values_vec) != length(loc_dict)) {
+        stop(paste("Error: Desajuste entre VALUES y LOCATIONS en parámetro:", name), call. = FALSE)
+      }
+      # Save in the domains structure
+      domains[[name]] <<- list(
+        values = values_vec,
+        locations = loc_dict
+      )
+      return(values_vec)
+    # If the parameter is integer or real
+    } else if (type %in% c("i", "r")) {
+      values_nums <- as.numeric(strsplit(values, ",")[[1]])
+      locations_nums <- as.numeric(strsplit(locations, ",")[[1]])
+      # Validate that the number of values and locations is correct
+      if (length(values_nums) != 2) {
+        stop(paste("Error: VALUES debe tener (min,max) para parámetro:", name), call. = FALSE)
+      }
+      # Validate that the number of locations is correct
+      if (length(locations_nums) != 2) {
+        stop(paste("Error: LOCATIONS debe tener (significance, step) para parámetro:", name), call. = FALSE)
+      }
+      # Save in the domains structure
+      domains[[name]] <<- list(
+        values = list(min = values_nums[1], max = values_nums[2]),
+        locations = list(step = locations_nums[1], significance = locations_nums[2])
+      )
+      return(values_nums)
+    } else {
+      stop(paste("Error: Tipo de parámetro desconocido:", type), call. = FALSE)
+    }
+  }, params$TYPE, params$VALUES_ARRAY, params$LOCATIONS_ARRAY, params$NAME, SIMPLIFY = FALSE)
+  # Convert the parameters data frame to a list
+  params$LOCATIONS_ARRAY <- lapply(seq_len(nrow(params)), function(i) {
+    type <- params$TYPE[i]
+    if (type %in% c("c", "o")) {
+      loc_vector <- strsplit(clean_array(params$LOCATIONS_ARRAY[i]), ",")[[1]]
+      return(loc_vector)
+    } else if (type %in% c("i", "r")) {
+      return(as.numeric(strsplit(clean_array(params$LOCATIONS_ARRAY[i]), ",")[[1]]))
+    }
+  })
+  return(list(
+    params = params,
+    domains = domains
+  ))
+}
+
+
+#' Generate a unique location code for a given set of parameter values.
+#' 
+#' This function generates a unique location code based on the provided parameter values
+#' and the definitions in the parameters structure. It handles categorical, ordinal,
+#' integer, and real parameters, ensuring that the location code is formatted correctly
+#' with leading zeros or 'X' characters for missing values.
+#' 
+#' @param parameters_values A list of parameter values.
+#' @param parameters A list of parameter definitions.
+#' 
+#' @return A character string representing the unique location code.
+#' 
+#' @export
+get_location_code <- function(parameters_values, parameters) {
+  location_code <- ""
+  # For each parameter, get the location code
+  for (param_name in names(parameters_values)) {
+    # Skip if the parameter is not in the parameters list
+    if (!(param_name %in% names(parameters$domains))) {
+      next
+    }
+    param_type <- parameters$params$TYPE[parameters$params$NAME == param_name]
+    param_value <- parameters_values[[param_name]]
+    # If the parameter is categorical or ordinal
+    if (param_type %in% c("c", "o")) {
+      loc_dict <- parameters$domains[[param_name]]$locations
+      # If the parameter value is NA or "<NA>", use Xs for the code
+      if (is.na(param_value) || param_value == "<NA>") {
+        max_digits <- nchar(as.character(max(loc_dict)))
+        code_part <- paste0(rep("X", max_digits), collapse = "")
+      }
+      # Otherwise, find the corresponding location code for the value
+      else {
+        # Convert param_value to character to ensure string matching
+        param_value_str <- as.character(param_value)
+        
+        if (param_value_str %in% names(loc_dict)) {
+          code_num <- loc_dict[[param_value_str]]
+          max_value <- max(loc_dict)
+          max_digits <- nchar(as.character(max_value))
+          current_digits <- nchar(as.character(code_num))
+          difference <- max_digits - current_digits
+          code_part <- paste0(strrep("0", difference), code_num)
+        } else {
+          max_digits <- nchar(as.character(max(loc_dict)))
+          code_part <- paste0(rep("X", max_digits), collapse = "")
+        }
+      }
+    }
+    # If the parameter is integer or real
+    else if (param_type %in% c("i", "r")) {
+      param_domain <- parameters$domains[[param_name]]
+      lower_bound <- param_domain$values$min
+      upper_bound <- param_domain$values$max
+      significance <- param_domain$locations$significance
+      step <- param_domain$locations$step
+      # Validate that the parameter domains are correctly defined
+      if (is.na(lower_bound) || is.na(upper_bound) || is.na(significance) || is.na(step)) {
+        stop(paste0("Error: Parameter domain not properly defined for: ", param_name))
+      }
+      # If the parameter value is NA or "<NA>", use Xs for the code
+      if (is.na(param_value) || param_value == "<NA>") {
+        max_upper_scaled <- as.integer(upper_bound * (10^significance))
+        # Validate the max upper scaled value
+        if (is.na(max_upper_scaled) || max_upper_scaled <= 0) {
+          stop(paste0("Error: max_upper_scaled invalid for parameter ", param_name))
+        }
+        total_digits <- nchar(as.character(max_upper_scaled))
+        if (is.na(total_digits) || total_digits <= 0) {
+          stop(paste0("Error: total_digits invalid for parameter ", param_name))
+        }
+        code_part <- paste0(rep("X", total_digits), collapse = "")
+      } else {
+        # Calculate the subrange index and the scaled value
+        subrange_index <- floor((as.numeric(param_value) - lower_bound) / step)
+        calculated_value <- lower_bound + subrange_index * step
+        scaled_value <- as.integer(calculated_value * (10^significance))
+        max_upper_scaled <- as.integer(upper_bound * (10^significance))
+        # Validate the scaled value and max upper scaled value
+        if (is.na(scaled_value) || is.na(max_upper_scaled)) {
+          stop(paste0("Error: scaled_value or max_upper_scaled is NA for parameter ", param_name,
+                      " (scaled_value = ", scaled_value, 
+                      ", max_upper_scaled = ", max_upper_scaled, ")"))
+        }
+        current_digits <- nchar(as.character(scaled_value))
+        max_upper_digits <- nchar(as.character(max_upper_scaled))
+        # Validate the digits
+        if (is.na(current_digits) || is.na(max_upper_digits)) {
+          stop(paste0("Error: digits NA for parameter ", param_name,
+                      " (scaled_value = ", scaled_value, 
+                      ", max_upper_scaled = ", max_upper_scaled, ")"))
+        }
+        difference <- max_upper_digits - current_digits
+        if (is.na(difference)) {
+          stop(paste0("Error: difference is NA for parameter ", param_name))
+        }
+        if (difference < 0) {
+          stop(paste0("Error: difference negative (", difference, ") for parameter ", param_name, 
+                      " (scaled_value = ", scaled_value, 
+                      ", max_upper_scaled = ", max_upper_scaled, ")"))
+        }
+        code_part <- paste0(strrep("0", difference), scaled_value)
+      }
+    }
+    # If the parameter type is not supported
+    else {
+      stop(paste0("Error: Unsupported parameter type: ", param_type))
+    }
+    # Append the code part to the total location code
+    location_code <- paste0(location_code, code_part)
+  }
+  return(location_code)
 }

@@ -9,44 +9,49 @@ option_list <- list(
   make_option(c("-i", "--input"), 
               type="character", 
               help="Directorio de entrada con los archivos .Rdata"),
-  
+
   make_option(c("-p", "--parameters"),
               type="character",
               help="Archivo CSV con los parámetros"),
-  
+
   make_option(c("-o", "--output"),
               type="character",
               help="Directorio de salida para los archivos STN-i"),
-  
+
   make_option(c("-n", "--name"),
               type="character",
               default=NULL,
               help="Nombre del archivo STN-i de salida [default= %default]"),
-  
+
   make_option(c("-b", "--best"),
               type="character", 
               default="min",
               help="Criterio para seleccionar el mejor valor ('min' o 'max') [default= %default]"),
-  
+
   make_option(c("-c", "--criteria"),
               type="character", 
               default="mean",
               help="Criterio para la calidad de configuraciones ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
-  
+
   make_option(c("-s", "--significance"),
               type="integer",
               default=2,
               help="Nivel de significancia para parámetros numéricos [default= %default]"),
-  
+
   make_option(c("-t", "--instances"),
               type="character",
               default=NULL,
               help="Archivo CSV con los valores óptimos de las instancias [default= %default]"),
-              
-  make_option(c("--na_ranking"),
+
+  make_option(c("-k", "--na_ranking"),
               type="logical",
               default=FALSE,
-              help="Considerar NA como peor valor posible en rankings [default= %default]")
+              help="Considerar NA como peor valor posible en rankings [default= %default]"),
+
+  make_option(c("-r", "--representative"),
+              type="character",
+              default="mean",
+              help="Criterio para la configuración representativa ('min', 'max', 'mean', 'median', 'mode') [default= %default]")
 )
 
 # Parse command line arguments
@@ -90,6 +95,11 @@ if (!(opt$criteria %in% c("min", "max", "mean", "median", "mode"))) {
   stop("El criterio 'criteria' debe ser uno de los siguientes: 'min', 'max', 'mean', 'median', 'mode'")
 }
 
+# Validate if significance is a positive integer
+if (!is.numeric(opt$significance) || opt$significance <= 0 || opt$significance != as.integer(opt$significance)) {
+  stop("El nivel de significancia debe ser un entero positivo")
+}
+
 # Validate instances file if provided
 if (!is.null(opt$instances)) {
   instances_file <- normalizePath(opt$instances)
@@ -112,28 +122,33 @@ if (!is.logical(opt$na_ranking)) {
   stop("El argumento 'na_ranking' debe ser TRUE o FALSE")
 }
 
+# Validate if representative criteria is valid
+if (!(opt$representative %in% c("min", "max", "mean", "median", "mode"))) {
+  stop("El criterio 'representative' debe ser uno de los siguientes: 'min', 'max', 'mean', 'median', 'mode'")
+}
+
 # Create Results directory path
 results_dir <- file.path(dirname(input_dir), "Results")
 
 # First process Rdata files and create Results structure
-cat("Procesando archivos Rdata y creando estructura Results...\n")
-process_rdata_files(
-  input_dir = input_dir,
-  parameters_file = parameters_file,
-  results_dir = results_dir,
-  optimum_file = instances_file,
-  best_criteria = opt$best,
-  is_na_ranking = opt$na_ranking
-)
+# cat("Procesando archivos Rdata y creando estructura Results...\n")
+# process_rdata_files(
+#   input_dir = input_dir,
+#   parameters_file = parameters_file,
+#   results_dir = results_dir,
+#   optimum_file = instances_file,
+#   best_criteria = opt$best,
+#   is_na_ranking = opt$na_ranking
+# )
 
 # Then generate STN-i file from processed Results
-# cat("Generando archivo STN-i desde Results...\n")
-# generate_stn_i(
-#   input_dir = results_dir,
-#   parameters = read_parameters_file(parameters_file),
-#   output_dir = output_dir,
-#   output_name = opt$name,
-#   best_criteria = opt$best,
-#   quality_criteria = opt$criteria,
-#   significance = opt$significance
-# )
+cat("Generando archivo STN-i desde Results...\n")
+generate_stn_i(
+  input_dir = results_dir,
+  parameters_file = parameters_file,
+  output_dir = output_dir,
+  output_name = opt$name,
+  quality_criteria = opt$criteria,
+  representative_criteria = opt$representative,
+  significance = opt$significance
+)
