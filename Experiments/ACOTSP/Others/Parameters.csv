@@ -1,0 +1,12 @@
+NAME;CONDITIONAL;TYPE
+algorithm;FALSE;c
+localsearch;FALSE;c
+alpha;FALSE;r
+beta;FALSE;r
+rho;FALSE;r
+ants;FALSE;i
+q0;TRUE;r
+rasrank;TRUE;i
+elitistants;TRUE;i
+nnls;TRUE;i
+dlb;TRUE;c

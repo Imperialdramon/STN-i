@@ -1,8 +1,27 @@
 #!/usr/bin/env Rscript
 
-# Import required libraries
+# ---------- Validate required packages ----------
+if (!requireNamespace("tools", quietly = TRUE)) {
+  stop("Error: The igraph package is not installed. Please install it with 'install.packages(\"igraph\")'", call. = FALSE)
+}
+if (!requireNamespace("irace", quietly = TRUE)) {
+  stop("Error: The irace package is not installed. Please install it with 'install.packages(\"irace\")'", call. = FALSE)
+}
+if (!requireNamespace("utils", quietly = TRUE)) {
+  stop("Error: The utils package is not installed. Please install it with 'install.packages(\"utils\")'", call. = FALSE)
+}
+if (!requireNamespace("optparse", quietly = TRUE)) {
+  stop("Error: The optparse package is not installed. Please install it with 'install.packages(\"optparse\")'", call. = FALSE)
+}
+
+# ---------- Load the required packages ----------
+library(tools)
+library(irace)
+library(utils)
 library(optparse)
-source("R/functions.R")
+
+# ---------- Load utility functions ----------
+source("R/utils.R")
 
 # Define command line options
 option_list <- list(
@@ -10,9 +29,13 @@ option_list <- list(
               type="character", 
               help="Directorio de entrada con los archivos .Rdata"),
 
+  make_option(c("-g", "--general_parameters"),
+              type="character",
+              help="Archivo CSV con los parámetros generales para proceso de datos"),
+
   make_option(c("-p", "--parameters"),
               type="character",
-              help="Archivo CSV con los parámetros"),
+              help="Directorio o archivo CSV con los parámetros de locaciones"),
 
   make_option(c("-o", "--output"),
               type="character",
@@ -51,7 +74,12 @@ option_list <- list(
   make_option(c("-r", "--representative"),
               type="character",
               default="mean",
-              help="Criterio para la configuración representativa ('min', 'max', 'mean', 'median', 'mode') [default= %default]")
+              help="Criterio para la configuración representativa ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
+
+  make_option(c("-v", "--verbose"),
+              type="logical",
+              default=FALSE,
+              help="Mostrar información detallada durante el procesamiento [default= %default]")
 )
 
 # Parse command line arguments
@@ -62,8 +90,11 @@ opt <- parse_args(opt_parser)
 if (is.null(opt$input)) {
   stop("El directorio de entrada es requerido (-i/--input)")
 }
+if (is.null(opt$general_parameters)) {
+  stop("El archivo de parámetros generales es requerido (-g/--general_parameters)")
+}
 if (is.null(opt$parameters)) {
-  stop("El archivo de parámetros es requerido (-p/--parameters)")
+  stop("El archivo o directorio de parámetros es requerido (-p/--parameters)")
 }
 if (is.null(opt$output)) {
   stop("El directorio de salida es requerido (-o/--output)")
@@ -75,10 +106,27 @@ if (!dir.exists(input_dir)) {
   stop(sprintf("El directorio de entrada no existe: %s", input_dir))
 }
 
-# Process parameters file
-parameters_file <- normalizePath(opt$parameters)
-if (!file.exists(parameters_file)) {
-  stop(sprintf("El archivo de parámetros no existe: %s", parameters_file))
+# Process general parameters file
+general_parameters_file <- normalizePath(opt$general_parameters)
+if (!file.exists(general_parameters_file)) {
+  stop(sprintf("El archivo de parámetros generales no existe: %s", general_parameters_file))
+}
+
+# Process parameters file or directory
+parameters_path <- normalizePath(opt$parameters)
+if (file.exists(parameters_path)) {
+  if (dir.exists(parameters_path)) {
+    # Es un directorio, obtener lista de archivos CSV
+    parameter_files <- list.files(parameters_path, pattern = "\\.csv$", full.names = TRUE)
+    if (length(parameter_files) == 0) {
+      stop(sprintf("No se encontraron archivos CSV en el directorio: %s", parameters_path))
+    }
+  } else {
+    # Es un archivo individual
+    parameter_files <- c(parameters_path)
+  }
+} else {
+  stop(sprintf("El archivo o directorio de parámetros no existe: %s", parameters_path))
 }
 
 # Create output directory if it doesn't exist
@@ -130,25 +178,48 @@ if (!(opt$representative %in% c("min", "max", "mean", "median", "mode"))) {
 # Create Results directory path
 results_dir <- file.path(dirname(input_dir), "Results")
 
-# First process Rdata files and create Results structure
-# cat("Procesando archivos Rdata y creando estructura Results...\n")
-# process_rdata_files(
-#   input_dir = input_dir,
-#   parameters_file = parameters_file,
-#   results_dir = results_dir,
-#   optimum_file = instances_file,
-#   best_criteria = opt$best,
-#   is_na_ranking = opt$na_ranking
-# )
-
-# Then generate STN-i file from processed Results
-cat("Generando archivo STN-i desde Results...\n")
-generate_stn_i(
-  input_dir = results_dir,
-  parameters_file = parameters_file,
-  output_dir = output_dir,
-  output_name = opt$name,
-  quality_criteria = opt$criteria,
-  representative_criteria = opt$representative,
-  significance = opt$significance
+# First process Rdata files and create Results structure using general parameters
+if (opt$verbose) cat("Procesando archivos Rdata y creando estructura Results usando parámetros generales...\n")
+process_rdata_files(
+  input_dir = input_dir,
+  parameters_file = general_parameters_file,
+  results_dir = results_dir,
+  optimum_file = instances_file,
+  best_criteria = opt$best,
+  is_na_ranking = opt$na_ranking,
+  verbose = opt$verbose
 )
+
+# Process each parameter file
+for (parameter_file in parameter_files) {
+  # Generate output name if not provided
+  if (is.null(opt$name)) {
+    file_basename <- tools::file_path_sans_ext(basename(parameter_file))
+    current_name <- sprintf("%s_%s.csv", basename(input_dir), file_basename)
+  } else {
+    # If name is provided and multiple files, add suffix
+    if (length(parameter_files) > 1) {
+      file_basename <- tools::file_path_sans_ext(basename(parameter_file))
+      base_name <- tools::file_path_sans_ext(opt$name)
+      ext <- tools::file_ext(opt$name)
+      current_name <- sprintf("%s-%s.%s", base_name, file_basename, ext)
+    } else {
+      current_name <- opt$name
+    }
+  }
+  
+  if (opt$verbose) cat(sprintf("\nProcesando archivo de parámetros: %s\n", basename(parameter_file)))
+  if (opt$verbose) cat(sprintf("Generando archivo STN-i: %s\n", current_name))
+  
+  # Generate STN-i file using current parameters
+  generate_stn_i(
+    input_dir = results_dir,
+    parameters_file = parameter_file,
+    output_dir = output_dir,
+    output_name = current_name,
+    quality_criteria = opt$criteria,
+    representative_criteria = opt$representative,
+    significance = opt$significance,
+    verbose = opt$verbose
+  )
+}
