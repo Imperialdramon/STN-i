@@ -1,4 +1,52 @@
-#!/usr/bin/env Rscript
+# nolint start
+
+#########################################################################
+# STN-i File Generation Script
+# Author: Pablo Estobar
+#
+# Description:
+# This script processes .Rdata files and parameters to generate STN-i files.
+# It allows processing of multiple parameter files, handles general and
+# location-specific parameters, and supports different criteria for evaluating
+# configuration quality and representativeness.
+#
+# Usage:
+# Rscript generate_STN-i_file.R --input=<input_dir> --general_parameters=<general_params_file> /
+#                               --parameters=<params_file_or_dir> --output=<output_dir> /
+#                               [--name=<output_name>] [--best=<min|max>] /
+#                               [--criteria=<min|max|mean|median|mode>] /
+#                               [--significance=<integer>] [--instances=<instances_file>] /
+#                               [--na_ranking=<TRUE|FALSE>] /
+#                               [--representative=<min|max|mean|median|mode>] /
+#                               [--verbose=<TRUE|FALSE>]
+#
+# Arguments:
+# --input              : (Required) Directory containing input .Rdata files
+# --general_parameters : (Required) CSV file with general parameters for data processing
+# --parameters         : (Required) Directory or CSV file with location parameters
+# --output            : (Required) Output directory for STN-i files
+# --name              : (Optional) Name of the output STN-i file
+# --best              : (Optional) Criterion for best value ('min' or 'max', default: 'min')
+# --criteria          : (Optional) Quality criterion ('min','max','mean','median','mode', default: 'mean')
+# --significance      : (Optional) Significance level for numerical parameters (default: 2)
+# --instances         : (Optional) CSV file with instance optimum values
+# --na_ranking        : (Optional) Consider NA as worst possible value in rankings (default: FALSE)
+# --representative    : (Optional) Criterion for representative configuration (default: 'mean')
+# --verbose           : (Optional) Show detailed processing information (default: FALSE)
+#
+# Requirements:
+# - R with the following packages installed:
+#     - tools
+#     - irace
+#     - utils
+#     - optparse
+#
+# Notes:
+# - Input files must be valid .Rdata files
+# - Parameter files must be in CSV format
+# - The script will create output directories if they don't exist
+# - Designed for command-line execution with named arguments
+#########################################################################
 
 # ---------- Validate required packages ----------
 if (!requireNamespace("tools", quietly = TRUE)) {
@@ -223,3 +271,5 @@ for (parameter_file in parameter_files) {
     verbose = opt$verbose
   )
 }
+
+# nolint end

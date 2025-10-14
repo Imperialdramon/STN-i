@@ -1125,13 +1125,25 @@ parse_arguments <- function(args) {
 #' \dontrun{
 #' stn_i_result <- stn_i_create("path/to/trace_file.txt", problem_type = "min", best_known_solution = 0.5, network_name = "My_STN_i")
 #' }
-stn_i_create <- function(input_file, problem_type = "min", best_known_solution = NA, number_of_runs = NA, separator = "", network_name = "STN_i") {
-  # Load the input file data
-  trace_all <- read.table(input_file, header=T, sep = separator, colClasses=c("integer", "logical", "numeric", "character", "character", "character", "character", "character", "integer", "numeric", "character", "character", "character", "character", "character", "integer"), stringsAsFactors = F)
+stn_i_create <- function(input_file, problem_type = "min", best_known_solution = NA, number_of_runs = NA, network_name = "STN_i") {
+  # Load the input file data with updated column structure
+  trace_all <- read.csv2(input_file, header = TRUE, stringsAsFactors = FALSE)
+
+  # Verify expected columns are present
+  expected_columns <- c(
+    "RUN_ID", "PATH",
+    "ITERATION_1", "SOLUTION_1", "QUALITY_1", "TYPE_1", "ORIGIN_IS_ELITE_1", "IS_ELITE_1",
+    "ITERATION_2", "SOLUTION_2", "QUALITY_2", "TYPE_2", "ORIGIN_IS_ELITE_2", "IS_ELITE_2"
+  )
+  
+  missing_columns <- setdiff(expected_columns, names(trace_all))
+  if (length(missing_columns) > 0) {
+    stop("Missing required columns in input file: ", paste(missing_columns, collapse = ", "), call. = FALSE)
+  }
 
   # Check if the number of runs is specified, if not, use the maximum run number in the data
   if (is.na(number_of_runs)) {
-    number_of_runs <- max(trace_all$Run, na.rm = TRUE)
+    number_of_runs <- max(trace_all$RUN_ID, na.rm = TRUE)
   } else {
     if (number_of_runs < 1) {
       stop("number_of_runs must be a positive integer.", call. = FALSE)
@@ -1139,20 +1151,19 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
   }
 
   # Filter the trace data to include only the specified number of runs
-  trace_all <- trace_all[trace_all$Run <= number_of_runs,]
+  trace_all <- trace_all[trace_all$RUN_ID <= number_of_runs,]
 
   # Initialize lists to store nodes and edges for each run
   lnodes <- vector("list", number_of_runs)
   ledges <- vector("list", number_of_runs)
 
   # Initialize a summary data frame for elite and type classifications
-  elite_values <- c("ELITE", "REGULAR")
-  type_values <- c("START", "STANDARD", "END")
+  elite_values <- c("TRUE", "FALSE")  # IS_ELITE values are boolean
+  type_values <- c("START", "STANDARD")  # Updated type values
   classification_summary <- expand.grid(
     Elite = elite_values,
     Type = type_values,
     Origin_Elite = elite_values,
-    Origin_Type = type_values,
     stringsAsFactors = FALSE
   )
 
@@ -1164,28 +1175,25 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
 
   # Combine all runs in a single network
   for (i in (1:number_of_runs)) {
-    # Take by run and remove first column run number
-    trace <- trace_all[which(trace_all$Run==i),c(-1)]
-    colnames(trace) <- c("path",
-                        "fit1", "node1", "elite1", "origin_elite1", "type1", "origin_type1", "iteration1",
-                        "fit2", "node2", "elite2", "origin_elite2", "type2", "origin_type2", "iteration2")
+    # Take by run
+    trace <- trace_all[which(trace_all$RUN_ID==i),]
 
     # Initialize lists to store nodes and edges for the current run
     lnodes_run <- list()
 
     for (j in 1:nrow(trace)) {
-      # Add only the right node (node2) to the location trend
-      # because it's to avoid over-representing the left node (node1) in the network
+      # Add only the second node to the location trend
+      # to avoid over-representing the first node in the network
       lnodes_run[[length(lnodes_run) + 1]] <- data.frame(
-        Node = trace$node2[j],
-        Fitness = trace$fit2[j],
-        Elite = trace$elite2[j],
-        Type = trace$type2[j],
+        Node = trace$SOLUTION_2[j],
+        Fitness = trace$QUALITY_2[j],
+        Elite = trace$IS_ELITE_2[j],
+        Type = trace$TYPE_2[j],
         stringsAsFactors = FALSE
       )
 
       # Search for the classification_summary
-      idx <- with(classification_summary, which(Elite == trace$elite2[j] & Type == trace$type2[j] & Origin_Elite == trace$origin_elite2[j] & Origin_Type == trace$origin_type2[j]))
+      idx <- with(classification_summary, which(Elite == trace$IS_ELITE_2[j] & Type == trace$TYPE_2[j] & Origin_Elite == trace$ORIGIN_IS_ELITE_2[j]))
       if (length(idx) == 1) {
         classification_summary$Count[idx] <- classification_summary$Count[idx] + 1
       }
@@ -1193,17 +1201,17 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
 
     # Remove self loops with path information
     lnodes[[i]] <- do.call(rbind, lnodes_run)
-    ledges[[i]] <- trace[trace$path == TRUE, c("node1", "node2")]
+    ledges[[i]] <- trace[trace$PATH == TRUE, c("SOLUTION_1", "SOLUTION_2")]
 
 
-    # Initalize a list to store survival rates for each configuration
-    max_iter <- max(trace$iteration2)
+    # Initialize a list to store survival rates for each configuration
+    max_iter <- max(trace$ITERATION_2)
     run_survival_rates <- numeric(max_iter)
 
     for (iter in 1:max_iter) {
-      iteration_rows <- trace[trace$iteration2 == iter, ]
+      iteration_rows <- trace[trace$ITERATION_2 == iter, ]
       total_iteration_nodes <- nrow(iteration_rows)
-      elite_iteration_nodes <- sum(iteration_rows$origin_elite2 == "ELITE")
+      elite_iteration_nodes <- sum(iteration_rows$ORIGIN_IS_ELITE_2 == TRUE)
       if (total_iteration_nodes == 0) {
         run_survival_rates[iter] <- NA
       } else {
@@ -1224,8 +1232,8 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
   nodesu <- nodes[!duplicated(nodes$Node), ]
 
   # Combine the list of edges into one dataframe and
-  # group by (node1, node2) to identify unique edges and count them
-  edges <- ddply(do.call("rbind", ledges), .(node1, node2), nrow)
+  # group by (SOLUTION_1, SOLUTION_2) to identify unique edges and count them
+  edges <- ddply(do.call("rbind", ledges), .(SOLUTION_1, SOLUTION_2), nrow)
   colnames(edges) <- c("Start", "End", "weight")
 
   # Create STN_i graph and remove self loops
@@ -1256,8 +1264,8 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
   V(STN_i)[end_ids]$Topology <- "END"
 
   # Obtain the quality ids (REGULAR, ELITE and BEST)
-  regular_ids <- which(V(STN_i)$Elite == "REGULAR")
-  elite_ids <- which(V(STN_i)$Elite == "ELITE")
+  regular_ids <- which(V(STN_i)$Elite == FALSE)
+  elite_ids <- which(V(STN_i)$Elite == TRUE)
   best_ids <- if (problem_type == "min") {
     which(fitness_vals <= best_known_solution)
   } else {
@@ -1300,7 +1308,6 @@ save_stn_i_data <- function(stn_i_result, output_file_path) {
   save(stn_i_result, file = output_file_path)
 
   cat("General STN-i summary:\n")
-
   cat("Problem Type:", stn_i_result$problem_type, "\n")
   cat("Number of Runs:", stn_i_result$number_of_runs, "\n")
   cat("Best Known Solution:", stn_i_result$best_known_solution, "\n")
@@ -2375,10 +2382,12 @@ get_stn_i_metrics <- function(stn_i_result) {
   # Compute initialization process metrics
   metrics$regular_start_nodes <- sum(V(STN_i)$Topology == "START" & V(STN_i)$Quality == "REGULAR")
   metrics$elite_start_nodes <- sum(V(STN_i)$Topology == "START" & V(STN_i)$Quality == "ELITE")
+  
+  # Compute start nodes rates
   start_nodes <- sum(classification_summary$Count[classification_summary$Type == "START"])
   if (start_nodes > 0) {
-    metrics$regular_start_configuration_rate <- sum(classification_summary$Count[classification_summary$Origin_Elite == "REGULAR" & classification_summary$Type == "START"]) / start_nodes
-    metrics$elite_start_configuration_rate <- sum(classification_summary$Count[classification_summary$Origin_Elite == "ELITE" & classification_summary$Type == "START"]) / start_nodes
+    metrics$regular_start_configuration_rate <- sum(classification_summary$Count[classification_summary$Elite == FALSE & classification_summary$Type == "START"]) / start_nodes
+    metrics$elite_start_configuration_rate <- sum(classification_summary$Count[classification_summary$Elite == TRUE & classification_summary$Type == "START"]) / start_nodes
   } else {
     metrics$regular_start_configuration_rate <- NA
     metrics$elite_start_configuration_rate <- NA
@@ -2386,8 +2395,8 @@ get_stn_i_metrics <- function(stn_i_result) {
 
   # Compute global configuration distribution metrics
   if (total_configurations > 0) {
-    metrics$regular_configuration_rate <- sum(classification_summary$Count[classification_summary$Origin_Elite == "REGULAR"]) / total_configurations
-    metrics$elite_configuration_rate <- sum(classification_summary$Count[classification_summary$Origin_Elite == "ELITE"]) / total_configurations
+    metrics$regular_configuration_rate <- sum(classification_summary$Count[classification_summary$Elite == FALSE]) / total_configurations
+    metrics$elite_configuration_rate <- sum(classification_summary$Count[classification_summary$Elite == TRUE]) / total_configurations
   } else {
     metrics$regular_configuration_rate <- NA
     metrics$elite_configuration_rate <- NA
