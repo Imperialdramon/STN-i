@@ -13,12 +13,12 @@
 # Usage:
 # Rscript generate_STN-i_data.R --input=<input_file> --output=<output_folder> /
 #                                [--output_file=<output_file_name>] /
+#                                [--verbose=<TRUE|FALSE>]
 # Arguments:
 # --input                : (Required) Path to the input file (.RData) containing STN-i data.
-#
 # --output               : (Required) Path to the output folder where the resulting metrics for STN-i object will be saved.
-#
 # --output_file          : (Optional)  Name of the output file (default: input file name without extension + "_metrics.csv").
+# --verbose              : (Optional) Whether to show detailed processing information (default: FALSE).
 #
 # Requirements:
 # - R with the following packages installed:
@@ -33,6 +33,9 @@
 # ---------- Validate required packages ----------
 if (!requireNamespace("igraph", quietly = TRUE)) {
   stop("Error: The igraph package is not installed. Please install it with 'install.packages(\"igraph\")'", call. = FALSE)
+}
+if (!requireNamespace("optparse", quietly = TRUE)) {
+  stop("Error: The optparse package is not installed. Please install it with 'install.packages(\"optparse\")'", call. = FALSE)
 }
 
 # ---------- Load the required packages ----------

@@ -17,6 +17,7 @@
 #                      [--size_factor=<value>] 
 #                      [--palette=<value>]
 #                      [--zoom_quantile=<value>]
+#                      [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
 # --input         : (Required) Path to the input file (.RData) containing the STN-i object.
@@ -40,6 +41,7 @@
 # --palette       : (Optional) Integer value (1–5) specifying a color palette for nodes and edges.
 #                   Each palette alters the visual distinction of node types (default: 1).
 # --zoom_quantile : (Optional) Numeric value between 0 and 1 to define a zoom level for the plot.
+# --verbose      : (Optional) Whether to show detailed processing information (default: FALSE).
 #
 # Requirements:
 # - R with the `igraph` package installed.
@@ -52,6 +54,9 @@
 # ---------- Validate required packages ----------
 if (!requireNamespace("igraph", quietly = TRUE)) {
   stop("Error: The igraph package is not installed. Please install it with 'install.packages(\"igraph\")'", call. = FALSE)
+}
+if (!requireNamespace("optparse", quietly = TRUE)) {
+  stop("Error: The optparse package is not installed. Please install it with 'install.packages(\"optparse\")'", call. = FALSE)
 }
 
 # ---------- Load the required packages ----------

@@ -1762,6 +1762,7 @@ get_stns_i_data <- function(input_folder) {
 #'   - `problem_type`: "min" or "max"
 #'   - `number_of_runs`: vector with number of runs per network
 #' @param criteria One of: "min", "max", "mean", "median", "mode" to resolve Fitness conflicts
+#' @param verbose Boolean indicating whether to print debug information (default is FALSE)
 #'
 #' @return A list with:
 #'   - `stnm`: the merged igraph object
@@ -1773,7 +1774,7 @@ get_stns_i_data <- function(input_folder) {
 #' \dontrun{
 #' merged_data <- merge_stns_i_data(stns_i_data, criteria = "mean")
 #' }
-merge_stns_i_data <- function(stns_i_data, criteria = "mean") {
+merge_stns_i_data <- function(stns_i_data, criteria = "mean", verbose = FALSE) {
 
   # Check if the criteria is valid
   if (!criteria %in% c("min", "max", "mean", "median", "mode")) {
@@ -1786,48 +1787,121 @@ merge_stns_i_data <- function(stns_i_data, criteria = "mean") {
   network_names <- stns_i_data$names
   problem_type <- stns_i_data$problem_type
 
-  # Collect all nodes
+  # Collect all nodes with debug information
   node_df_list <- list()
   for (i in seq_along(snts_i)) {
     g <- snts_i[[i]]
+    
+    # Debug information
+    if (verbose) {
+      cat(sprintf("\nProcessing network %d/%d:\n", i, length(snts_i)))
+      cat(sprintf("Number of nodes: %d\n", vcount(g)))
+    }
+    
+    # Extract and validate vertex attributes
+    node_names <- V(g)$name
+    node_fitness <- V(g)$Fitness
+    node_topology <- V(g)$Topology
+    node_count <- V(g)$Count
+    node_quality <- V(g)$Quality
+    node_network <- V(g)$Network
+    
+    # Debug attribute information
+    if (verbose) {
+      cat("Sample of Fitness values:", head(node_fitness), "\n")
+      cat("Number of NA in Fitness:", sum(is.na(node_fitness)), "\n")
+    }
+    
+    # Create data frame with explicit type conversion
     node_df <- data.frame(
-      Node = V(g)$name,
-      Fitness = V(g)$Fitness,
-      Topology = V(g)$Topology,
-      Count = V(g)$Count,
-      Quality = V(g)$Quality,
-      Network = V(g)$Network,
+      Node = as.character(node_names),
+      Fitness = as.numeric(node_fitness),
+      Topology = as.character(node_topology),
+      Count = as.numeric(node_count),
+      Quality = as.character(node_quality),
+      Network = as.character(node_network),
       stringsAsFactors = FALSE
     )
     node_df$graph_id <- i
+
+    if (verbose) {
+      cat("Structure of node_df:\n")
+      str(node_df)
+    }
+
     node_df_list[[i]] <- node_df
   }
   nodes_all <- bind_rows(node_df_list)
+  
+  if (verbose) {
+    cat("\nCompleted processing all networks.\n")
 
-  # Merge nodes
+    # Debug combined data
+    cat("\nAfter combining all networks:\n")
+    cat("Total number of nodes:", nrow(nodes_all), "\n")
+    cat("Number of NA in combined Fitness:", sum(is.na(nodes_all$Fitness)), "\n")
+
+    # Debug before merge
+    cat("\nBefore merging nodes:\n")
+    cat("Unique nodes:", length(unique(nodes_all$Node)), "\n")
+    cat("Range of Fitness values:", range(nodes_all$Fitness, na.rm = TRUE), "\n")
+  }
+  
+  # Merge nodes with more detailed error handling
   merged_nodes <- nodes_all %>%
     group_by(Node) %>%
     summarise(
       Fitness = {
         vals <- Fitness[!is.na(Fitness)]
-        if (length(vals) == 0) NA else switch(criteria,
-          "min" = min(vals),
-          "max" = max(vals),
-          "mean" = mean(vals),
-          "median" = median(vals),
-          "mode" = as.numeric(names(sort(table(vals), decreasing = TRUE)[1]))
-        )
+        if (length(vals) == 0) {
+          warning(sprintf("No valid Fitness values for node %s", first(Node)))
+          NA 
+        } else {
+          result <- switch(criteria,
+            "min" = min(vals),
+            "max" = max(vals),
+            "mean" = mean(vals),
+            "median" = median(vals),
+            "mode" = as.numeric(names(sort(table(vals), decreasing = TRUE)[1]))
+          )
+          if (is.na(result)) {
+            warning(sprintf("Calculation resulted in NA for node %s with values: %s", 
+                          first(Node), paste(vals, collapse=", ")))
+          }
+          result
+        }
       },
       Topology = {
         types <- unique(na.omit(Topology[Topology != ""]))
-        if ("END" %in% types) "END" else if ("START" %in% types) "START" else "STANDARD"
+        if (length(types) == 0) {
+          warning(sprintf("No valid Topology for node %s", first(Node)))
+          "STANDARD"
+        } else if ("END" %in% types) "END" 
+        else if ("START" %in% types) "START" 
+        else "STANDARD"
       },
       Count = sum(Count, na.rm = TRUE),
-      Quality = paste(Quality[!is.na(Quality) & Quality != ""], collapse = ""),
-      Network = paste(Network[!is.na(Network) & Network != ""], collapse = ""),
+      Quality = {
+        qual <- paste(Quality[!is.na(Quality) & Quality != ""], collapse = "")
+        if (qual == "") warning(sprintf("Empty Quality for node %s", first(Node)))
+        qual
+      },
+      Network = {
+        net <- paste(Network[!is.na(Network) & Network != ""], collapse = "")
+        if (net == "") warning(sprintf("Empty Network for node %s", first(Node)))
+        net
+      },
       n_networks = n(),
       .groups = "drop"
     )
+    
+  # Debug after merge
+  if (verbose) {
+    cat("\nAfter merging nodes:\n")
+    cat("Number of merged nodes:", nrow(merged_nodes), "\n")
+    cat("Number of NA in merged Fitness:", sum(is.na(merged_nodes$Fitness)), "\n")
+    cat("Range of merged Fitness values:", range(merged_nodes$Fitness, na.rm = TRUE), "\n")
+  }
 
   merged_nodes$Shared <- merged_nodes$n_networks > 1
   merged_nodes$Category <- mapply(function(q, shared) {
@@ -1913,6 +1987,7 @@ merge_stns_i_data <- function(stns_i_data, criteria = "mean") {
 #' 
 #'  @param merged_stn_i_data A list containing the merged STN-i data, typically returned by `merge_stns_i_data()`.
 #'  @param output_file_path A string specifying the path to the output file where the merged data will be saved.
+#'  @param verbose A boolean indicating whether to print summary metrics before saving (default is FALSE).
 #' 
 #'  @return NULL
 #' 
@@ -1920,7 +1995,7 @@ merge_stns_i_data <- function(stns_i_data, criteria = "mean") {
 #' \dontrun{
 #' save_merged_stn_i_data(merged_STN_i, "path/to/output.RData")
 #' }
-save_merged_stn_i_data <- function(merged_stn_i_data, output_file_path) {
+save_merged_stn_i_data <- function(merged_stn_i_data, output_file_path, verbose = FALSE) {
   # Ensure the file name ends in .RData
   if (!grepl("\\.RData$", output_file_path)) {
     output_file_path <- paste0(output_file_path, ".RData")
@@ -1928,15 +2003,17 @@ save_merged_stn_i_data <- function(merged_stn_i_data, output_file_path) {
 
   # Print summary metrics before saving
   g <- merged_stn_i_data$merged_STN_i
-  cat("\nSaving merged STN-i with summary metrics:\n")
-  cat(" - Total nodes:", vcount(g), "\n")
-  cat(" - Total edges:", ecount(g), "\n")
-  cat(" - Shared nodes:", sum(V(g)$Shared), "\n")
-  cat(" - shared-elite:", sum(V(g)$Category == "shared-elite"), "\n")
-  cat(" - shared-regular:", sum(V(g)$Category == "shared-regular"), "\n")
-  cat(" - shared-mixed:", sum(V(g)$Category == "shared-mixed"), "\n")
-  cat(" - network-elite:", sum(V(g)$Category == "network-elite"), "\n")
-  cat(" - network-regular:", sum(V(g)$Category == "network-regular"), "\n")
+  if (verbose) {
+    cat("\nSaving merged STN-i with summary metrics:\n")
+    cat(" - Total nodes:", vcount(g), "\n")
+    cat(" - Total edges:", ecount(g), "\n")
+    cat(" - Shared nodes:", sum(V(g)$Shared), "\n")
+    cat(" - shared-elite:", sum(V(g)$Category == "shared-elite"), "\n")
+    cat(" - shared-regular:", sum(V(g)$Category == "shared-regular"), "\n")
+    cat(" - shared-mixed:", sum(V(g)$Category == "shared-mixed"), "\n")
+    cat(" - network-elite:", sum(V(g)$Category == "network-elite"), "\n")
+    cat(" - network-regular:", sum(V(g)$Category == "network-regular"), "\n")
+  }
 
   save(merged_stn_i_data, file = output_file_path)
   message(paste("Merged STN-i data saved to:", output_file_path))
