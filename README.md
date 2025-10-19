@@ -348,7 +348,4 @@ The script will:
 ### `run_all_generate_STN-i_Rdata.sh`
 Creates RData objects for all STN-i files in the specified algorithm folders.
 
-### `run_all_metrics_STN-i.sh`
-Calculates metrics for all STN-i RData files in the specified algorithm folders.
-
 These scripts should be run from the repository root and require proper folder structure as shown in the Project Structure section.
