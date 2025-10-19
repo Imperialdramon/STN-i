@@ -2795,4 +2795,152 @@ save_merged_stn_i_metrics <- function(merged_stn_i_metrics, output_file_path) {
   message(paste("Merged STN-i metrics saved to:", output_file_path))
 }
 
+#' Process elite configurations from multiple irace runs
+#' 
+#' This function processes multiple .Rdata files from irace runs and extracts
+#' unique elite configurations, creating a mapping between runs and configurations.
+#' 
+#' @param runs_data A list of irace run data, each containing elites information
+#' @param parameters The parameters data frame from irace
+#' 
+#' @return A list containing:
+#'   - unique_elites: Data frame of unique elite configurations with parameter values
+#'   - runs_mapping: Data frame mapping run information to configurations
+#'
+#' @keywords internal
+process_elite_configurations <- function(runs_data, parameters) {
+    unique_elites <- data.frame()
+    runs_mapping <- data.frame(
+        RUN_ID = integer(),
+        RUN_NAME = character(),
+        CONFIG_ID = integer(),
+        CONFIG_POS = integer()
+    )
+    
+    config_counter <- 1
+    
+    # Process each run
+    for (run_id in seq_along(runs_data)) {
+        run_data <- runs_data[[run_id]]
+        run_name <- names(runs_data)[run_id]
+        
+        # Get elite configurations from this run
+        elites <- get_run_elites(run_data)
+        
+        # Process each elite configuration
+        for (i in seq_along(elites)) {
+            elite_config <- elites[[i]]
+            
+            # Convert configuration to parameter values
+            param_values <- get_parameter_values(elite_config, parameters)
+            
+            # Check if this configuration already exists
+            existing_pos <- find_matching_configuration(param_values, unique_elites)
+            
+            if (is.na(existing_pos)) {
+                # New unique configuration
+                unique_elites <- rbind(unique_elites, param_values)
+                config_pos <- nrow(unique_elites)
+            } else {
+                # Configuration already exists
+                config_pos <- existing_pos
+            }
+            
+            # Add mapping entry
+            runs_mapping <- rbind(runs_mapping, data.frame(
+                RUN_ID = run_id,
+                RUN_NAME = run_name,
+                CONFIG_ID = elite_config$id,
+                CONFIG_POS = config_pos
+            ))
+        }
+    }
+    
+    return(list(
+        unique_elites = unique_elites,
+        runs_mapping = runs_mapping
+    ))
+}
+
+#' Get elite configurations from a single irace run
+#' 
+#' This function extracts all elite configurations from an irace run.
+#' 
+#' @param run_data The irace run data loaded from a .Rdata file
+#' 
+#' @return A list of configurations with their IDs
+#'
+#' @keywords internal
+get_run_elites <- function(run_data) {
+    # Initialize empty list for elite configurations
+    elites <- list()
+    elite_ids <- c()
+    
+    # Extract elite IDs from all iterations
+    if (!is.null(run_data$allElites)) {
+        for (iter in seq_along(run_data$allElites)) {
+            elite_ids <- c(elite_ids, run_data$allElites[[iter]])
+        }
+        # Remove duplicates
+        elite_ids <- unique(elite_ids)
+        
+        # Get configurations for each elite ID
+        for (id in elite_ids) {
+            # Find configuration in allConfigurations
+            config_row <- run_data$allConfigurations[run_data$allConfigurations$.ID. == id, ]
+            if (nrow(config_row) > 0) {
+                elites[[length(elites) + 1]] <- list(
+                    id = id,
+                    values = config_row
+                )
+            }
+        }
+    }
+    
+    return(elites)
+}
+
+#' Extract parameter values from a configuration
+#' 
+#' This function extracts parameter values from a configuration in the format
+#' required for the output file.
+#' 
+#' @param config The configuration object from irace containing values data frame
+#' @param parameters The parameters data frame from irace
+#' 
+#' @return A data frame row with parameter values
+#'
+#' @keywords internal
+get_parameter_values <- function(config, parameters) {
+    # Get parameter names excluding special columns from irace
+    param_names <- setdiff(names(config$values), c(".ID.", ".PARENT."))
+    
+    # Extract values for each parameter
+    values <- config$values[param_names]
+    values_df <- as.data.frame(values, stringsAsFactors = FALSE)
+    
+    return(values_df)
+}
+
+#' Find matching configuration in existing set
+#' 
+#' This function checks if a configuration already exists in the set of unique configurations.
+#' 
+#' @param config The configuration to check
+#' @param existing_configs Data frame of existing configurations
+#' 
+#' @return Position of matching configuration or NA if not found
+#'
+#' @keywords internal
+find_matching_configuration <- function(config, existing_configs) {
+    if (nrow(existing_configs) == 0) return(NA)
+    
+    for (i in 1:nrow(existing_configs)) {
+        if (all(config == existing_configs[i,])) {
+            return(i)
+        }
+    }
+    return(NA)
+}
+
 # nolint end

@@ -43,6 +43,28 @@ STN-i/
 
 ### Data Generation Scripts
 
+#### `get_elites.R`
+Extracts and processes elite configurations from multiple irace executions.
+
+```bash
+Rscript R/get_elites.R \
+  --directories=<dir1,dir2,...> \
+  --output=<output_dir> \
+  --name=<output_name> \
+  [--verbose=TRUE|FALSE]
+```
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -d    | --directories | Comma-separated list of directories containing .Rdata files | - | Yes |
+| -o    | --output | Directory where output files will be saved | - | Yes |
+| -n    | --name | Base name for output files | - | Yes |
+| -v    | --verbose | Show detailed processing information | FALSE | No |
+
+The script generates two output files:
+1. `<name>_configs.txt`: Tab-separated file containing unique elite configurations
+2. `<name>_mapping.csv`: CSV file mapping runs to configurations
+
 #### `generate_STN-i_file.R`
 Generates STN-i files from irace execution data.
 
