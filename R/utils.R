@@ -1295,6 +1295,7 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
 #'
 #' @param stn_i_result The result of the STN_i-i analysis, typically an object containing the STN_i graph and related data.
 #' @param output_file_path A string specifying the path to the output folder where the RData file will be saved.
+#' @param verbose A logical value indicating whether to print detailed information during the saving process. Default is FALSE.
 #'
 #' @return None. The function writes the file to disk.
 #'
@@ -1302,33 +1303,35 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
 #' \dontrun{
 #' save_stn_i_data(stn_i_result, "output/", "custom_name.RData")
 #' }
-save_stn_i_data <- function(stn_i_result, output_file_path) {
+save_stn_i_data <- function(stn_i_result, output_file_path, verbose = FALSE) {
 
   # Save the STN-i result as an RData file
   save(stn_i_result, file = output_file_path)
 
-  cat("General STN-i summary:\n")
-  cat("Problem Type:", stn_i_result$problem_type, "\n")
-  cat("Number of Runs:", stn_i_result$number_of_runs, "\n")
-  cat("Best Known Solution:", stn_i_result$best_known_solution, "\n")
-  cat("Number of Nodes:", vcount(stn_i_result$STN_i), "\n")
-  cat("Number of Edges:", ecount(stn_i_result$STN_i), "\n")
-  cat("Number of Elite Nodes:", sum(V(stn_i_result$STN_i)$Quality == "ELITE"), "\n")
-  cat("Number of Regular Nodes:", sum(V(stn_i_result$STN_i)$Quality == "REGULAR"), "\n")
-  cat("Number of Best Nodes:", sum(V(stn_i_result$STN_i)$Quality == "BEST"), "\n")
+  if (verbose) {
+    cat("General STN-i summary:\n")
+    cat("Problem Type:", stn_i_result$problem_type, "\n")
+    cat("Number of Runs:", stn_i_result$number_of_runs, "\n")
+    cat("Best Known Solution:", stn_i_result$best_known_solution, "\n")
+    cat("Number of Nodes:", vcount(stn_i_result$STN_i), "\n")
+    cat("Number of Edges:", ecount(stn_i_result$STN_i), "\n")
+    cat("Number of Elite Nodes:", sum(V(stn_i_result$STN_i)$Quality == "ELITE"), "\n")
+    cat("Number of Regular Nodes:", sum(V(stn_i_result$STN_i)$Quality == "REGULAR"), "\n")
+    cat("Number of Best Nodes:", sum(V(stn_i_result$STN_i)$Quality == "BEST"), "\n")
 
-  # Print the classification summary
-  cat("\nClassification Summary:\n")
-  print(stn_i_result$classification_summary)
+    # Print the classification summary
+    cat("\nClassification Summary:\n")
+    print(stn_i_result$classification_summary)
 
-  # Print the survival rates for each configuration
-  cat("\nConfigurations Survival Rates:\n")
-  for (i in seq_along(stn_i_result$configurations_survival_rates)) {
-    cat(paste("Run", i, ":", paste(stn_i_result$configurations_survival_rates[[i]], collapse = ", "), "\n"))
+    # Print the survival rates for each configuration
+    cat("\nConfigurations Survival Rates:\n")
+    for (i in seq_along(stn_i_result$configurations_survival_rates)) {
+      cat(paste("Run", i, ":", paste(stn_i_result$configurations_survival_rates[[i]], collapse = ", "), "\n"))
+    }
+
+    # Print a message indicating where the file was saved
+    message(paste("STN-i data saved to:", output_file_path))
   }
-
-  # Print a message indicating where the file was saved
-  message(paste("STN-i data saved to:", output_file_path))
 }
 
 #' Load STN-i data from a file

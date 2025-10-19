@@ -1,0 +1,18 @@
+EXPERIMENT_ID;INSTANCE_ID;SEED;NAME;OPTIMUM
+1;18;1112721275;--competition 3 --problem 17 --dimensions 30;0.47434198629815
+2;44;1678366140;--competition 3 --problem 43 --dimensions 30;809.224949847411
+3;20;25598670;--competition 3 --problem 19 --dimensions 30;38.8262439792608
+4;16;2051423763;--competition 3 --problem 15 --dimensions 30;13.9211049906887
+5;43;1854959318;--competition 3 --problem 42 --dimensions 30;196.479705530363
+6;48;533909377;--competition 3 --problem 47 --dimensions 30;856.385034976123
+7;41;309565161;--competition 3 --problem 40 --dimensions 30;349.51563600863
+8;11;1638308389;--competition 3 --problem 10 --dimensions 30;20.8841420261492
+9;49;315088125;--competition 3 --problem 48 --dimensions 30;534.367133830453
+10;35;1666179331;--competition 3 --problem 34 --dimensions 30;6806.64081196766
+11;5;1655063989;--competition 3 --problem 4 --dimensions 30;0.215654563298031
+12;4;178162096;--competition 3 --problem 3 --dimensions 30;32.9808500420154
+13;12;1708866624;--competition 3 --problem 11 --dimensions 30;46.4635802489204
+14;2;2036787240;--competition 3 --problem 1 --dimensions 30;593951.784457862
+15;3;630320445;--competition 3 --problem 2 --dimensions 30;466829.094081022
+16;31;2002818653;--competition 3 --problem 30 --dimensions 30;12.1225871898022
+17;38;824900240;--competition 3 --problem 37 --dimensions 30;49993.4460265801

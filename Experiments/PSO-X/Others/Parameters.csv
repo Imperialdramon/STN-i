@@ -1,0 +1,9 @@
+NAME;CONDITIONAL;TYPE
+particles;FALSE;i
+topology;FALSE;c
+modInfluence;FALSE;c
+branching;TRUE;i
+tSchedule;TRUE;i
+phi1;FALSE;r
+phi2;FALSE;r
+inertia;FALSE;r

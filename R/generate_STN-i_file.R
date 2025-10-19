@@ -272,4 +272,11 @@ for (parameter_file in parameter_files) {
   )
 }
 
+#  ---------- Clean up ----------
+
+# Clear the workspace and garbage collection
+rm(list = ls())
+gc()
+quit(save = "no")
+
 # nolint end

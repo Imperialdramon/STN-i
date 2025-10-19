@@ -1,0 +1,1 @@
+# Obtener élites de todos los Rdata de diferentes carpetas en un único archivo con el formato de irace es decir tabulados

@@ -1,0 +1,1 @@
+# Debe generar los diferentes archivos sobre las élites obtenidas en las diferentes ejecuciones, manteniendo el formato de Results correspondientes donde las trayectorias contengan únicamente las élites obtenidas en cada ejecución.

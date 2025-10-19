@@ -194,7 +194,11 @@ output_file_path <- file.path(output_folder, output_file_name)
 if (opt$verbose) cat(sprintf("Saving STN-i to %s...\n", output_file_path))
 
 # Save the STN-i result to the specified output file
-save_stn_i_data(stn_i_result = stn_i_result, output_file_path = output_file_path)
+save_stn_i_data(
+  stn_i_result = stn_i_result,
+  output_file_path = output_file_path,
+  verbose = opt$verbose
+)
 
 if (opt$verbose) cat("Done.\n")
 

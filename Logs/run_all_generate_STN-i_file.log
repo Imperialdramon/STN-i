@@ -1,0 +1,20 @@
+=== STN-i data generation started at Sat Oct 18 20:07:43 -03 2025 ===
+=== Processing algorithm: ACOTSP ===
+>> Generating: 
+✅ Success: Generated 
+>> Generating: 
+✅ Success: Generated 
+>> Generating: 
+✅ Success: Generated 
+>> Generating: 
+✅ Success: Generated 
+=== Processing algorithm: PSO-X ===
+>> Generating: 
+✅ Success: Generated 
+>> Generating: 
+✅ Success: Generated 
+>> Generating: 
+✅ Success: Generated 
+>> Generating: 
+✅ Success: Generated 
+=== STN-i files generation finished at Sat Oct 18 20:23:52 -03 2025 ===
