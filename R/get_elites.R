@@ -12,7 +12,9 @@
 #
 # Usage:
 # Rscript get_elites.R --directories=<dir1,dir2,...> --output=<output_dir> /
-#                      --name=<output_name> [--verbose=<TRUE|FALSE>]
+#                      --name=<output_name> /
+#                      --parameters=<parameters_file> /
+#                      [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
 # --directories        : (Required) Comma-separated list of directories containing .Rdata files
@@ -59,6 +61,10 @@ option_list <- list(
                 type = "character",
                 help = "Base name for output files"),
     
+    make_option(c("-p", "--parameters"),
+                type = "character",
+                help = "Path to parameters CSV file"),
+    
     make_option(c("-v", "--verbose"),
                 type = "logical",
                 default = FALSE,
@@ -79,11 +85,20 @@ if (is.null(opt$output)) {
 if (is.null(opt$name)) {
     stop("Output name is required (-n/--name)")
 }
+if (is.null(opt$parameters)) {
+    stop("Parameters file is required (-p/--parameters)")
+}
 
 # Process paths
 directories <- strsplit(opt$directories, ",")[[1]]
 directories <- normalizePath(directories, mustWork = TRUE)
 output_dir <- normalizePath(opt$output, mustWork = FALSE)
+parameters_file <- normalizePath(opt$parameters, mustWork = TRUE)
+
+# Read parameters
+parameters <- read.csv(parameters_file, header = TRUE, stringsAsFactors = FALSE, sep = ";")
+parameters$NAME <- trimws(parameters$NAME)
+parameters$TYPE <- trimws(parameters$TYPE)
 
 # Create output directory if needed
 if (!dir.exists(output_dir)) {
@@ -119,11 +134,11 @@ for (dir in directories) {
 
 if (opt$verbose) cat("Processing elite configurations...\n")
 
-# Get parameters structure from first run
-parameters <- runs_data[[1]]$parameters
-
 # Process elite configurations
-result <- process_elite_configurations(runs_data, parameters)
+result <- process_elite_configurations(
+    runs_data,
+    parameters
+)
 
 if (opt$verbose) cat("Writing output files...\n")
 

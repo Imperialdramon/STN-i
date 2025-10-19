@@ -2809,6 +2809,9 @@ save_merged_stn_i_metrics <- function(merged_stn_i_metrics, output_file_path) {
 #'
 #' @keywords internal
 process_elite_configurations <- function(runs_data, parameters) {
+    param_names <- parameters$NAME
+    param_types <- setNames(parameters$TYPE, parameters$NAME)
+    
     unique_elites <- data.frame()
     runs_mapping <- data.frame(
         RUN_ID = integer(),
@@ -2914,11 +2917,27 @@ get_run_elites <- function(run_data) {
 get_parameter_values <- function(config, parameters) {
     # Get parameter names excluding special columns from irace
     param_names <- setdiff(names(config$values), c(".ID.", ".PARENT."))
+    param_types <- setNames(parameters$TYPE, parameters$NAME)
     
     # Extract values for each parameter
-    values <- config$values[param_names]
-    values_df <- as.data.frame(values, stringsAsFactors = FALSE)
+    param_values <- sapply(param_names, function(pname) {
+        value <- config$values[[pname]]
+        if (is.na(value)) {
+            return(NA)
+        }
+        type <- param_types[[pname]]
+        if (type %in% c("c", "o", "cat", "ord")) {
+            return(paste0('"', as.character(value), '"'))
+        } else if (type %in% c("i", "int", "i,log")) {
+            return(as.character(as.integer(value)))
+        } else if (type %in% c("r", "real", "r,log")) {
+            return(as.character(as.numeric(value)))
+        } else {
+            return(as.character(value))
+        }
+    })
     
+    values_df <- as.data.frame(t(param_values), stringsAsFactors = FALSE)
     return(values_df)
 }
 
