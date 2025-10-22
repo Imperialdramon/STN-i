@@ -83,6 +83,60 @@ Rscript R/generate_STN-i_file.R \
 | -p    | --problem_type | Optimization type (min/max)                 | min     | No       |
 | -v    | --verbose      | Show detailed processing information        | FALSE   | No       |
 
+#### `generate_elite_STN-i_file.R`
+Processes elite configurations from irace testing results and generates STN-i files for each scenario. This script filters testing data to include only elite configurations from each run.
+
+```bash
+Rscript R/generate_elite_STN-i_file.R \
+  --elites_dir=<elites_dir> \
+  --directories=<dir1,dir2,...> \
+  --output=<output_dir> \
+  --parameters=<params_file> \
+  [--best=<min|max>] \
+  [--na_ranking=TRUE|FALSE] \
+  [--verbose=TRUE|FALSE]
+```
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -e    | --elites_dir  | Directory containing elite data (irace.Rdata with testing results) | - | Yes |
+| -d    | --directories | Comma-separated list of scenario directories with .Rdata files | - | Yes |
+| -o    | --output      | Output directory for elite STN-i files | - | Yes |
+| -p    | --parameters  | CSV file with parameters definition | - | Yes |
+| -b    | --best        | Criterion for best value ('min' or 'max') | min | No |
+| -n    | --na_ranking  | Consider NA as worst value in rankings | FALSE | No |
+| -v    | --verbose     | Show detailed processing information | FALSE | No |
+
+The script generates four files per run:
+1. `configurations.csv`: Elite configurations with parameter values
+2. `instances.csv`: Testing instances with seeds and optimal values
+3. `results.csv`: Performance metrics for elite configurations
+4. `trajectories.csv`: Evolution paths between elite configurations
+
+**Usage Examples:**
+
+ACOTSP case:
+```bash
+Rscript R/generate_elite_STN-i_file.R \
+  -e "Experiments/ACOTSP/Individuals-Elites/General-Data" \
+  -d "Experiments/ACOTSP/Individuals/BH/Data,Experiments/ACOTSP/Individuals/BH-90/Data,Experiments/ACOTSP/Individuals/BL/Data,Experiments/ACOTSP/Individuals/BL-45/Data" \
+  -o "Experiments/ACOTSP/Individuals-Elites" \
+  -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -b "min" \
+  -v FALSE
+```
+
+PSO-X case:
+```bash
+Rscript R/generate_elite_STN-i_file.R \
+  -e "Experiments/PSO-X/Individuals-Elites/General-Data" \
+  -d "Experiments/PSO-X/Individuals/BH/Data,Experiments/PSO-X/Individuals/BH-65/Data,Experiments/PSO-X/Individuals/BL/Data,Experiments/PSO-X/Individuals/BL-32/Data" \
+  -o "Experiments/PSO-X/Individuals-Elites" \
+  -p "Experiments/PSO-X/Others/Parameters.csv" \
+  -b "min" \
+  -v FALSE
+```
+
 #### `generate_STN-i_Rdata.R`
 Creates R data objects from STN-i files.
 

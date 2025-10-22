@@ -2962,4 +2962,176 @@ find_matching_configuration <- function(config, existing_configs) {
     return(NA)
 }
 
+#' Create configurations file for elite configurations only
+#' 
+#' This function creates a configurations file containing only elite configurations
+#' from an irace run.
+#' 
+#' @param allConfigurations The allConfigurations data frame from iraceResults
+#' @param elite_ids Vector of elite configuration IDs
+#' @param parameters The parameters data frame
+#' @param output_file Path to save the configurations CSV file
+#' 
+#' @return Data frame with elite configurations
+#' 
+#' @export
+create_elite_configurations_file <- function(allConfigurations, elite_ids, parameters, output_file) {
+  param_names <- intersect(parameters$NAME, colnames(allConfigurations))
+  param_types <- setNames(parameters$TYPE, parameters$NAME)
+  
+  config_list <- lapply(elite_ids, function(id) {
+    param_row <- allConfigurations[allConfigurations$.ID. == as.integer(id), , drop = FALSE]
+    
+    if (nrow(param_row) == 0) {
+      return(NULL)
+    }
+    
+    param_values <- sapply(param_names, function(pname) {
+      if (!(pname %in% colnames(param_row)) || is.na(param_row[[pname]])) {
+        return(NA)
+      }
+      value <- param_row[[pname]]
+      type <- param_types[[pname]]
+      if (type %in% c("c", "o", "cat", "ord")) {
+        return(as.character(value))
+      } else if (type %in% c("i", "int", "i,log")) {
+        return(as.character(as.integer(value)))
+      } else if (type %in% c("r", "real", "r,log")) {
+        return(as.character(as.numeric(value)))
+      } else {
+        return(as.character(value))
+      }
+    })
+    
+    c(
+      CONFIG_ID = as.character(id),
+      IS_ELITE = "TRUE",  # All configs in this file are elite
+      param_values
+    )
+  })
+  
+  # Remove NULL entries
+  config_list <- config_list[!sapply(config_list, is.null)]
+  
+  if (length(config_list) == 0) {
+    config_df <- data.frame()
+  } else {
+    config_df <- as.data.frame(do.call(rbind, config_list), stringsAsFactors = FALSE)
+  }
+  
+  write.table(config_df, file = output_file, sep = ";", row.names = FALSE, quote = FALSE)
+  return(config_df)
+}
+
+#' Create trajectories file for elite configurations only
+#' 
+#' This function creates a trajectories file that captures only the paths
+#' between elite configurations across iterations.
+#' 
+#' @param iraceResults The irace results from read_logfile
+#' @param elite_ids Vector of elite configuration IDs
+#' @param output_file Path to save the trajectories CSV file
+#' 
+#' @return Data frame with elite trajectories
+#' 
+#' @export
+create_elite_trajectories_file <- function(iraceResults, elite_ids, output_file) {
+  # Initialize data frame for trajectories
+  trajectories <- data.frame(
+    PATH = logical(),
+    ORIGIN_ITER = integer(),
+    ORIGIN_CONFIG_ID = character(),
+    DESTINY_ITER = integer(),
+    DESTINY_CONFIG_ID = character(),
+    stringsAsFactors = FALSE
+  )
+  
+  # Get number of iterations
+  iterations <- length(iraceResults$allElites)
+  raceData <- iraceResults$raceData
+  
+  # Create a set for quick lookup
+  elite_set <- as.character(elite_ids)
+  
+  # Track which elite configs appear in which iterations
+  elite_by_iteration <- list()
+  for (iter in 1:iterations) {
+    if (!is.null(raceData[[iter]])) {
+      iter_configs <- rownames(raceData[[iter]])
+      elite_by_iteration[[iter]] <- intersect(iter_configs, elite_set)
+    } else {
+      elite_by_iteration[[iter]] <- character(0)
+    }
+  }
+  
+  # Process each iteration
+  for (iter in 1:iterations) {
+    configs <- raceData[[iter]]
+    if (is.null(configs) || nrow(configs) == 0) next
+    
+    # Process only elite configurations
+    for (id_str in elite_by_iteration[[iter]]) {
+      config_id <- as.integer(id_str)
+      config <- configs[as.character(config_id), , drop = FALSE]
+      
+      if (iter == 1) {
+        # First iteration: elite configs connect to themselves with PATH = FALSE
+        trajectories <- rbind(trajectories, data.frame(
+          PATH = FALSE,
+          ORIGIN_ITER = 1,
+          ORIGIN_CONFIG_ID = id_str,
+          DESTINY_ITER = 1,
+          DESTINY_CONFIG_ID = id_str,
+          stringsAsFactors = FALSE
+        ))
+      } else {
+        parent_id <- as.character(config$.PARENT.)
+        
+        # Check if parent is also elite
+        is_parent_elite <- parent_id %in% elite_set
+        
+        if (!is.na(parent_id) && is_parent_elite && parent_id %in% elite_by_iteration[[iter-1]]) {
+          # Parent is elite and was in previous iteration
+          trajectories <- rbind(trajectories, data.frame(
+            PATH = TRUE,
+            ORIGIN_ITER = iter - 1,
+            ORIGIN_CONFIG_ID = parent_id,
+            DESTINY_ITER = iter,
+            DESTINY_CONFIG_ID = id_str,
+            stringsAsFactors = FALSE
+          ))
+        } else {
+          # No elite parent connection, check if it survived from previous iteration
+          if (id_str %in% elite_by_iteration[[iter-1]]) {
+            # It survived, connect to itself
+            trajectories <- rbind(trajectories, data.frame(
+              PATH = FALSE,
+              ORIGIN_ITER = iter - 1,
+              ORIGIN_CONFIG_ID = id_str,
+              DESTINY_ITER = iter,
+              DESTINY_CONFIG_ID = id_str,
+              stringsAsFactors = FALSE
+            ))
+          } else {
+            # New elite in this iteration without elite parent, connect to itself
+            trajectories <- rbind(trajectories, data.frame(
+              PATH = FALSE,
+              ORIGIN_ITER = iter,
+              ORIGIN_CONFIG_ID = id_str,
+              DESTINY_ITER = iter,
+              DESTINY_CONFIG_ID = id_str,
+              stringsAsFactors = FALSE
+            ))
+          }
+        }
+      }
+    }
+  }
+  
+  # Save file with semicolon separator
+  write.table(trajectories, file = output_file, sep = ";", row.names = FALSE, quote = FALSE)
+  return(trajectories)
+}
+
 # nolint end
+
