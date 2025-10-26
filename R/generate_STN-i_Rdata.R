@@ -9,7 +9,7 @@
 # and builds the corresponding Search Trajectory Network (STN-i).
 # It allows configuration for minimization or maximization problems,
 # supports optional specification of a best-known solution and number
-# of runs to consider, and saves the resulting STN-i as a .RData file.
+# of runs to consider, and saves the resulting STN-i as a .Rdata file.
 #
 # Usage:
 # Rscript generate_STN-i_Rdata.R --input=<input_file> --output=<output_folder> /
@@ -28,10 +28,10 @@
 #                          TYPE_2, ORIGIN_IS_ELITE_2, IS_ELITE_2
 #
 # --output               : (Required) Path to the output folder where the resulting
-#                          STN-i object (.RData) will be saved.
+#                          STN-i object (.Rdata) will be saved.
 #
 # --output_file          : (Optional) Name of the output file (default: input file name
-#                          without extension + "_stn_i.RData").
+#                          without extension + "_stn_i.Rdata").
 #
 # --problem_type         : (Optional) Optimization objective. Use:
 #                            - "min" for minimization (default)
@@ -90,12 +90,12 @@ option_list <- list(
 
   make_option(c("-o", "--output"),
               type="character",
-              help="Path to the output folder where the resulting STN-i object (.RData) will be saved"),
+              help="Path to the output folder where the resulting STN-i object (.Rdata) will be saved"),
 
   make_option(c("-f", "--output_file"),
               type="character",
               default=NULL,
-              help="Name of the output file [default= input_name_stn_i.RData]"),
+              help="Name of the output file [default= input_name_stn_i.Rdata]"),
 
   make_option(c("-p", "--problem_type"),
               type="character", 
@@ -153,11 +153,11 @@ dir.create(output_folder, recursive = TRUE, showWarnings = FALSE)
 # Process output filename
 if (is.null(opt$output_file)) {
   input_basename <- tools::file_path_sans_ext(basename(input_file))
-  output_file_name <- paste0(input_basename, "_stn_i.RData")
+  output_file_name <- paste0(input_basename, "_stn_i.Rdata")
 } else {
   output_file_name <- opt$output_file
-  if (!grepl("\\.RData$", output_file_name)) {
-    output_file_name <- paste0(output_file_name, ".RData")
+  if (!grepl("\\.Rdata$", output_file_name)) {
+    output_file_name <- paste0(output_file_name, ".Rdata")
   }
 }
 

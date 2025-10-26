@@ -6,7 +6,7 @@
 #
 # Description:
 # This script generates a visual representation of a Search Trajectory Network 
-# for irace (STN-i) from a single STN-i file in .RData format.
+# for irace (STN-i) from a single STN-i file in .Rdata format.
 #
 # Usage:
 # Rscript plot_STN-i.R --input=<input_file> --output=<output_folder> 
@@ -20,7 +20,7 @@
 #                      [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
-# --input         : (Required) Path to the input file (.RData) containing the STN-i object.
+# --input         : (Required) Path to the input file (.Rdata) containing the STN-i object.
 # --output        : (Required) Path to the output folder where the plot PDF will be saved.
 # --output_file   : (Optional) Name of the output PDF file. If not provided, defaults to the
 #                   input file name (without extension) + ".pdf".
@@ -70,7 +70,7 @@ source("R/utils.R")
 option_list <- list(
   make_option(c("-i", "--input"), 
               type="character", 
-              help="Path to the input file (.RData) containing the STN-i object"),
+              help="Path to the input file (.Rdata) containing the STN-i object"),
 
   make_option(c("-o", "--output"),
               type="character",
@@ -139,8 +139,8 @@ if (!file.exists(input_file)) {
 }
 
 # Check if input file is a valid STN-i file
-if (!grepl("\\.RData$", input_file)) {
-  stop("Input file must be a .RData file containing an STN-i object.")
+if (!grepl("\\.Rdata$", input_file)) {
+  stop("Input file must be a .Rdata file containing an STN-i object.")
 }
 
 # Create output directory if needed

@@ -569,8 +569,13 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
   # Load the parameters file
   parameters <- read_parameters_file(parameters_file = parameters_file)
 
-  # Define the type priority
-  type_priority <- c("STANDARD", "START", "END")
+  # Acá hacer el guardado y contador por cada caso de:
+  # - Calidad: REGULAR y ELITE
+  # - Topología en la trayectoria: STANDARD, START, END
+  # Cada configuración suma 3 puntos distribuidos según sus tipos topológicos:
+  # - 1 tipo: 3 puntos a ese tipo
+  # - 2 tipos: 1.5 puntos a cada tipo
+  # - 3 tipos: 1 punto a cada tipo
 
   results_dirs <- list.dirs(path = input_dir, full.names = TRUE, recursive = FALSE)
 
@@ -596,18 +601,34 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
       CONFIG_ID_1 = trajectories_data$ORIGIN_CONFIG_ID,
       SOLUTION_1 = NA,
       QUALITY_1 = NA,
-      ORIGIN_TYPE_1 = NA,
-      TYPE_1 = NA,
-      ORIGIN_IS_ELITE_1 = NA,
-      IS_ELITE_1 = NA,
+      CONFIG_COUNT_1 = NA,
+      ELITE_COUNT_1 = NA,
+      REGULAR_COUNT_1 = NA,
+      START_COUNT_1 = NA,
+      STANDARD_COUNT_1 = NA,
+      END_COUNT_1 = NA,
+      ELITE_START_COUNT_1 = NA,
+      ELITE_STANDARD_COUNT_1 = NA,
+      ELITE_END_COUNT_1 = NA,
+      REGULAR_START_COUNT_1 = NA,
+      REGULAR_STANDARD_COUNT_1 = NA,
+      REGULAR_END_COUNT_1 = NA,
       ITERATION_2 = trajectories_data$DESTINY_ITER,
       CONFIG_ID_2 = trajectories_data$DESTINY_CONFIG_ID,
       SOLUTION_2 = NA,
       QUALITY_2 = NA,
-      ORIGIN_TYPE_2 = NA,
-      TYPE_2 = NA,
-      ORIGIN_IS_ELITE_2 = NA,
-      IS_ELITE_2 = NA,
+      CONFIG_COUNT_2 = NA,
+      ELITE_COUNT_2 = NA,
+      REGULAR_COUNT_2 = NA,
+      START_COUNT_2 = NA,
+      STANDARD_COUNT_2 = NA,
+      END_COUNT_2 = NA,
+      ELITE_START_COUNT_2 = NA,
+      ELITE_STANDARD_COUNT_2 = NA,
+      ELITE_END_COUNT_2 = NA,
+      REGULAR_START_COUNT_2 = NA,
+      REGULAR_STANDARD_COUNT_2 = NA,
+      REGULAR_END_COUNT_2 = NA,
       stringsAsFactors = FALSE
     )
     trajectories_list[[length(trajectories_list) + 1]] <- trajectories_batch
@@ -659,15 +680,13 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
       # Store information for later batch update
       current_batch_idx <- length(trajectories_list)
       if (current_batch_idx > 0) {
-        # Update SOLUTION_1, SOLUTION_2 and ORIGIN_IS_ELITE_1, ORIGIN_IS_ELITE_2
+        # Update SOLUTION_1 and SOLUTION_2
         batch_data <- trajectories_list[[current_batch_idx]]
         config_id_matches_1 <- batch_data$CONFIG_ID_1 == configuration$CONFIG_ID
         config_id_matches_2 <- batch_data$CONFIG_ID_2 == configuration$CONFIG_ID
         
         batch_data$SOLUTION_1[config_id_matches_1] <- location_code
-        batch_data$ORIGIN_IS_ELITE_1[config_id_matches_1] <- configuration$IS_ELITE
         batch_data$SOLUTION_2[config_id_matches_2] <- location_code
-        batch_data$ORIGIN_IS_ELITE_2[config_id_matches_2] <- configuration$IS_ELITE
         
         trajectories_list[[current_batch_idx]] <- batch_data
       }
@@ -689,7 +708,6 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
               type <- "STANDARD"
             }
             trajectory_types <- c(trajectory_types, type)
-            batch_data$ORIGIN_TYPE_1[idx] <- type
           }
         }
         # For CONFIG_ID_2
@@ -704,11 +722,8 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
               type <- "STANDARD"
             }
             trajectory_types <- c(trajectory_types, type)
-            batch_data$ORIGIN_TYPE_2[idx] <- type
           }
         }
-        # Update the batch data
-        trajectories_list[[current_batch_idx]] <- batch_data
       }
 
       # Update TYPES
@@ -782,44 +797,92 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
       stop("Error: quality_criteria debe ser 'min', 'max', 'mean', 'median' o 'mode'", call. = FALSE)
     }
 
+    # Get topology types for this configuration
+    config_types <- unique(config$TYPES[[1]])
+    num_types <- length(config_types)
+    
+    # Calculate points to distribute (3 points total)
+    points_per_type <- if (num_types > 0) 3 / num_types else 0
+    
     # Search for existing location in locations_df
     if (nrow(locations_df) > 0 && config$LOCATION_CODE %in% locations_df$LOCATION_CODE) {
         # Search for existing location
         loc_idx <- which(locations_df$LOCATION_CODE == config$LOCATION_CODE)
-        # Update IS_ELITE if necessary
-        if (config$IS_ELITE == "TRUE" && locations_df$IS_ELITE[loc_idx] == "FALSE") {
-          locations_df$IS_ELITE[loc_idx] <- "TRUE"
+        
+        # Update configuration count
+        locations_df$CONFIG_COUNT[loc_idx] <- locations_df$CONFIG_COUNT[loc_idx] + 1
+        
+        # Determine if configuration is elite
+        is_elite <- config$IS_ELITE == "TRUE"
+        
+        # Update ELITE or REGULAR count
+        if (is_elite) {
+          locations_df$ELITE_COUNT[loc_idx] <- locations_df$ELITE_COUNT[loc_idx] + 1
+        } else {
+          locations_df$REGULAR_COUNT[loc_idx] <- locations_df$REGULAR_COUNT[loc_idx] + 1
         }
+        
         # Update QUALITIES list
         locations_df$QUALITIES[[loc_idx]] <- c(locations_df$QUALITIES[[loc_idx]], final_mnrg)
-        # Update TYPE if necessary based on priority
-        config_types <- config$TYPES[[1]]
-        if (length(config_types) > 0) {
-          # Get the best type from the configuration
-          type_priorities <- match(config_types, type_priority)
-          best_config_type <- config_types[which.min(type_priorities)]
-          # Compare type priorities and update if necessary
-          current_type <- locations_df$TYPE[loc_idx]
-          current_priority <- match(current_type, type_priority)
-          best_config_priority <- match(best_config_type, type_priority)
-          if (best_config_priority < current_priority) {
-            locations_df$TYPE[loc_idx] <- best_config_type
+        
+        # Update topology counts and combined QUALITY-TOPOLOGY counts
+        if (num_types > 0) {
+          for (type in config_types) {
+            if (type == "START") {
+              locations_df$START_COUNT[loc_idx] <- locations_df$START_COUNT[loc_idx] + points_per_type
+              if (is_elite) {
+                locations_df$ELITE_START_COUNT[loc_idx] <- locations_df$ELITE_START_COUNT[loc_idx] + points_per_type
+              } else {
+                locations_df$REGULAR_START_COUNT[loc_idx] <- locations_df$REGULAR_START_COUNT[loc_idx] + points_per_type
+              }
+            } else if (type == "END") {
+              locations_df$END_COUNT[loc_idx] <- locations_df$END_COUNT[loc_idx] + points_per_type
+              if (is_elite) {
+                locations_df$ELITE_END_COUNT[loc_idx] <- locations_df$ELITE_END_COUNT[loc_idx] + points_per_type
+              } else {
+                locations_df$REGULAR_END_COUNT[loc_idx] <- locations_df$REGULAR_END_COUNT[loc_idx] + points_per_type
+              }
+            } else if (type == "STANDARD") {
+              locations_df$STANDARD_COUNT[loc_idx] <- locations_df$STANDARD_COUNT[loc_idx] + points_per_type
+              if (is_elite) {
+                locations_df$ELITE_STANDARD_COUNT[loc_idx] <- locations_df$ELITE_STANDARD_COUNT[loc_idx] + points_per_type
+              } else {
+                locations_df$REGULAR_STANDARD_COUNT[loc_idx] <- locations_df$REGULAR_STANDARD_COUNT[loc_idx] + points_per_type
+              }
+            }
           }
         }
     } else {
-      # Create new location entry and select best type
-      config_types <- config$TYPES[[1]]
-      if (length(config_types) > 0) {
-        type_priorities <- match(config_types, type_priority)
-        best_type <- config_types[which.min(type_priorities)]
-      } else {
-        best_type <- "STANDARD"
-      }
+      # Create new location entry
+      is_elite <- config$IS_ELITE == "TRUE"
+      elite_count <- if (is_elite) 1 else 0
+      regular_count <- if (!is_elite) 1 else 0
+      start_count <- if ("START" %in% config_types) points_per_type else 0
+      end_count <- if ("END" %in% config_types) points_per_type else 0
+      standard_count <- if ("STANDARD" %in% config_types) points_per_type else 0
+      
+      # Combined QUALITY-TOPOLOGY counts
+      elite_start_count <- if (is_elite && "START" %in% config_types) points_per_type else 0
+      elite_standard_count <- if (is_elite && "STANDARD" %in% config_types) points_per_type else 0
+      elite_end_count <- if (is_elite && "END" %in% config_types) points_per_type else 0
+      regular_start_count <- if (!is_elite && "START" %in% config_types) points_per_type else 0
+      regular_standard_count <- if (!is_elite && "STANDARD" %in% config_types) points_per_type else 0
+      regular_end_count <- if (!is_elite && "END" %in% config_types) points_per_type else 0
       
       location_entry <- data.frame(
         LOCATION_CODE = config$LOCATION_CODE,
-        IS_ELITE = config$IS_ELITE,
-        TYPE = best_type,
+        CONFIG_COUNT = 1,
+        ELITE_COUNT = elite_count,
+        REGULAR_COUNT = regular_count,
+        START_COUNT = start_count,
+        STANDARD_COUNT = standard_count,
+        END_COUNT = end_count,
+        ELITE_START_COUNT = elite_start_count,
+        ELITE_STANDARD_COUNT = elite_standard_count,
+        ELITE_END_COUNT = elite_end_count,
+        REGULAR_START_COUNT = regular_start_count,
+        REGULAR_STANDARD_COUNT = regular_standard_count,
+        REGULAR_END_COUNT = regular_end_count,
         QUALITIES = I(list(final_mnrg)),
         FINAL_QUALITY = NA,
         stringsAsFactors = FALSE
@@ -829,6 +892,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
   }
 
   # Calculate FINAL_QUALITY for each location based on QUALITIES and representative_criteria
+  # Also normalize topology counts by dividing by 3
   for (i in seq_len(nrow(locations_df))) {
     qualities <- as.numeric(locations_df$QUALITIES[[i]])
     qualities <- qualities[!is.na(qualities)]
@@ -847,18 +911,57 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
       mode_value <- as.numeric(names(sort(table(qualities), decreasing = TRUE)[1]))
       locations_df$FINAL_QUALITY[i] <- mode_value
     }
+    
+    # Normalize topology counts by dividing by 3
+    locations_df$START_COUNT[i] <- locations_df$START_COUNT[i] / 3
+    locations_df$STANDARD_COUNT[i] <- locations_df$STANDARD_COUNT[i] / 3
+    locations_df$END_COUNT[i] <- locations_df$END_COUNT[i] / 3
 
-    # Update trajectories_df with quality and type information
+    # Update trajectories_df with quality and count information
     loc_code <- locations_df$LOCATION_CODE[i]
     loc_quality <- locations_df$FINAL_QUALITY[i]
-    loc_type <- locations_df$TYPE[i]
-    loc_elite <- locations_df$IS_ELITE[i]
+    loc_config_count <- locations_df$CONFIG_COUNT[i]
+    loc_elite_count <- locations_df$ELITE_COUNT[i]
+    loc_regular_count <- locations_df$REGULAR_COUNT[i]
+    loc_start_count <- locations_df$START_COUNT[i]
+    loc_standard_count <- locations_df$STANDARD_COUNT[i]
+    loc_end_count <- locations_df$END_COUNT[i]
+    loc_elite_start_count <- locations_df$ELITE_START_COUNT[i]
+    loc_elite_standard_count <- locations_df$ELITE_STANDARD_COUNT[i]
+    loc_elite_end_count <- locations_df$ELITE_END_COUNT[i]
+    loc_regular_start_count <- locations_df$REGULAR_START_COUNT[i]
+    loc_regular_standard_count <- locations_df$REGULAR_STANDARD_COUNT[i]
+    loc_regular_end_count <- locations_df$REGULAR_END_COUNT[i]
+    
+    # Update for SOLUTION_1
     trajectories_df$QUALITY_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_quality
-    trajectories_df$TYPE_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_type
-    trajectories_df$IS_ELITE_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_elite
+    trajectories_df$CONFIG_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_config_count
+    trajectories_df$ELITE_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_elite_count
+    trajectories_df$REGULAR_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_regular_count
+    trajectories_df$START_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_start_count
+    trajectories_df$STANDARD_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_standard_count
+    trajectories_df$END_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_end_count
+    trajectories_df$ELITE_START_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_elite_start_count
+    trajectories_df$ELITE_STANDARD_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_elite_standard_count
+    trajectories_df$ELITE_END_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_elite_end_count
+    trajectories_df$REGULAR_START_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_regular_start_count
+    trajectories_df$REGULAR_STANDARD_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_regular_standard_count
+    trajectories_df$REGULAR_END_COUNT_1[trajectories_df$SOLUTION_1 == loc_code] <- loc_regular_end_count
+    
+    # Update for SOLUTION_2
     trajectories_df$QUALITY_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_quality
-    trajectories_df$TYPE_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_type
-    trajectories_df$IS_ELITE_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_elite
+    trajectories_df$CONFIG_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_config_count
+    trajectories_df$ELITE_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_elite_count
+    trajectories_df$REGULAR_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_regular_count
+    trajectories_df$START_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_start_count
+    trajectories_df$STANDARD_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_standard_count
+    trajectories_df$END_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_end_count
+    trajectories_df$ELITE_START_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_elite_start_count
+    trajectories_df$ELITE_STANDARD_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_elite_standard_count
+    trajectories_df$ELITE_END_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_elite_end_count
+    trajectories_df$REGULAR_START_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_regular_start_count
+    trajectories_df$REGULAR_STANDARD_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_regular_standard_count
+    trajectories_df$REGULAR_END_COUNT_2[trajectories_df$SOLUTION_2 == loc_code] <- loc_regular_end_count
   }
 
   # Write output files
@@ -1129,11 +1232,19 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
   # Load the input file data with updated column structure
   trace_all <- read.csv2(input_file, header = TRUE, stringsAsFactors = FALSE)
 
-  # Verify expected columns are present
+  # Verify expected columns are present (new format with counters)
   expected_columns <- c(
     "RUN_ID", "PATH",
-    "ITERATION_1", "SOLUTION_1", "QUALITY_1", "TYPE_1", "ORIGIN_IS_ELITE_1", "IS_ELITE_1",
-    "ITERATION_2", "SOLUTION_2", "QUALITY_2", "TYPE_2", "ORIGIN_IS_ELITE_2", "IS_ELITE_2"
+    "ITERATION_1", "CONFIG_ID_1", "SOLUTION_1", "QUALITY_1",
+    "CONFIG_COUNT_1", "ELITE_COUNT_1", "REGULAR_COUNT_1",
+    "START_COUNT_1", "STANDARD_COUNT_1", "END_COUNT_1",
+    "ELITE_START_COUNT_1", "ELITE_STANDARD_COUNT_1", "ELITE_END_COUNT_1",
+    "REGULAR_START_COUNT_1", "REGULAR_STANDARD_COUNT_1", "REGULAR_END_COUNT_1",
+    "ITERATION_2", "CONFIG_ID_2", "SOLUTION_2", "QUALITY_2",
+    "CONFIG_COUNT_2", "ELITE_COUNT_2", "REGULAR_COUNT_2",
+    "START_COUNT_2", "STANDARD_COUNT_2", "END_COUNT_2",
+    "ELITE_START_COUNT_2", "ELITE_STANDARD_COUNT_2", "ELITE_END_COUNT_2",
+    "REGULAR_START_COUNT_2", "REGULAR_STANDARD_COUNT_2", "REGULAR_END_COUNT_2"
   )
   
   missing_columns <- setdiff(expected_columns, names(trace_all))
@@ -1153,129 +1264,97 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
   # Filter the trace data to include only the specified number of runs
   trace_all <- trace_all[trace_all$RUN_ID <= number_of_runs,]
 
-  # Initialize lists to store nodes and edges for each run
-  lnodes <- vector("list", number_of_runs)
-  ledges <- vector("list", number_of_runs)
+  # Initialize lists to store nodes and edges
+  lnodes <- list()
+  ledges <- list()
 
-  # Initialize a summary data frame for elite and type classifications
-  elite_values <- c("TRUE", "FALSE")  # IS_ELITE values are boolean
-  type_values <- c("START", "STANDARD")  # Updated type values
-  classification_summary <- expand.grid(
-    Elite = elite_values,
-    Type = type_values,
-    Origin_Elite = elite_values,
-    stringsAsFactors = FALSE
-  )
-
-  # Add a Count column to the classification summary (initially set to 0)
-  classification_summary$Count <- 0
-
-  # Initialize a list to store survival rates for each configuration for all runs
-  configurations_survival_rates <- list()
-
-  # Combine all runs in a single network
-  for (i in (1:number_of_runs)) {
+  # Process all runs
+  for (i in 1:number_of_runs) {
     # Take by run
-    trace <- trace_all[which(trace_all$RUN_ID==i),]
-
-    # Initialize lists to store nodes and edges for the current run
-    lnodes_run <- list()
+    trace <- trace_all[trace_all$RUN_ID == i, ]
 
     for (j in 1:nrow(trace)) {
-      # Add only the second node to the location trend
-      # to avoid over-representing the first node in the network
-      lnodes_run[[length(lnodes_run) + 1]] <- data.frame(
+      # Add only the second node (destination) to avoid over-representation
+      lnodes[[length(lnodes) + 1]] <- data.frame(
         Node = trace$SOLUTION_2[j],
         Fitness = trace$QUALITY_2[j],
-        Elite = trace$IS_ELITE_2[j],
-        Type = trace$TYPE_2[j],
+        CONFIGURATIONS = trace$CONFIG_COUNT_2[j],
+        ELITES = trace$ELITE_COUNT_2[j],
+        REGULARS = trace$REGULAR_COUNT_2[j],
+        STARTS = trace$START_COUNT_2[j],
+        STANDARDS = trace$STANDARD_COUNT_2[j],
+        ENDS = trace$END_COUNT_2[j],
+        ELITE_STARTS = trace$ELITE_START_COUNT_2[j],
+        ELITE_STANDARDS = trace$ELITE_STANDARD_COUNT_2[j],
+        ELITE_ENDS = trace$ELITE_END_COUNT_2[j],
+        REGULAR_STARTS = trace$REGULAR_START_COUNT_2[j],
+        REGULAR_STANDARDS = trace$REGULAR_STANDARD_COUNT_2[j],
+        REGULAR_ENDS = trace$REGULAR_END_COUNT_2[j],
         stringsAsFactors = FALSE
       )
-
-      # Search for the classification_summary
-      idx <- with(classification_summary, which(Elite == trace$IS_ELITE_2[j] & Type == trace$TYPE_2[j] & Origin_Elite == trace$ORIGIN_IS_ELITE_2[j]))
-      if (length(idx) == 1) {
-        classification_summary$Count[idx] <- classification_summary$Count[idx] + 1
-      }
     }
 
-    # Remove self loops with path information
-    lnodes[[i]] <- do.call(rbind, lnodes_run)
-    ledges[[i]] <- trace[trace$PATH == TRUE, c("SOLUTION_1", "SOLUTION_2")]
-
-
-    # Initialize a list to store survival rates for each configuration
-    max_iter <- max(trace$ITERATION_2)
-    run_survival_rates <- numeric(max_iter)
-
-    for (iter in 1:max_iter) {
-      iteration_rows <- trace[trace$ITERATION_2 == iter, ]
-      total_iteration_nodes <- nrow(iteration_rows)
-      elite_iteration_nodes <- sum(iteration_rows$ORIGIN_IS_ELITE_2 == TRUE)
-      if (total_iteration_nodes == 0) {
-        run_survival_rates[iter] <- NA
-      } else {
-        run_survival_rates[iter] <- elite_iteration_nodes / total_iteration_nodes
-      }
-    }
-
-    # Store the survival rates for the current run
-    configurations_survival_rates[[i]] <- run_survival_rates
+    # Add edges (only paths, no self-loops)
+    ledges[[length(ledges) + 1]] <- trace[trace$PATH == TRUE, c("SOLUTION_1", "SOLUTION_2")]
   }
 
-  # Combine the list of nodes into one dataframe and
-  # group by (Node, Fitness) to identify unique nodes and count them
-  nodes <- ddply((do.call("rbind", lnodes)), .(Node, Fitness, Elite, Type), nrow) # Cambiar forma de contar nodos
-  colnames(nodes) <- c("Node", "Fitness", "Elite", "Type", "Count")
+  # Combine all nodes and aggregate by Node
+  all_nodes <- do.call(rbind, lnodes)
+  
+  # Aggregate nodes: for each unique Node, take the first occurrence values
+  # (they should be the same across all occurrences since they come from the same location)
+  nodes_aggregated <- all_nodes %>%
+    group_by(Node) %>%
+    summarise(
+      Fitness = first(Fitness),
+      CONFIGURATIONS = first(CONFIGURATIONS),
+      ELITES = first(ELITES),
+      REGULARS = first(REGULARS),
+      STARTS = first(STARTS),
+      STANDARDS = first(STANDARDS),
+      ENDS = first(ENDS),
+      ELITE_STARTS = first(ELITE_STARTS),
+      ELITE_STANDARDS = first(ELITE_STANDARDS),
+      ELITE_ENDS = first(ELITE_ENDS),
+      REGULAR_STARTS = first(REGULAR_STARTS),
+      REGULAR_STANDARDS = first(REGULAR_STANDARDS),
+      REGULAR_ENDS = first(REGULAR_ENDS),
+      .groups = 'drop'
+    ) %>%
+    as.data.frame()
 
-  # Delete duplicates from nodes dataframe based on Node
-  nodesu <- nodes[!duplicated(nodes$Node), ]
-
-  # Combine the list of edges into one dataframe and
-  # group by (SOLUTION_1, SOLUTION_2) to identify unique edges and count them
-  edges <- ddply(do.call("rbind", ledges), .(SOLUTION_1, SOLUTION_2), nrow)
-  colnames(edges) <- c("Start", "End", "weight")
+  # Combine all edges and aggregate by (Start, End) pair
+  all_edges <- do.call(rbind, ledges)
+  edges_aggregated <- all_edges %>%
+    group_by(SOLUTION_1, SOLUTION_2) %>%
+    summarise(weight = n(), .groups = 'drop') %>%
+    as.data.frame()
+  colnames(edges_aggregated) <- c("Start", "End", "weight")
 
   # Create STN_i graph and remove self loops
-  STN_i <- graph_from_data_frame(d = edges, directed = T, vertices = nodesu)
+  STN_i <- graph_from_data_frame(d = edges_aggregated, directed = TRUE, vertices = nodes_aggregated)
   STN_i <- simplify(STN_i, remove.multiple = FALSE, remove.loops = TRUE)
 
   # Obtain the fitness values from graph
   fitness_vals <- V(STN_i)$Fitness
 
-  # If best known solution is not provided, calculate it based on the problem type
-  if (is.na(best_known_solution)) {
-    best_known_solution <- if (problem_type == "min") {
+  # Determine BEST nodes and best known solution if not provided
+  V(STN_i)$BEST <- FALSE
+  if (problem_type == "min") {
+    best_known_solution <- if (!is.na(best_known_solution)) {
+      best_known_solution
+    } else {
       min(fitness_vals, na.rm = TRUE)
+    }
+    V(STN_i)$BEST <- fitness_vals <= best_known_solution
+  } else {
+    best_known_solution <- if (!is.na(best_known_solution)) {
+      best_known_solution
     } else {
       max(fitness_vals, na.rm = TRUE)
     }
+    V(STN_i)$BEST <- fitness_vals >= best_known_solution
   }
-
-  # Obtain the topology ids
-  standard_ids <- which(V(STN_i)$Type == "STANDARD")
-  start_ids <- which(V(STN_i)$Type == "START")
-  end_ids <- which(V(STN_i)$Type == "END")
-
-  # Set the topology types: START, STANDARD and END
-  V(STN_i)$Topology <- NA
-  V(STN_i)[standard_ids]$Topology <- "STANDARD"
-  V(STN_i)[start_ids]$Topology <- "START"
-  V(STN_i)[end_ids]$Topology <- "END"
-
-  # Obtain the quality ids (REGULAR, ELITE and BEST)
-  regular_ids <- which(V(STN_i)$Elite == FALSE)
-  elite_ids <- which(V(STN_i)$Elite == TRUE)
-  best_ids <- if (problem_type == "min") {
-    which(fitness_vals <= best_known_solution)
-  } else {
-    which(fitness_vals >= best_known_solution)
-  }
-
-  # Set the quality types: REGULAR, ELITE and BEST
-  V(STN_i)[regular_ids]$Quality <- "REGULAR"
-  V(STN_i)[elite_ids]$Quality <- "ELITE"
-  V(STN_i)[best_ids]$Quality <- "BEST"
 
   # Return all data without save
   return(list(
@@ -1283,9 +1362,7 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
     network_name = network_name,
     problem_type = problem_type,
     best_known_solution = best_known_solution,
-    number_of_runs = number_of_runs,
-    classification_summary = classification_summary,
-    configurations_survival_rates = configurations_survival_rates
+    number_of_runs = number_of_runs
   ))
 }
 
@@ -1301,7 +1378,7 @@ stn_i_create <- function(input_file, problem_type = "min", best_known_solution =
 #'
 #' @examples
 #' \dontrun{
-#' save_stn_i_data(stn_i_result, "output/", "custom_name.RData")
+#' save_stn_i_data(stn_i_result, "output/", "custom_name.Rdata")
 #' }
 save_stn_i_data <- function(stn_i_result, output_file_path, verbose = FALSE) {
 
@@ -1315,19 +1392,18 @@ save_stn_i_data <- function(stn_i_result, output_file_path, verbose = FALSE) {
     cat("Best Known Solution:", stn_i_result$best_known_solution, "\n")
     cat("Number of Nodes:", vcount(stn_i_result$STN_i), "\n")
     cat("Number of Edges:", ecount(stn_i_result$STN_i), "\n")
-    cat("Number of Elite Nodes:", sum(V(stn_i_result$STN_i)$Quality == "ELITE"), "\n")
-    cat("Number of Regular Nodes:", sum(V(stn_i_result$STN_i)$Quality == "REGULAR"), "\n")
-    cat("Number of Best Nodes:", sum(V(stn_i_result$STN_i)$Quality == "BEST"), "\n")
-
-    # Print the classification summary
-    cat("\nClassification Summary:\n")
-    print(stn_i_result$classification_summary)
-
-    # Print the survival rates for each configuration
-    cat("\nConfigurations Survival Rates:\n")
-    for (i in seq_along(stn_i_result$configurations_survival_rates)) {
-      cat(paste("Run", i, ":", paste(stn_i_result$configurations_survival_rates[[i]], collapse = ", "), "\n"))
-    }
+    cat("Number of Best Nodes:", sum(V(stn_i_result$STN_i)$BEST), "\n")
+    
+    # Print statistics about configurations
+    cat("\nConfiguration Statistics:\n")
+    cat("Total Configurations:", sum(V(stn_i_result$STN_i)$CONFIGURATIONS), "\n")
+    cat("Total Elite Configurations:", sum(V(stn_i_result$STN_i)$ELITES), "\n")
+    cat("Total Regular Configurations:", sum(V(stn_i_result$STN_i)$REGULARS), "\n")
+    
+    cat("\nTopology Statistics (normalized):\n")
+    cat("Start Configurations:", sum(V(stn_i_result$STN_i)$STARTS), "\n")
+    cat("Standard Configurations:", sum(V(stn_i_result$STN_i)$STANDARDS), "\n")
+    cat("End Configurations:", sum(V(stn_i_result$STN_i)$ENDS), "\n")
 
     # Print a message indicating where the file was saved
     message(paste("STN-i data saved to:", output_file_path))
@@ -1344,7 +1420,7 @@ save_stn_i_data <- function(stn_i_result, output_file_path, verbose = FALSE) {
 #' 
 #' @examples
 #' \dontrun{
-#' stn_i_data <- get_stn_i_data("path/to/stn_i_file.RData")
+#' stn_i_data <- get_stn_i_data("path/to/stn_i_file.Rdata")
 #' }
 get_stn_i_data <- function(input_file) {
   # Check if file exists
@@ -1356,15 +1432,13 @@ get_stn_i_data <- function(input_file) {
   loaded_name <- load(input_file)
   stn_i_result <- get(loaded_name)
 
-  # Validate structure
+  # Validate structure (new format without classification_summary and configurations_survival_rates)
   expected_fields <- c(
     "STN_i",
     "network_name",
     "problem_type",
     "best_known_solution",
-    "number_of_runs",
-    "classification_summary",
-    "configurations_survival_rates"
+    "number_of_runs"
   )
 
   if (!is.list(stn_i_result) || !all(expected_fields %in% names(stn_i_result))) {
@@ -1588,7 +1662,7 @@ stn_i_decorate <- function(STN_i, problem_type = "min", show_regular = TRUE, sho
 #'
 #' @examples
 #' \dontrun{
-#' result <- stn_i_plot_create("path/to/stn_i_file.RData", show_regular = TRUE, show_start_regular = TRUE, palette_colors = get_stn_i_palette_colors(1), zoom_quantile = 0.5)
+#' result <- stn_i_plot_create("path/to/stn_i_file.Rdata", show_regular = TRUE, show_start_regular = TRUE, palette_colors = get_stn_i_palette_colors(1), zoom_quantile = 0.5)
 #' }
 stn_i_plot_create <- function(input_file, show_regular = TRUE, show_start_regular = TRUE, palette_colors, zoom_quantile = NA) {
   # Load the STN-i data
@@ -1692,11 +1766,11 @@ save_stn_i_plot <- function(output_file_path, STN_i, layout_data, palette_colors
 
 #' Load and merge multiple STN-i data files from a specified folder.
 #'
-#' This function reads multiple `.RData` files containing STN-i graph objects,
+#' This function reads multiple `.Rdata` files containing STN-i graph objects,
 #' merges them into a single graph, and extracts relevant metadata such as
 #' algorithm names, problem type, best known solutions, and number of runs.
 #'
-#' @param input_folder The folder containing the `.RData` files.
+#' @param input_folder The folder containing the `.Rdata` files.
 #'
 #' @return A list containing:
 #' - `graphs`: A list of merged STN-i graph objects.
@@ -1711,10 +1785,10 @@ save_stn_i_plot <- function(output_file_path, STN_i, layout_data, palette_colors
 #' merged_data <- load_stn_i_data(input_folder)
 #' }
 get_stns_i_data <- function(input_folder) {
-  # Check if the input folder contains at least 2 .RData files
-  files <- list.files(input_folder, pattern = "\\.RData$", full.names = TRUE)
+  # Check if the input folder contains at least 2 .Rdata files
+  files <- list.files(input_folder, pattern = "\\.Rdata$", full.names = TRUE)
   if (length(files) < 2) {
-    stop("At least 2 .RData files required to merge STN-i data.")
+    stop("At least 2 .Rdata files required to merge STN-i data.")
   }
 
   # Initialize lists to store graphs and metadata
@@ -1996,12 +2070,12 @@ merge_stns_i_data <- function(stns_i_data, criteria = "mean", verbose = FALSE) {
 #' 
 #' @examples
 #' \dontrun{
-#' save_merged_stn_i_data(merged_STN_i, "path/to/output.RData")
+#' save_merged_stn_i_data(merged_STN_i, "path/to/output.Rdata")
 #' }
 save_merged_stn_i_data <- function(merged_stn_i_data, output_file_path, verbose = FALSE) {
-  # Ensure the file name ends in .RData
-  if (!grepl("\\.RData$", output_file_path)) {
-    output_file_path <- paste0(output_file_path, ".RData")
+  # Ensure the file name ends in .Rdata
+  if (!grepl("\\.Rdata$", output_file_path)) {
+    output_file_path <- paste0(output_file_path, ".Rdata")
   }
 
   # Print summary metrics before saving
@@ -2032,7 +2106,7 @@ save_merged_stn_i_data <- function(merged_stn_i_data, output_file_path, verbose 
 #' 
 #' @examples
 #' \dontrun{
-#'  get_merged_stn_i_data("path/to/merged_stn_i_file.RData")
+#'  get_merged_stn_i_data("path/to/merged_stn_i_file.Rdata")
 #' }
 get_merged_stn_i_data <- function(input_file) {
   # Check if file exists
@@ -2400,7 +2474,7 @@ get_zoomed_graph <- function(graph, quantile_value = 0.25, problem_type = "min")
 #' @examples
 #'
 #' \dontrun{
-#' stn_i_result <- get_stn_i_data("path/to/stn_i_file.RData")
+#' stn_i_result <- get_stn_i_data("path/to/stn_i_file.Rdata")
 #' metrics <- get_stn_i_metrics(stn_i_result)
 #' }
 get_stn_i_metrics <- function(stn_i_result) {
@@ -2620,7 +2694,7 @@ save_stn_i_metrics <- function(stn_i_metrics, output_file_path) {
 #'
 #' @examples
 #' \dontrun{
-#' merged_stn_i_data <- get_merged_stn_i_data("path/to/merged_stn_i_file.RData")
+#' merged_stn_i_data <- get_merged_stn_i_data("path/to/merged_stn_i_file.Rdata")
 #' metrics <- get_merged_stn_i_metrics(merged_stn_i_data)
 #' }
 get_merged_stn_i_metrics <- function(merged_stn_i_data) {

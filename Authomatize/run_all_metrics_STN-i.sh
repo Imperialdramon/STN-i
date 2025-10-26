@@ -57,7 +57,7 @@ for alg in "${!experiments[@]}"; do
 
   for exp in ${experiments[$alg]}; do
     for loc in ${locations_type[$alg]}; do
-      input_file="Experiments/${alg}/Individuals/${exp}/STN-i-RData/${exp}-${loc}_stn_i.RData"
+      input_file="Experiments/${alg}/Individuals/${exp}/STN-i-RData/${exp}-${loc}_stn_i.Rdata"
       output_dir="Experiments/${alg}/Individuals/${exp}/STN-i-Metrics"
 
       run_generate_rdata \

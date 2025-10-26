@@ -15,11 +15,11 @@
 #                                      [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
-# --input         : (Required) Path to the folder containing 2 or more .RData files, 
+# --input         : (Required) Path to the folder containing 2 or more .Rdata files, 
 #                   each with an STN-i object named 'STN-i'.
 # --output        : (Required) Path to the folder where the merged file will be saved.
 # --output_file   : (Optional) Name for the output file. If not provided, defaults to 
-#                   "<input_folder_name>_merged_stn_i.RData".
+#                   "<input_folder_name>_merged_stn_i.Rdata".
 # --criteria      : (Optional) Criteria for merging shared nodes. Options:
 #                     - "mean"   : Use the mean value for merging attributes (default).
 #                     - "min"    : Use the minimum value.
@@ -29,7 +29,7 @@
 # --verbose      : (Optional) Whether to show detailed processing information (default: FALSE).
 #
 # Behavior:
-# - Loads each `.RData` file and extracts the `STN-i` graph object.
+# - Loads each `.Rdata` file and extracts the `STN-i` graph object.
 # - Assigns algorithm identifiers based on filenames (prefix before first underscore).
 # - Merges the networks using igraph::graph.union().
 # - Consolidates vertex attributes (Fitness, Type, Quality, etc.) and 
@@ -40,7 +40,7 @@
 #     - algorithm-elite
 #     - algorithm-regular
 # - Consolidates edge weights and algorithms.
-# - Saves the merged network as "<input_folder_name>_merged_stn_i.RData".
+# - Saves the merged network as "<input_folder_name>_merged_stn_i.Rdata".
 # - The merged object is saved as `merged_STN_i` along with metadata (nruns, algn, bmin, best).
 #
 # Requirements:
@@ -51,7 +51,7 @@
 #     - optparse
 #
 # Notes:
-# - The input folder must contain 2 or more `.RData` files, each with a valid STN-i object.
+# - The input folder must contain 2 or more `.Rdata` files, each with a valid STN-i object.
 # - The merging logic and attribute handling are implemented in utils.R.
 #########################################################################
 
@@ -82,7 +82,7 @@ source("R/utils.R")
 option_list <- list(
   make_option(c("-i", "--input"), 
               type="character", 
-              help="Path to the folder containing 2 or more .RData files with STN-i objects"),
+              help="Path to the folder containing 2 or more .Rdata files with STN-i objects"),
 
   make_option(c("-o", "--output"),
               type="character",
@@ -91,7 +91,7 @@ option_list <- list(
   make_option(c("-f", "--output_file"),
               type="character",
               default=NULL,
-              help="Name for the output file [default= input_folder_name_merged_stn_i.RData]"),
+              help="Name for the output file [default= input_folder_name_merged_stn_i.Rdata]"),
 
   make_option(c("-c", "--criteria"),
               type="character",
@@ -125,9 +125,9 @@ if (!dir.exists(input_folder)) {
 }
 
 # Check for RData files in input folder
-rdata_files <- list.files(input_folder, pattern = "\\.RData$", full.names = TRUE)
+rdata_files <- list.files(input_folder, pattern = "\\.Rdata$", full.names = TRUE)
 if (length(rdata_files) < 2) {
-  stop(sprintf("Input folder must contain at least 2 .RData files, found %d", length(rdata_files)))
+  stop(sprintf("Input folder must contain at least 2 .Rdata files, found %d", length(rdata_files)))
 }
 
 # Normalize output path
@@ -145,17 +145,17 @@ if (!opt$criteria %in% valid_criteria) {
 # Process output filename
 if (is.null(opt$output_file)) {
   input_basename <- tools::file_path_sans_ext(basename(input_folder))
-  output_file_name <- paste0(input_basename, "_merged_stn_i.RData")
+  output_file_name <- paste0(input_basename, "_merged_stn_i.Rdata")
 } else {
   output_file_name <- opt$output_file
-  if (!grepl("\\.RData$", output_file_name)) {
-    output_file_name <- paste0(output_file_name, ".RData")
+  if (!grepl("\\.Rdata$", output_file_name)) {
+    output_file_name <- paste0(output_file_name, ".Rdata")
   }
 }
 
 if (opt$verbose) {
   cat(sprintf("Processing STN-i files from %s...\n", input_folder))
-  cat(sprintf("Found %d .RData files\n", length(rdata_files)))
+  cat(sprintf("Found %d .Rdata files\n", length(rdata_files)))
   cat(sprintf("Using '%s' criteria for merging\n", opt$criteria))
 }
 

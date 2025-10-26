@@ -2,7 +2,7 @@
 
 # ==============================================================================
 # Script: run_all_generate_STN-i_Rdata.sh
-# Description: Generates .RData STN-i files for all experiments and locations
+# Description: Generates .Rdata STN-i files for all experiments and locations
 #
 # Usage:
 #   1. Make the script executable:
@@ -13,7 +13,7 @@
 #
 #   Output:
 #     - Log file in Logs/run_all_generate_STN-i_Rdata.log
-#     - Generated STN-i .RData files in respective experiment directories
+#     - Generated STN-i .Rdata files in respective experiment directories
 # ==============================================================================
 
 # Create log directory if it doesn't exist

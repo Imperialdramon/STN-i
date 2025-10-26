@@ -24,7 +24,7 @@
 #                              [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
-# --input         : (Required) Path to the input file (.RData) containing the merged STN-i object.
+# --input         : (Required) Path to the input file (.Rdata) containing the merged STN-i object.
 # --output        : (Required) Path to the output folder where the plot PDF will be saved.
 # --output_file   : (Optional) Name of the output PDF file. If not provided, defaults to the
 #                   input file name (without extension) + ".pdf".
@@ -82,7 +82,7 @@ source("R/utils.R")
 option_list <- list(
   make_option(c("-i", "--input"), 
               type="character", 
-              help="Path to the input file (.RData) containing merged STN-i object"),
+              help="Path to the input file (.Rdata) containing merged STN-i object"),
 
   make_option(c("-o", "--output"),
               type="character",
@@ -155,8 +155,8 @@ if (is.null(opt$output)) {
 input_file <- normalizePath(opt$input, mustWork = TRUE)
 
 # Validate input file extension
-if (!grepl("\\.RData$", input_file)) {
-  stop("Input file must be a .RData file containing an STN-i object")
+if (!grepl("\\.Rdata$", input_file)) {
+  stop("Input file must be a .Rdata file containing an STN-i object")
 }
 
 # Normalize output path

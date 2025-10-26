@@ -376,7 +376,7 @@ Rscript R/generate_STN-i_Rdata.R \
 3. Generate visualization:
 ```bash
 Rscript R/plot_STN-i.R \
-  --input=Experiments/ACOTSP/BH-90/STN-i-RData/BH-90-L1_stn_i.RData \
+  --input=Experiments/ACOTSP/BH-90/STN-i-RData/BH-90-L1_stn_i.Rdata \
   --output=Experiments/ACOTSP/BH-90/STN-i-Plots \
   --layout_type=fr
 ```
@@ -384,7 +384,7 @@ Rscript R/plot_STN-i.R \
 4. Calculate metrics:
 ```bash
 Rscript R/metrics_STN-i.R \
-  --input=Experiments/ACOTSP/BH-90/STN-i-RData/BH-90-L1_stn_i.RData \
+  --input=Experiments/ACOTSP/BH-90/STN-i-RData/BH-90-L1_stn_i.Rdata \
   --output=Experiments/ACOTSP/BH-90/STN-i-Metrics
 ```
 

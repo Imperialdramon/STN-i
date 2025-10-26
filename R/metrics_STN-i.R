@@ -15,7 +15,7 @@
 #                                [--output_file=<output_file_name>] /
 #                                [--verbose=<TRUE|FALSE>]
 # Arguments:
-# --input                : (Required) Path to the input file (.RData) containing STN-i data.
+# --input                : (Required) Path to the input file (.Rdata) containing STN-i data.
 # --output               : (Required) Path to the output folder where the resulting metrics for STN-i object will be saved.
 # --output_file          : (Optional)  Name of the output file (default: input file name without extension + "_metrics.csv").
 # --verbose              : (Optional) Whether to show detailed processing information (default: FALSE).
@@ -25,7 +25,7 @@
 #     - igraph
 #
 # Notes:
-# - The input file must exist and be formatted as a .RData file containing STN-i data.
+# - The input file must exist and be formatted as a .Rdata file containing STN-i data.
 # - The output will be saved as a CSV file containing the STN-i metrics.
 # - Designed for execution from command line using named arguments.
 #########################################################################
@@ -49,7 +49,7 @@ source("R/utils.R")
 option_list <- list(
   make_option(c("-i", "--input"), 
               type="character", 
-              help="Path to the input file (.RData) containing STN-i data"),
+              help="Path to the input file (.Rdata) containing STN-i data"),
 
   make_option(c("-o", "--output"),
               type="character",

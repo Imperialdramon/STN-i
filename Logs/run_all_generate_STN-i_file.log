@@ -1,20 +1,44 @@
-=== STN-i data generation started at Sat Oct 18 20:07:43 -03 2025 ===
+=== STN-i data generation started at Sun Oct 26 15:04:39 -03 2025 ===
 === Processing algorithm: ACOTSP ===
 >> Generating: 
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  525527 28.1    1848518 98.8  1848518 98.8
+Vcells 1008061  7.7    8513340 65.0  8513340 65.0
 ✅ Success: Generated 
 >> Generating: 
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 525489 28.1    1532212 81.9  1532212 81.9
+Vcells 942487  7.2    8411786 64.2  8411786 64.2
 ✅ Success: Generated 
 >> Generating: 
+          used (Mb) gc trigger (Mb) max used  (Mb)
+Ncells  525530 28.1    1869758 99.9  2337195 124.9
+Vcells 1008064  7.7    8893900 67.9 10756680  82.1
 ✅ Success: Generated 
 >> Generating: 
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  525530 28.1    1713583 91.6  1713583 91.6
+Vcells 1008064  7.7    8746104 66.8  8746104 66.8
 ✅ Success: Generated 
 === Processing algorithm: PSO-X ===
 >> Generating: 
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 525274 28.1    1220049 65.2  1220049 65.2
+Vcells 942275  7.2    8390864 64.1  8390864 64.1
 ✅ Success: Generated 
 >> Generating: 
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 525231 28.1    1220631 65.2  1220631 65.2
+Vcells 942232  7.2    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 525530 28.1    1530341 81.8  1530341 81.8
+Vcells 942531  7.2    8451007 64.5  8451007 64.5
 ✅ Success: Generated 
 >> Generating: 
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 525384 28.1    1759925 94.0  1759925 94.0
+Vcells 942385  7.2    8409297 64.2  8409297 64.2
 ✅ Success: Generated 
-=== STN-i files generation finished at Sat Oct 18 20:23:52 -03 2025 ===
+=== STN-i files generation finished at Sun Oct 26 15:33:45 -03 2025 ===
