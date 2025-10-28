@@ -425,3 +425,36 @@ The script will:
 Creates RData objects for all STN-i files in the specified algorithm folders.
 
 These scripts should be run from the repository root and require proper folder structure as shown in the Project Structure section.
+
+## Aditional Data
+
+### Experiments
+
+For the ACOTSP results we use this locations
+
+| Parámetro     | Condicional | Tipo | Valores           | Equivalencia L1                                   | Equivalencia L2                                   | Equivalencia L3                                   | Equivalencia L4                                   | Equivalencia L5                                   |
+|---------------|-------------|------|-------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|
+| algorithm     | FALSE       | c    | {as, mmas, eas, ras, acs} | {as:0, mmas:1, eas:2, ras:3, acs:4} | {as:0, mmas:1, eas:2, ras:3, acs:4} | {as:0, mmas:1, eas:2, ras:3, acs:4} | {as:0, mmas:1, eas:2, ras:3, acs:4} | {as:0, mmas:1, eas:2, ras:3, acs:4} |
+| localsearch   | FALSE       | c    | {0, 1, 2, 3}      | {0:0, 1:1, 2:2, 3:3} | {0:0, 1:1, 2:2, 3:3} | {0:0, 1:1, 2:2, 3:3} | {0:0, 1:1, 2:2, 3:3} | {0:0, 1:1, 2:2, 3:3} |
+| alpha         | FALSE       | r    | (0.00, 5.00)      | step=0.05, significance=2 | step=0.15, significance=2 | step=0.25, significance=2 | step=0.35, significance=2 | step=0.45, significance=2 |
+| beta          | FALSE       | r    | (0.00, 10.00)     | step=0.05, significance=2 | step=0.15, significance=2 | step=0.25, significance=2 | step=0.35, significance=2 | step=0.45, significance=2 |
+| rho           | FALSE       | r    | (0.01, 1.00)      | step=0.05, significance=2 | step=0.15, significance=2 | step=0.25, significance=2 | step=0.35, significance=2 | step=0.45, significance=2 |
+| ants          | FALSE       | i    | (5, 100)          | step=5, significance=0 | step=15, significance=0 | step=25, significance=0 | step=35, significance=0 | step=45, significance=0 |
+| q0            | TRUE        | r    | (0.0, 1.0)        | step=0.05, significance=2 | step=0.15, significance=2 | step=0.25, significance=2 | step=0.35, significance=2 | step=0.45, significance=2 |
+| rasrank       | TRUE        | i    | (1, 100)          | step=5, significance=0 | step=15, significance=0 | step=25, significance=0 | step=35, significance=0 | step=45, significance=0 |
+| elitistants   | TRUE        | i    | (1, 750)          | step=5, significance=0 | step=15, significance=0 | step=25, significance=0 | step=35, significance=0 | step=45, significance=0 |
+| nnls          | TRUE        | i    | (5, 50)           | step=5, significance=0 | step=15, significance=0 | step=25, significance=0 | step=35, significance=0 | step=45, significance=0 |
+| dlb           | TRUE        | c    | {0, 1}            | {0:0, 1:1} | {0:0, 1:1} | {0:0, 1:1} | {0:0, 1:1} | {0:0, 1:1} |
+
+For the PSO-X results we use this locations
+
+| Parámetro    | Condicional | Tipo | Valores           | Equivalencia L1                                   | Equivalencia L2                                   | Equivalencia L3                                   | Equivalencia L4                                   | Equivalencia L5                                   |
+|---------------|-------------|------|-------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|
+| particles     | FALSE       | i    | (2, 200)          | step=5, significance=0 | step=15, significance=0 | step=25, significance=0 | step=35, significance=0 | step=45, significance=0 |
+| topology      | FALSE       | c    | {0, 1, 2, 3, 4, 5, 6} | {0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6} | {0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6} | {0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6} | {0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6} | {0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6} |
+| modInfluence  | FALSE       | c    | {0, 1, 2}         | {0:0, 1:1, 2:2} | {0:0, 1:1, 2:2} | {0:0, 1:1, 2:2} | {0:0, 1:1, 2:2} | {0:0, 1:1, 2:2} |
+| branching     | TRUE        | i    | (4, 20)           | step=5, significance=0 | step=15, significance=0 | step=17, significance=0 | step=17, significance=0 | step=17, significance=0 |
+| tSchedule     | TRUE        | i    | (2, 10)           | step=5, significance=0 | step=8, significance=0 | step=8, significance=0 | step=8, significance=0 | step=8, significance=0 |
+| phi1          | FALSE       | r    | (0.00, 2.50)      | step=0.05, significance=2 | step=0.15, significance=2 | step=0.25, significance=2 | step=0.35, significance=2 | step=0.45, significance=2 |
+| phi2          | FALSE       | r    | (0.00, 2.50)      | step=0.05, significance=2 | step=0.15, significance=2 | step=0.25, significance=2 | step=0.35, significance=2 | step=0.45, significance=2 |
+| inertia       | FALSE       | r    | (0.00, 0.90)      | step=0.05, significance=2 | step=0.15, significance=2 | step=0.25, significance=2 | step=0.35, significance=2 | step=0.45, significance=2 |
