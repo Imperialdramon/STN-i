@@ -97,12 +97,12 @@ option_list <- list(
   make_option(c("-b", "--best"),
               type="character", 
               default="min",
-              help="Criterio para seleccionar el mejor valor ('min' o 'max') [default= %default]"),
+              help="Criterio para seleccionar el mejor valor ('min' o 'max') de una configuración pre-agrupamiento [default= %default]"),
 
   make_option(c("-c", "--criteria"),
               type="character", 
               default="mean",
-              help="Criterio para la calidad de configuraciones ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
+              help="Criterio para la calidad de configuraciones agrupadas ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
 
   make_option(c("-s", "--significance"),
               type="integer",
@@ -122,7 +122,7 @@ option_list <- list(
   make_option(c("-r", "--representative"),
               type="character",
               default="mean",
-              help="Criterio para la configuración representativa ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
+              help="Criterio para la configuración representativa de una locación ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
 
   make_option(c("-v", "--verbose"),
               type="logical",

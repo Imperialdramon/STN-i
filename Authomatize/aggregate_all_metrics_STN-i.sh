@@ -15,7 +15,7 @@ algorithms=("ACOTSP" "PSO-X")
 # Define experiments per algorithm
 declare -A experiments
 experiments["ACOTSP"]="BH BH-90 BL BL-45"
-experiments["PSO-X"]="BH BH-32 BL BH-65"
+experiments["PSO-X"]="BH BH-65 BL BL-32"
 
 # Define levels for each algorithm
 levels="L1 L2 L3 L4 L5"

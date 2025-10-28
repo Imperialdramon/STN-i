@@ -71,11 +71,11 @@ for alg in "${!experiments[@]}"; do
       -o "$output_dir" \
       -n "$output_file" \
       -t "$optimum_file" \
-      -c "mean" \
       -b "min" \
-      -s 8 \
       -k FALSE \
+      -c "mean" \
       -r "min" \
+      -s 8 \
       -v FALSE
   done
 done
