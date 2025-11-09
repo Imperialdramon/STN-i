@@ -1,0 +1,1069 @@
+=== STN-i data generation started at Sat Nov  8 21:30:18 -03 2025 ===
+Mode: Individuals-Elites
+⚠️  Warning: Individuals directory not found for ACOTSP: Experiments/ACOTSP/Individuals-Elites/BL/Data
+    Make sure Individuals processing has completed successfully
+⚠️  Warning: Individuals directory not found for ACOTSP: Experiments/ACOTSP/Individuals-Elites/BL-45/Data
+    Make sure Individuals processing has completed successfully
+⚠️  Warning: Individuals directory not found for ACOTSP: Experiments/ACOTSP/Individuals-Elites/BH/Data
+    Make sure Individuals processing has completed successfully
+⚠️  Warning: Individuals directory not found for ACOTSP: Experiments/ACOTSP/Individuals-Elites/BH-90/Data
+    Make sure Individuals processing has completed successfully
+⚠️  Warning: Individuals directory not found for PSO-X: Experiments/PSO-X/Individuals-Elites/BL/Data
+    Make sure Individuals processing has completed successfully
+⚠️  Warning: Individuals directory not found for PSO-X: Experiments/PSO-X/Individuals-Elites/BL-32/Data
+    Make sure Individuals processing has completed successfully
+⚠️  Warning: Individuals directory not found for PSO-X: Experiments/PSO-X/Individuals-Elites/BH/Data
+    Make sure Individuals processing has completed successfully
+⚠️  Warning: Individuals directory not found for PSO-X: Experiments/PSO-X/Individuals-Elites/BH-65/Data
+    Make sure Individuals processing has completed successfully
+=== Processing algorithm: ACOTSP ===
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BL-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 449 
+  Suma CONFIG_COUNT (de configs): 449 
+  Mejor calidad (FINAL_MNRG): 0.12875000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 449 
+  Suma CONFIG_COUNT (de locations): 449 
+  Mejor calidad (FINAL_QUALITY): 0.12875000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 449 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
+  Mejor calidad (QUALITY_2): 0.12875000 
+  Total de trayectorias guardadas: 1150 
+  ✓ Mejor locación 432700455037021064XXXXXX160 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 449 
+  Suma CONFIG_COUNT (de configs): 449 
+  Mejor calidad (FINAL_MNRG): 0.12875000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 449 
+  Suma CONFIG_COUNT (de locations): 449 
+  Mejor calidad (FINAL_QUALITY): 0.12875000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 449 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
+  Mejor calidad (QUALITY_2): 0.12875000 
+  Total de trayectorias guardadas: 1150 
+  ✓ Mejor locación 432700455036020060XXXXXX150 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 449 
+  Suma CONFIG_COUNT (de configs): 449 
+  Mejor calidad (FINAL_MNRG): 0.12875000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 449 
+  Suma CONFIG_COUNT (de locations): 449 
+  Mejor calidad (FINAL_QUALITY): 0.12875000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 449 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
+  Mejor calidad (QUALITY_2): 0.12875000 
+  Total de trayectorias guardadas: 1150 
+  ✓ Mejor locación 432700450031020060XXXXXX050 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 449 
+  Suma CONFIG_COUNT (de configs): 449 
+  Mejor calidad (FINAL_MNRG): 0.12875000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 440 
+  Suma CONFIG_COUNT (de locations): 449 
+  Mejor calidad (FINAL_QUALITY): 0.12875000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 440 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
+  Mejor calidad (QUALITY_2): 0.12875000 
+  Total de trayectorias guardadas: 1150 
+  ✓ Mejor locación 432500450026005050XXXXXX050 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 449 
+  Suma CONFIG_COUNT (de configs): 449 
+  Mejor calidad (FINAL_MNRG): 0.12875000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 418 
+  Suma CONFIG_COUNT (de locations): 449 
+  Mejor calidad (FINAL_QUALITY): 0.12875000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 418 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
+  Mejor calidad (QUALITY_2): 0.12875000 
+  Total de trayectorias guardadas: 1150 
+  ✓ Mejor locación 432440455036005035XXXXXX050 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 449 
+  Suma CONFIG_COUNT (de configs): 449 
+  Mejor calidad (FINAL_MNRG): 0.12875000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 391 
+  Suma CONFIG_COUNT (de locations): 449 
+  Mejor calidad (FINAL_QUALITY): 0.12875000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 391 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
+  Mejor calidad (QUALITY_2): 0.12875000 
+  Total de trayectorias guardadas: 1150 
+  ✓ Mejor locación 432700450001005045XXXXXX050 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495198 26.5    1179971 63.1  1179971 63.1
+Vcells 871293  6.7    8388608 64.0  8388601 64.0
+✅ Success: Generated 
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BL-45-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 489 
+  Suma CONFIG_COUNT (de configs): 489 
+  Mejor calidad (FINAL_MNRG): 0.12727273 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 489 
+  Suma CONFIG_COUNT (de locations): 489 
+  Mejor calidad (FINAL_QUALITY): 0.12727273 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 489 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
+  Mejor calidad (QUALITY_2): 0.12727273 
+  Total de trayectorias guardadas: 1079 
+  ✓ Mejor locación 432170365049046031XXXXXX201 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-45-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 489 
+  Suma CONFIG_COUNT (de configs): 489 
+  Mejor calidad (FINAL_MNRG): 0.12727273 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 489 
+  Suma CONFIG_COUNT (de locations): 489 
+  Mejor calidad (FINAL_QUALITY): 0.12727273 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 489 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
+  Mejor calidad (QUALITY_2): 0.12727273 
+  Total de trayectorias guardadas: 1079 
+  ✓ Mejor locación 432150365046045030XXXXXX201 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-45-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 489 
+  Suma CONFIG_COUNT (de configs): 489 
+  Mejor calidad (FINAL_MNRG): 0.12727273 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 489 
+  Suma CONFIG_COUNT (de locations): 489 
+  Mejor calidad (FINAL_QUALITY): 0.12727273 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 489 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
+  Mejor calidad (QUALITY_2): 0.12727273 
+  Total de trayectorias guardadas: 1079 
+  ✓ Mejor locación 432100359046035030XXXXXX201 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-45-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 489 
+  Suma CONFIG_COUNT (de configs): 489 
+  Mejor calidad (FINAL_MNRG): 0.12727273 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 481 
+  Suma CONFIG_COUNT (de locations): 489 
+  Mejor calidad (FINAL_QUALITY): 0.12727273 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 481 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
+  Mejor calidad (QUALITY_2): 0.12727273 
+  Total de trayectorias guardadas: 1079 
+  ✓ Mejor locación 432000350026030025XXXXXX051 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-45-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 489 
+  Suma CONFIG_COUNT (de configs): 489 
+  Mejor calidad (FINAL_MNRG): 0.12727273 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 459 
+  Suma CONFIG_COUNT (de locations): 489 
+  Mejor calidad (FINAL_QUALITY): 0.12727273 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 459 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
+  Mejor calidad (QUALITY_2): 0.12727273 
+  Total de trayectorias guardadas: 1079 
+  ✓ Mejor locación 432090350036040000XXXXXX051 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-45-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 489 
+  Suma CONFIG_COUNT (de configs): 489 
+  Mejor calidad (FINAL_MNRG): 0.12727273 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 424 
+  Suma CONFIG_COUNT (de locations): 489 
+  Mejor calidad (FINAL_QUALITY): 0.12727273 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 424 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
+  Mejor calidad (QUALITY_2): 0.12727273 
+  Total de trayectorias guardadas: 1079 
+  ✓ Mejor locación 431800360046005000XXXXXX051 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495198 26.5    1184986 63.3  1184986 63.3
+Vcells 871293  6.7    8388608 64.0  8388565 64.0
+✅ Success: Generated 
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BH-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 473 
+  Suma CONFIG_COUNT (de configs): 473 
+  Mejor calidad (FINAL_MNRG): 0.14062500 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 473 
+  Suma CONFIG_COUNT (de locations): 473 
+  Mejor calidad (FINAL_QUALITY): 0.14062500 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 473 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
+  Mejor calidad (QUALITY_2): 0.14062500 
+  Total de trayectorias guardadas: 1168 
+  ✓ Mejor locación 434790062071062009XXXXXX101 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 473 
+  Suma CONFIG_COUNT (de configs): 473 
+  Mejor calidad (FINAL_MNRG): 0.14062500 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 473 
+  Suma CONFIG_COUNT (de locations): 473 
+  Mejor calidad (FINAL_QUALITY): 0.14062500 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 473 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
+  Mejor calidad (QUALITY_2): 0.14062500 
+  Total de trayectorias guardadas: 1168 
+  ✓ Mejor locación 434750060066060005XXXXXX101 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 473 
+  Suma CONFIG_COUNT (de configs): 473 
+  Mejor calidad (FINAL_MNRG): 0.14062500 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 469 
+  Suma CONFIG_COUNT (de locations): 473 
+  Mejor calidad (FINAL_QUALITY): 0.14062500 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 469 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
+  Mejor calidad (QUALITY_2): 0.14062500 
+  Total de trayectorias guardadas: 1168 
+  ✓ Mejor locación 434640060061050000XXXXXX051 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 473 
+  Suma CONFIG_COUNT (de configs): 473 
+  Mejor calidad (FINAL_MNRG): 0.14062500 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 444 
+  Suma CONFIG_COUNT (de locations): 473 
+  Mejor calidad (FINAL_QUALITY): 0.14062500 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 444 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
+  Mejor calidad (QUALITY_2): 0.14062500 
+  Total de trayectorias guardadas: 1168 
+  ✓ Mejor locación 434750050051055000XXXXXX051 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 473 
+  Suma CONFIG_COUNT (de configs): 473 
+  Mejor calidad (FINAL_MNRG): 0.14062500 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 410 
+  Suma CONFIG_COUNT (de locations): 473 
+  Mejor calidad (FINAL_QUALITY): 0.14062500 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 410 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
+  Mejor calidad (QUALITY_2): 0.14062500 
+  Total de trayectorias guardadas: 1168 
+  ✓ Mejor locación 434550035071040000XXXXXX051 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 473 
+  Suma CONFIG_COUNT (de configs): 473 
+  Mejor calidad (FINAL_MNRG): 0.14062500 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 376 
+  Suma CONFIG_COUNT (de locations): 473 
+  Mejor calidad (FINAL_QUALITY): 0.14062500 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 376 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
+  Mejor calidad (QUALITY_2): 0.14062500 
+  Total de trayectorias guardadas: 1168 
+  ✓ Mejor locación 434500045046050000XXXXXX051 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495194 26.5    1181914 63.2  1181914 63.2
+Vcells 871289  6.7    8388608 64.0  8388593 64.0
+✅ Success: Generated 
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BH-90-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 514 
+  Suma CONFIG_COUNT (de configs): 514 
+  Mejor calidad (FINAL_MNRG): 0.15535714 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 514 
+  Suma CONFIG_COUNT (de locations): 514 
+  Mejor calidad (FINAL_QUALITY): 0.15535714 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 514 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
+  Mejor calidad (QUALITY_2): 0.15535714 
+  Total de trayectorias guardadas: 1085 
+  ✓ Mejor locación 432330919071045050XXXXXX171 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-90-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 514 
+  Suma CONFIG_COUNT (de configs): 514 
+  Mejor calidad (FINAL_MNRG): 0.15535714 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 514 
+  Suma CONFIG_COUNT (de locations): 514 
+  Mejor calidad (FINAL_QUALITY): 0.15535714 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 514 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
+  Mejor calidad (QUALITY_2): 0.15535714 
+  Total de trayectorias guardadas: 1085 
+  ✓ Mejor locación 432300915066045050XXXXXX151 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-90-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 514 
+  Suma CONFIG_COUNT (de configs): 514 
+  Mejor calidad (FINAL_MNRG): 0.15535714 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 511 
+  Suma CONFIG_COUNT (de locations): 514 
+  Mejor calidad (FINAL_QUALITY): 0.15535714 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 511 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
+  Mejor calidad (QUALITY_2): 0.15535714 
+  Total de trayectorias guardadas: 1085 
+  ✓ Mejor locación 432250915061035044XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-90-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 514 
+  Suma CONFIG_COUNT (de configs): 514 
+  Mejor calidad (FINAL_MNRG): 0.15535714 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 492 
+  Suma CONFIG_COUNT (de locations): 514 
+  Mejor calidad (FINAL_QUALITY): 0.15535714 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 492 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
+  Mejor calidad (QUALITY_2): 0.15535714 
+  Total de trayectorias guardadas: 1085 
+  ✓ Mejor locación 432250900051030050XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-90-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 514 
+  Suma CONFIG_COUNT (de configs): 514 
+  Mejor calidad (FINAL_MNRG): 0.15535714 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 462 
+  Suma CONFIG_COUNT (de locations): 514 
+  Mejor calidad (FINAL_QUALITY): 0.15535714 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 462 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
+  Mejor calidad (QUALITY_2): 0.15535714 
+  Total de trayectorias guardadas: 1085 
+  ✓ Mejor locación 432090910071040035XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-90-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 514 
+  Suma CONFIG_COUNT (de configs): 514 
+  Mejor calidad (FINAL_MNRG): 0.15535714 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 421 
+  Suma CONFIG_COUNT (de locations): 514 
+  Mejor calidad (FINAL_QUALITY): 0.15535714 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 421 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
+  Mejor calidad (QUALITY_2): 0.15535714 
+  Total de trayectorias guardadas: 1085 
+  ✓ Mejor locación 432250900046005045XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495196 26.5    1169568 62.5  1169568 62.5
+Vcells 871291  6.7    8388608 64.0  8388602 64.0
+✅ Success: Generated 
+=== Processing algorithm: PSO-X ===
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BL-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 385 
+  Suma CONFIG_COUNT (de configs): 385 
+  Mejor calidad (FINAL_MNRG): 0.28000000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 385 
+  Suma CONFIG_COUNT (de locations): 385 
+  Mejor calidad (FINAL_QUALITY): 0.28000000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 385 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
+  Mejor calidad (QUALITY_2): 0.28000000 
+  Total de trayectorias guardadas: 855 
+  ✓ Mejor locación 09740XXXX24324246 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 385 
+  Suma CONFIG_COUNT (de configs): 385 
+  Mejor calidad (FINAL_MNRG): 0.28000000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 384 
+  Suma CONFIG_COUNT (de locations): 385 
+  Mejor calidad (FINAL_QUALITY): 0.28000000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 384 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
+  Mejor calidad (QUALITY_2): 0.28000000 
+  Total de trayectorias guardadas: 855 
+  ✓ Mejor locación 09740XXXX24024045 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 385 
+  Suma CONFIG_COUNT (de configs): 385 
+  Mejor calidad (FINAL_MNRG): 0.28000000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 370 
+  Suma CONFIG_COUNT (de locations): 385 
+  Mejor calidad (FINAL_QUALITY): 0.28000000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 370 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
+  Mejor calidad (QUALITY_2): 0.28000000 
+  Total de trayectorias guardadas: 855 
+  ✓ Mejor locación 09240XXXX24024044 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 385 
+  Suma CONFIG_COUNT (de configs): 385 
+  Mejor calidad (FINAL_MNRG): 0.28000000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 334 
+  Suma CONFIG_COUNT (de locations): 385 
+  Mejor calidad (FINAL_QUALITY): 0.28000000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 334 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
+  Mejor calidad (QUALITY_2): 0.28000000 
+  Total de trayectorias guardadas: 855 
+  ✓ Mejor locación 07740XXXX22522525 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 385 
+  Suma CONFIG_COUNT (de configs): 385 
+  Mejor calidad (FINAL_MNRG): 0.28000000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 300 
+  Suma CONFIG_COUNT (de locations): 385 
+  Mejor calidad (FINAL_QUALITY): 0.28000000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 300 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
+  Mejor calidad (QUALITY_2): 0.28000000 
+  Total de trayectorias guardadas: 855 
+  ✓ Mejor locación 07240XXXX20920935 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 385 
+  Suma CONFIG_COUNT (de configs): 385 
+  Mejor calidad (FINAL_MNRG): 0.28000000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 258 
+  Suma CONFIG_COUNT (de locations): 385 
+  Mejor calidad (FINAL_QUALITY): 0.28000000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 258 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
+  Mejor calidad (QUALITY_2): 0.28000000 
+  Total de trayectorias guardadas: 855 
+  ✓ Mejor locación 09240XXXX22522545 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495003 26.5    1166525 62.3  1166525 62.3
+Vcells 871102  6.7    8388608 64.0  8388512 64.0
+✅ Success: Generated 
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BL-32-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 432 
+  Suma CONFIG_COUNT (de configs): 432 
+  Mejor calidad (FINAL_MNRG): 0.29809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 432 
+  Suma CONFIG_COUNT (de locations): 432 
+  Mejor calidad (FINAL_QUALITY): 0.29809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 432 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 432 
+  Mejor calidad (QUALITY_2): 0.29809524 
+  Total de trayectorias guardadas: 946 
+  ✓ Mejor locación 19442XXXX17617862 con calidad 0.29809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-32-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 432 
+  Suma CONFIG_COUNT (de configs): 432 
+  Mejor calidad (FINAL_MNRG): 0.29809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 432 
+  Suma CONFIG_COUNT (de locations): 432 
+  Mejor calidad (FINAL_QUALITY): 0.29809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 432 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 432 
+  Mejor calidad (QUALITY_2): 0.29809524 
+  Total de trayectorias guardadas: 946 
+  ✓ Mejor locación 19242XXXX17517560 con calidad 0.29809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-32-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 432 
+  Suma CONFIG_COUNT (de configs): 432 
+  Mejor calidad (FINAL_MNRG): 0.29809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 416 
+  Suma CONFIG_COUNT (de locations): 432 
+  Mejor calidad (FINAL_QUALITY): 0.29809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 416 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 432 
+  Mejor calidad (QUALITY_2): 0.29809524 
+  Total de trayectorias guardadas: 946 
+  ✓ Mejor locación 18242XXXX16516560 con calidad 0.29809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-32-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 432 
+  Suma CONFIG_COUNT (de configs): 432 
+  Mejor calidad (FINAL_MNRG): 0.29809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 371 
+  Suma CONFIG_COUNT (de locations): 432 
+  Mejor calidad (FINAL_QUALITY): 0.29809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 371 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 432 
+  Mejor calidad (QUALITY_2): 0.29809524 
+  Total de trayectorias guardadas: 946 
+  ✓ Mejor locación 17742XXXX17517550 con calidad 0.29809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-32-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 432 
+  Suma CONFIG_COUNT (de configs): 432 
+  Mejor calidad (FINAL_MNRG): 0.29809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 332 
+  Suma CONFIG_COUNT (de locations): 432 
+  Mejor calidad (FINAL_QUALITY): 0.29809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 332 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 432 
+  Mejor calidad (QUALITY_2): 0.29809524 
+  Total de trayectorias guardadas: 946 
+  ✓ Mejor locación 17742XXXX17517535 con calidad 0.29809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BL-32-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 432 
+  Suma CONFIG_COUNT (de configs): 432 
+  Mejor calidad (FINAL_MNRG): 0.29809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 284 
+  Suma CONFIG_COUNT (de locations): 432 
+  Mejor calidad (FINAL_QUALITY): 0.29809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 284 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 432 
+  Mejor calidad (QUALITY_2): 0.29809524 
+  Total de trayectorias guardadas: 946 
+  ✓ Mejor locación 18242XXXX13513545 con calidad 0.29809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495005 26.5    1156148 61.8  1156148 61.8
+Vcells 871104  6.7    8388608 64.0  8388561 64.0
+✅ Success: Generated 
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BH-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 415 
+  Suma CONFIG_COUNT (de configs): 415 
+  Mejor calidad (FINAL_MNRG): 0.27809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 415 
+  Suma CONFIG_COUNT (de locations): 415 
+  Mejor calidad (FINAL_QUALITY): 0.27809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 415 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 415 
+  Mejor calidad (QUALITY_2): 0.27809524 
+  Total de trayectorias guardadas: 940 
+  ✓ Mejor locación 02941XXXX20215984 con calidad 0.27809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 415 
+  Suma CONFIG_COUNT (de configs): 415 
+  Mejor calidad (FINAL_MNRG): 0.27809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 413 
+  Suma CONFIG_COUNT (de locations): 415 
+  Mejor calidad (FINAL_QUALITY): 0.27809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 413 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 415 
+  Mejor calidad (QUALITY_2): 0.27809524 
+  Total de trayectorias guardadas: 940 
+  ✓ Mejor locación 02741XXXX20015580 con calidad 0.27809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 415 
+  Suma CONFIG_COUNT (de configs): 415 
+  Mejor calidad (FINAL_MNRG): 0.27809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 389 
+  Suma CONFIG_COUNT (de locations): 415 
+  Mejor calidad (FINAL_QUALITY): 0.27809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 389 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 415 
+  Mejor calidad (QUALITY_2): 0.27809524 
+  Total de trayectorias guardadas: 940 
+  ✓ Mejor locación 01741XXXX19515075 con calidad 0.27809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 415 
+  Suma CONFIG_COUNT (de configs): 415 
+  Mejor calidad (FINAL_MNRG): 0.27809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 309 
+  Suma CONFIG_COUNT (de locations): 415 
+  Mejor calidad (FINAL_QUALITY): 0.27809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 309 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 415 
+  Mejor calidad (QUALITY_2): 0.27809524 
+  Total de trayectorias guardadas: 940 
+  ✓ Mejor locación 02741XXXX20015075 con calidad 0.27809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 415 
+  Suma CONFIG_COUNT (de configs): 415 
+  Mejor calidad (FINAL_MNRG): 0.27809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 258 
+  Suma CONFIG_COUNT (de locations): 415 
+  Mejor calidad (FINAL_QUALITY): 0.27809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 258 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 415 
+  Mejor calidad (QUALITY_2): 0.27809524 
+  Total de trayectorias guardadas: 940 
+  ✓ Mejor locación 00241XXXX17514070 con calidad 0.27809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 415 
+  Suma CONFIG_COUNT (de configs): 415 
+  Mejor calidad (FINAL_MNRG): 0.27809524 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 214 
+  Suma CONFIG_COUNT (de locations): 415 
+  Mejor calidad (FINAL_QUALITY): 0.27809524 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 214 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 415 
+  Mejor calidad (QUALITY_2): 0.27809524 
+  Total de trayectorias guardadas: 940 
+  ✓ Mejor locación 00241XXXX18013545 con calidad 0.27809524 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495003 26.5    1151608 61.6  1151608 61.6
+Vcells 871102  6.7    8388608 64.0  8388524 64.0
+✅ Success: Generated 
+>> Generating: 
+========================================
+VALIDACIÓN - Archivo: BH-65-L0.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 454 
+  Suma CONFIG_COUNT (de configs): 454 
+  Mejor calidad (FINAL_MNRG): 0.25100000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 454 
+  Suma CONFIG_COUNT (de locations): 454 
+  Mejor calidad (FINAL_QUALITY): 0.25100000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 454 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
+  Mejor calidad (QUALITY_2): 0.25100000 
+  Total de trayectorias guardadas: 939 
+  ✓ Mejor locación 01640XXXX15021623 con calidad 0.25100000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-65-L1.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 454 
+  Suma CONFIG_COUNT (de configs): 454 
+  Mejor calidad (FINAL_MNRG): 0.25100000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 453 
+  Suma CONFIG_COUNT (de locations): 454 
+  Mejor calidad (FINAL_QUALITY): 0.25100000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 453 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
+  Mejor calidad (QUALITY_2): 0.25100000 
+  Total de trayectorias guardadas: 939 
+  ✓ Mejor locación 01240XXXX15021520 con calidad 0.25100000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-65-L2.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 454 
+  Suma CONFIG_COUNT (de configs): 454 
+  Mejor calidad (FINAL_MNRG): 0.25100000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 422 
+  Suma CONFIG_COUNT (de locations): 454 
+  Mejor calidad (FINAL_QUALITY): 0.25100000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 422 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
+  Mejor calidad (QUALITY_2): 0.25100000 
+  Total de trayectorias guardadas: 939 
+  ✓ Mejor locación 00240XXXX15021015 con calidad 0.25100000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-65-L3.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 454 
+  Suma CONFIG_COUNT (de configs): 454 
+  Mejor calidad (FINAL_MNRG): 0.25100000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 335 
+  Suma CONFIG_COUNT (de locations): 454 
+  Mejor calidad (FINAL_QUALITY): 0.25100000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 335 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
+  Mejor calidad (QUALITY_2): 0.25100000 
+  Total de trayectorias guardadas: 939 
+  ✓ Mejor locación 00240XXXX15020000 con calidad 0.25100000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-65-L4.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 454 
+  Suma CONFIG_COUNT (de configs): 454 
+  Mejor calidad (FINAL_MNRG): 0.25100000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 285 
+  Suma CONFIG_COUNT (de locations): 454 
+  Mejor calidad (FINAL_QUALITY): 0.25100000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 285 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
+  Mejor calidad (QUALITY_2): 0.25100000 
+  Total de trayectorias guardadas: 939 
+  ✓ Mejor locación 00240XXXX14020900 con calidad 0.25100000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+========================================
+VALIDACIÓN - Archivo: BH-65-L5.csv 
+----------------------------------------
+DATOS PRE-LOCACIONES (Configuraciones):
+  Total de configuraciones únicas: 454 
+  Suma CONFIG_COUNT (de configs): 454 
+  Mejor calidad (FINAL_MNRG): 0.25100000 
+----------------------------------------
+DATOS POST-LOCACIONES (Agrupadas):
+  Total de locaciones creadas: 243 
+  Suma CONFIG_COUNT (de locations): 454 
+  Mejor calidad (FINAL_QUALITY): 0.25100000 
+----------------------------------------
+DATOS EN ARCHIVO (Usando solo SOLUTION_2):
+  Total de locaciones únicas (SOLUTION_2): 243 
+  Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
+  Mejor calidad (QUALITY_2): 0.25100000 
+  Total de trayectorias guardadas: 939 
+  ✓ Mejor locación 00240XXXX13518000 con calidad 0.25100000 SÍ está en trayectorias
+  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
+========================================
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 495006 26.5    1155997 61.8  1155997 61.8
+Vcells 871105  6.7    8388608 64.0  8388602 64.0
+✅ Success: Generated 
+=== STN-i files generation finished at Sat Nov  8 21:31:34 -03 2025 ===

@@ -8,21 +8,48 @@
 #   1. Make the script executable:
 #        chmod +x run_all_generate_STN-i_Rdata.sh
 #
-#   2. Run the script:
+#   2. Run the script (using Individuals by default):
 #        ./run_all_generate_STN-i_Rdata.sh
+#
+#   3. Run the script with Individuals-Elites:
+#        ./run_all_generate_STN-i_Rdata.sh --mode=Individuals-Elites
 #
 #   Output:
 #     - Log file in Logs/run_all_generate_STN-i_Rdata.log
 #     - Generated STN-i .Rdata files in respective experiment directories
 # ==============================================================================
 
+# Parse command line arguments
+MODE="Individuals"  # Default mode
+for arg in "$@"; do
+  case $arg in
+    --mode=*)
+      MODE="${arg#--mode=}"
+      ;;
+    *)
+      echo "Unknown argument: $arg"
+      echo "Usage: $0 [--mode=Individuals|Individuals-Elites]"
+      exit 1
+      ;;
+  esac
+done
+
+# Validate mode
+if [[ "$MODE" != "Individuals" && "$MODE" != "Individuals-Elites" ]]; then
+  echo "Error: Invalid mode '$MODE'. Must be 'Individuals' or 'Individuals-Elites'"
+  exit 1
+fi
+
+echo "Running with mode: $MODE"
+
 # Create log directory if it doesn't exist
 LOG_DIR="./Logs"
 mkdir -p "$LOG_DIR"
 
 # Set log file path
-LOG_FILE="$LOG_DIR/run_all_generate_STN-i_Rdata.log"
+LOG_FILE="$LOG_DIR/run_all_generate_STN-i_Rdata_${MODE}.log"
 echo "=== STN-i data generation started at $(date) ===" > "$LOG_FILE"
+echo "Mode: $MODE" >> "$LOG_FILE"
 
 # Function to run the Rscript and log output
 run_generate_rdata() {
@@ -48,8 +75,8 @@ experiments["PSO-X"]="BL BL-32 BH BH-65"
 
 # Define locations type per algorithm
 declare -A locations_type
-locations_type["ACOTSP"]="L1 L2 L3 L4 L5"
-locations_type["PSO-X"]="L1 L2 L3 L4 L5"
+locations_type["ACOTSP"]="L0 L1 L2 L3 L4 L5"
+locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
 
 # Loop over all combinations of algorithm, experiment, and level
 for alg in "${!experiments[@]}"; do
@@ -57,8 +84,14 @@ for alg in "${!experiments[@]}"; do
 
   for exp in ${experiments[$alg]}; do
     for loc in ${locations_type[$alg]}; do
-      input_file="Experiments/$alg/Individuals/$exp/STN-i-Files/$exp-$loc.csv"
-      output_dir="Experiments/$alg/Individuals/$exp/STN-i-RData"
+      input_file="Experiments/$alg/$MODE/$exp/STN-i-Files/$exp-$loc.csv"
+      output_dir="Experiments/$alg/$MODE/$exp/STN-i-RData"
+
+      # Validate input file exists
+      if [[ ! -f "$input_file" ]]; then
+        echo "⚠️  Skipping: Input file not found: $input_file" | tee -a "$LOG_FILE"
+        continue
+      fi
 
       run_generate_rdata \
         -i "$input_file" \

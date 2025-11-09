@@ -150,9 +150,9 @@ if (is.null(opt$output)) {
 
 # Process input directory
 input_dir <- normalizePath(opt$input)
-if (!dir.exists(input_dir)) {
-  stop(sprintf("El directorio de entrada no existe: %s", input_dir))
-}
+# if (!dir.exists(input_dir)) {
+#   stop(sprintf("El directorio de entrada no existe: %s", input_dir))
+# }
 
 # Process general parameters file
 general_parameters_file <- normalizePath(opt$general_parameters)
@@ -226,17 +226,23 @@ if (!(opt$representative %in% c("min", "max", "mean", "median", "mode"))) {
 # Create Results directory path
 results_dir <- file.path(dirname(input_dir), "Results")
 
-# First process Rdata files and create Results structure using general parameters
-if (opt$verbose) cat("Procesando archivos Rdata y creando estructura Results usando parámetros generales...\n")
-process_rdata_files(
-  input_dir = input_dir,
-  parameters_file = general_parameters_file,
-  results_dir = results_dir,
-  optimum_file = instances_file,
-  best_criteria = opt$best,
-  is_na_ranking = opt$na_ranking,
-  verbose = opt$verbose
-)
+# Check if we need to process Rdata files
+# In Individuals-Elites mode, Results should already exist from Individuals processing
+# In normal Individuals mode, we need to process Rdata files first
+need_process_rdata <- !dir.exists(results_dir) || length(list.files(results_dir)) == 0
+
+if (need_process_rdata && opt$verbose) {
+  cat("Procesando archivos Rdata y creando estructura Results usando parámetros generales...\n")
+  process_rdata_files(
+    input_dir = input_dir,
+    parameters_file = general_parameters_file,
+    results_dir = results_dir,
+    optimum_file = instances_file,
+    best_criteria = opt$best,
+    is_na_ranking = opt$na_ranking,
+    verbose = opt$verbose
+  )
+}
 
 # Process each parameter file
 for (parameter_file in parameter_files) {
