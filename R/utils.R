@@ -1289,34 +1289,40 @@ get_location_code <- function(parameters_values, parameters) {
         code_part <- paste0(rep("X", total_digits), collapse = "")
       } else {
         # Calculate the subrange index and the scaled value
-        subrange_index <- floor((as.numeric(param_value) - lower_bound) / step)
-        calculated_value <- lower_bound + subrange_index * step
-        scaled_value <- as.integer(calculated_value * (10^significance))
-        max_upper_scaled <- as.integer(upper_bound * (10^significance))
-        # Validate the scaled value and max upper scaled value
-        if (is.na(scaled_value) || is.na(max_upper_scaled)) {
-          stop(paste0("Error: scaled_value or max_upper_scaled is NA for parameter ", param_name,
-                      " (scaled_value = ", scaled_value, 
-                      ", max_upper_scaled = ", max_upper_scaled, ")"))
+        # --- Scaled integer arithmetic for numeric stability ---
+        scale          <- 10^significance
+        scaled_lower   <- as.integer(round(lower_bound * scale))
+        scaled_upper   <- as.integer(round(upper_bound * scale))
+        scaled_step    <- as.integer(round(step * scale))
+        scaled_value   <- as.integer(round(as.numeric(param_value) * scale))
+        
+        if (scaled_step <= 0) {
+          stop(paste0("Error: Invalid step size for parameter ", param_name))
         }
-        current_digits <- nchar(as.character(scaled_value))
-        max_upper_digits <- nchar(as.character(max_upper_scaled))
-        # Validate the digits
-        if (is.na(current_digits) || is.na(max_upper_digits)) {
-          stop(paste0("Error: digits NA for parameter ", param_name,
-                      " (scaled_value = ", scaled_value, 
-                      ", max_upper_scaled = ", max_upper_scaled, ")"))
+        if (scaled_upper < scaled_lower) {
+          stop(paste0("Error: Upper bound < lower bound for parameter ", param_name))
         }
-        difference <- max_upper_digits - current_digits
-        if (is.na(difference)) {
-          stop(paste0("Error: difference is NA for parameter ", param_name))
-        }
+        
+        # Maximum valid index (integer division)
+        max_index <- (scaled_upper - scaled_lower) %/% scaled_step
+        
+        # Subrange index, clamped to [0, max_index]
+        subrange_index <- (scaled_value - scaled_lower) %/% scaled_step
+        subrange_index <- pmin(pmax(subrange_index, 0L), as.integer(max_index))
+        
+        # Start of the corresponding subrange
+        calculated_scaled <- scaled_lower + subrange_index * scaled_step
+        
+        # --- Prepare code formatting ---
+        current_digits   <- nchar(as.character(calculated_scaled))
+        max_upper_digits <- nchar(as.character(scaled_upper))
+        difference       <- max_upper_digits - current_digits
+        
         if (difference < 0) {
-          stop(paste0("Error: difference negative (", difference, ") for parameter ", param_name, 
-                      " (scaled_value = ", scaled_value, 
-                      ", max_upper_scaled = ", max_upper_scaled, ")"))
+          stop(paste0("Error: Negative digit difference for parameter ", param_name))
         }
-        code_part <- paste0(strrep("0", difference), scaled_value)
+        
+        code_part <- paste0(strrep("0", difference), calculated_scaled)
       }
     }
     # If the parameter type is not supported

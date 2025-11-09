@@ -1,4 +1,4 @@
-=== STN-i data generation started at Sat Nov  8 21:30:18 -03 2025 ===
+=== STN-i data generation started at Sun Nov  9 00:11:35 -03 2025 ===
 Mode: Individuals-Elites
 ⚠️  Warning: Individuals directory not found for ACOTSP: Experiments/ACOTSP/Individuals-Elites/BL/Data
     Make sure Individuals processing has completed successfully
@@ -36,7 +36,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
   Mejor calidad (QUALITY_2): 0.12875000 
   Total de trayectorias guardadas: 1150 
-  ✓ Mejor locación 432700455037021064XXXXXX160 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Mejor locación 432700456037021064XXXXXX160 con calidad 0.12875000 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -120,7 +120,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 449 
   Mejor calidad (QUALITY_2): 0.12875000 
   Total de trayectorias guardadas: 1150 
-  ✓ Mejor locación 432440455036005035XXXXXX050 con calidad 0.12875000 SÍ está en trayectorias
+  ✓ Mejor locación 432450455036005035XXXXXX050 con calidad 0.12875000 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -145,8 +145,8 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495198 26.5    1179971 63.1  1179971 63.1
-Vcells 871293  6.7    8388608 64.0  8388601 64.0
+Ncells 496608 26.6    1180082 63.1  1180082 63.1
+Vcells 874519  6.7    8388608 64.0  8388469 64.0
 ✅ Success: Generated 
 >> Generating: 
 ========================================
@@ -209,7 +209,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
   Mejor calidad (QUALITY_2): 0.12727273 
   Total de trayectorias guardadas: 1079 
-  ✓ Mejor locación 432100359046035030XXXXXX201 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Mejor locación 432100360046035030XXXXXX201 con calidad 0.12727273 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -251,7 +251,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
   Mejor calidad (QUALITY_2): 0.12727273 
   Total de trayectorias guardadas: 1079 
-  ✓ Mejor locación 432090350036040000XXXXXX051 con calidad 0.12727273 SÍ está en trayectorias
+  ✓ Mejor locación 432100350036040000XXXXXX051 con calidad 0.12727273 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -263,12 +263,12 @@ DATOS PRE-LOCACIONES (Configuraciones):
   Mejor calidad (FINAL_MNRG): 0.12727273 
 ----------------------------------------
 DATOS POST-LOCACIONES (Agrupadas):
-  Total de locaciones creadas: 424 
+  Total de locaciones creadas: 425 
   Suma CONFIG_COUNT (de locations): 489 
   Mejor calidad (FINAL_QUALITY): 0.12727273 
 ----------------------------------------
 DATOS EN ARCHIVO (Usando solo SOLUTION_2):
-  Total de locaciones únicas (SOLUTION_2): 424 
+  Total de locaciones únicas (SOLUTION_2): 425 
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 489 
   Mejor calidad (QUALITY_2): 0.12727273 
   Total de trayectorias guardadas: 1079 
@@ -276,8 +276,8 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495198 26.5    1184986 63.3  1184986 63.3
-Vcells 871293  6.7    8388608 64.0  8388565 64.0
+Ncells 496610 26.6    1184694 63.3  1184694 63.3
+Vcells 874521  6.7    8388608 64.0  8388584 64.0
 ✅ Success: Generated 
 >> Generating: 
 ========================================
@@ -319,7 +319,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
   Mejor calidad (QUALITY_2): 0.14062500 
   Total de trayectorias guardadas: 1168 
-  ✓ Mejor locación 434750060066060005XXXXXX101 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Mejor locación 434750060071060005XXXXXX101 con calidad 0.14062500 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -340,7 +340,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
   Mejor calidad (QUALITY_2): 0.14062500 
   Total de trayectorias guardadas: 1168 
-  ✓ Mejor locación 434640060061050000XXXXXX051 con calidad 0.14062500 SÍ está en trayectorias
+  ✓ Mejor locación 434650060061050000XXXXXX051 con calidad 0.14062500 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -394,12 +394,12 @@ DATOS PRE-LOCACIONES (Configuraciones):
   Mejor calidad (FINAL_MNRG): 0.14062500 
 ----------------------------------------
 DATOS POST-LOCACIONES (Agrupadas):
-  Total de locaciones creadas: 376 
+  Total de locaciones creadas: 377 
   Suma CONFIG_COUNT (de locations): 473 
   Mejor calidad (FINAL_QUALITY): 0.14062500 
 ----------------------------------------
 DATOS EN ARCHIVO (Usando solo SOLUTION_2):
-  Total de locaciones únicas (SOLUTION_2): 376 
+  Total de locaciones únicas (SOLUTION_2): 377 
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 473 
   Mejor calidad (QUALITY_2): 0.14062500 
   Total de trayectorias guardadas: 1168 
@@ -407,8 +407,8 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495194 26.5    1181914 63.2  1181914 63.2
-Vcells 871289  6.7    8388608 64.0  8388593 64.0
+Ncells 496615 26.6    1181897 63.2  1181897 63.2
+Vcells 874526  6.7    8388608 64.0  8388534 64.0
 ✅ Success: Generated 
 >> Generating: 
 ========================================
@@ -429,7 +429,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
   Mejor calidad (QUALITY_2): 0.15535714 
   Total de trayectorias guardadas: 1085 
-  ✓ Mejor locación 432330919071045050XXXXXX171 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Mejor locación 432340920071045050XXXXXX171 con calidad 0.15535714 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -450,7 +450,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
   Mejor calidad (QUALITY_2): 0.15535714 
   Total de trayectorias guardadas: 1085 
-  ✓ Mejor locación 432300915066045050XXXXXX151 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Mejor locación 432300920071045050XXXXXX151 con calidad 0.15535714 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -471,7 +471,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
   Mejor calidad (QUALITY_2): 0.15535714 
   Total de trayectorias guardadas: 1085 
-  ✓ Mejor locación 432250915061035044XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Mejor locación 432250915061035045XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -513,7 +513,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
   Mejor calidad (QUALITY_2): 0.15535714 
   Total de trayectorias guardadas: 1085 
-  ✓ Mejor locación 432090910071040035XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
+  ✓ Mejor locación 432100910071040035XXXXXX051 con calidad 0.15535714 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -525,12 +525,12 @@ DATOS PRE-LOCACIONES (Configuraciones):
   Mejor calidad (FINAL_MNRG): 0.15535714 
 ----------------------------------------
 DATOS POST-LOCACIONES (Agrupadas):
-  Total de locaciones creadas: 421 
+  Total de locaciones creadas: 422 
   Suma CONFIG_COUNT (de locations): 514 
   Mejor calidad (FINAL_QUALITY): 0.15535714 
 ----------------------------------------
 DATOS EN ARCHIVO (Usando solo SOLUTION_2):
-  Total de locaciones únicas (SOLUTION_2): 421 
+  Total de locaciones únicas (SOLUTION_2): 422 
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 514 
   Mejor calidad (QUALITY_2): 0.15535714 
   Total de trayectorias guardadas: 1085 
@@ -538,8 +538,8 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495196 26.5    1169568 62.5  1169568 62.5
-Vcells 871291  6.7    8388608 64.0  8388602 64.0
+Ncells 496609 26.6    1169349 62.5  1169349 62.5
+Vcells 874520  6.7    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 === Processing algorithm: PSO-X ===
 >> Generating: 
@@ -603,7 +603,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
   Mejor calidad (QUALITY_2): 0.28000000 
   Total de trayectorias guardadas: 855 
-  ✓ Mejor locación 09240XXXX24024044 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Mejor locación 09240XXXX24024045 con calidad 0.28000000 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -645,7 +645,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 385 
   Mejor calidad (QUALITY_2): 0.28000000 
   Total de trayectorias guardadas: 855 
-  ✓ Mejor locación 07240XXXX20920935 con calidad 0.28000000 SÍ está en trayectorias
+  ✓ Mejor locación 07240XXXX21021035 con calidad 0.28000000 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -670,8 +670,8 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495003 26.5    1166525 62.3  1166525 62.3
-Vcells 871102  6.7    8388608 64.0  8388512 64.0
+Ncells 496409 26.6    1166554 62.4  1166554 62.4
+Vcells 874324  6.7    8388608 64.0  8388588 64.0
 ✅ Success: Generated 
 >> Generating: 
 ========================================
@@ -704,12 +704,12 @@ DATOS PRE-LOCACIONES (Configuraciones):
   Mejor calidad (FINAL_MNRG): 0.29809524 
 ----------------------------------------
 DATOS POST-LOCACIONES (Agrupadas):
-  Total de locaciones creadas: 432 
+  Total de locaciones creadas: 431 
   Suma CONFIG_COUNT (de locations): 432 
   Mejor calidad (FINAL_QUALITY): 0.29809524 
 ----------------------------------------
 DATOS EN ARCHIVO (Usando solo SOLUTION_2):
-  Total de locaciones únicas (SOLUTION_2): 432 
+  Total de locaciones únicas (SOLUTION_2): 431 
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 432 
   Mejor calidad (QUALITY_2): 0.29809524 
   Total de trayectorias guardadas: 946 
@@ -801,8 +801,8 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495005 26.5    1156148 61.8  1156148 61.8
-Vcells 871104  6.7    8388608 64.0  8388561 64.0
+Ncells 496411 26.6    1159763   62  1159763   62
+Vcells 874326  6.7    8388608   64  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 ========================================
@@ -823,7 +823,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 415 
   Mejor calidad (QUALITY_2): 0.27809524 
   Total de trayectorias guardadas: 940 
-  ✓ Mejor locación 02941XXXX20215984 con calidad 0.27809524 SÍ está en trayectorias
+  ✓ Mejor locación 02941XXXX20315984 con calidad 0.27809524 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -932,8 +932,8 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495003 26.5    1151608 61.6  1151608 61.6
-Vcells 871102  6.7    8388608 64.0  8388524 64.0
+Ncells 496409 26.6    1164322 62.2  1164322 62.2
+Vcells 874324  6.7    8388608 64.0  8388533 64.0
 ✅ Success: Generated 
 >> Generating: 
 ========================================
@@ -966,12 +966,12 @@ DATOS PRE-LOCACIONES (Configuraciones):
   Mejor calidad (FINAL_MNRG): 0.25100000 
 ----------------------------------------
 DATOS POST-LOCACIONES (Agrupadas):
-  Total de locaciones creadas: 453 
+  Total de locaciones creadas: 454 
   Suma CONFIG_COUNT (de locations): 454 
   Mejor calidad (FINAL_QUALITY): 0.25100000 
 ----------------------------------------
 DATOS EN ARCHIVO (Usando solo SOLUTION_2):
-  Total de locaciones únicas (SOLUTION_2): 453 
+  Total de locaciones únicas (SOLUTION_2): 454 
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
   Mejor calidad (QUALITY_2): 0.25100000 
   Total de trayectorias guardadas: 939 
@@ -1038,7 +1038,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   Suma CONFIG_COUNT (CONFIG_COUNT_2): 454 
   Mejor calidad (QUALITY_2): 0.25100000 
   Total de trayectorias guardadas: 939 
-  ✓ Mejor locación 00240XXXX14020900 con calidad 0.25100000 SÍ está en trayectorias
+  ✓ Mejor locación 00240XXXX14021000 con calidad 0.25100000 SÍ está en trayectorias
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
 ========================================
@@ -1063,7 +1063,7 @@ DATOS EN ARCHIVO (Usando solo SOLUTION_2):
   ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)
 ========================================
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 495006 26.5    1155997 61.8  1155997 61.8
-Vcells 871105  6.7    8388608 64.0  8388602 64.0
+Ncells 496411 26.6    1155783 61.8  1155783 61.8
+Vcells 874326  6.7    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
-=== STN-i files generation finished at Sat Nov  8 21:31:34 -03 2025 ===
+=== STN-i files generation finished at Sun Nov  9 00:12:50 -03 2025 ===

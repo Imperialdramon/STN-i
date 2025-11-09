@@ -426,6 +426,186 @@ Creates RData objects for all STN-i files in the specified algorithm folders.
 
 These scripts should be run from the repository root and require proper folder structure as shown in the Project Structure section.
 
+## Location Code Generation Algorithm
+
+The `get_location_code()` function in `R/utils.R` generates unique identifiers (location codes) for configurations by discretizing their parameter values into subranges. This is the mathematical foundation for node grouping in STN-i.
+
+### Core Concept
+
+Each configuration is mapped to a **location code** by processing its parameters according to their type (categorical, integer, or real). The location code uniquely identifies a "location" in the parameter space, which corresponds to a node in the STN-i graph.
+
+### Numeric Parameter Bucketing (Integer & Real)
+
+For numeric parameters (integer or real types), we create **discrete buckets** using subrange indices:
+
+#### Subrange Index Calculation
+
+Given a parameter value `v` in the range `[lower_bound, upper_bound]` with step size `step`:
+
+$$
+\text{subrange\_index} = \left\lfloor \frac{v - \text{lower\_bound}}{\text{step}} \right\rfloor
+$$
+
+This formula assigns each value to a bucket `[k \cdot step, (k+1) \cdot step)` where `k = subrange_index`.
+
+**Example:** For `inertia` with range `[0.0, 0.9]` and `step=0.01`:
+- Value `0.045` → `subrange_index = floor((0.045 - 0) / 0.01) = 4` → bucket `[0.04, 0.05)`
+- Value `0.049` → `subrange_index = floor((0.049 - 0) / 0.01) = 4` → bucket `[0.04, 0.05)` (same bucket)
+- Value `0.050` → `subrange_index = floor((0.050 - 0) / 0.01) = 5` → bucket `[0.05, 0.06)` (different bucket)
+
+#### Scaled Integer Arithmetic
+
+To avoid floating-point precision issues, we perform all calculations using **integer arithmetic**:
+
+$$
+\text{scale} = 10^{\text{significance}}
+$$
+
+$$
+\text{scaled\_lower} = \text{round}(\text{lower\_bound} \times \text{scale})
+$$
+
+$$
+\text{scaled\_upper} = \text{round}(\text{upper\_bound} \times \text{scale})
+$$
+
+$$
+\text{scaled\_step} = \text{round}(\text{step} \times \text{scale})
+$$
+
+$$
+\text{scaled\_value} = \text{round}(v \times \text{scale})
+$$
+
+#### Subrange Index in Scaled Space
+
+$$
+\text{subrange\_index} = \left\lfloor \frac{\text{scaled\_value} - \text{scaled\_lower}}{\text{scaled\_step}} \right\rfloor
+$$
+
+With clamping to ensure the index stays within valid bounds:
+
+$$
+\text{subrange\_index} = \min\left(\max(\text{subrange\_index}, 0), \left\lfloor \frac{\text{scaled\_upper} - \text{scaled\_lower}}{\text{scaled\_step}} \right\rfloor\right)
+$$
+
+#### Code Generation for Numeric Parameters
+
+1. Calculate the **starting value of the bucket**:
+$$
+\text{calculated\_scaled} = \text{scaled\_lower} + \text{subrange\_index} \times \text{scaled\_step}
+$$
+
+2. Determine **digit padding** (to maintain fixed-width formatting):
+$$
+\text{max\_digits} = \text{len}(\text{str}(\text{scaled\_upper}))
+$$
+$$
+\text{current\_digits} = \text{len}(\text{str}(\text{calculated\_scaled}))
+$$
+$$
+\text{padding} = \text{max\_digits} - \text{current\_digits}
+$$
+
+3. Format as code part:
+$$
+\text{code\_part} = \text{"0"} \times \text{padding} + \text{str}(\text{calculated\_scaled})
+$$
+
+**Example:** For `inertia` with `lower_bound=0.0`, `upper_bound=0.9`, `step=0.01`, `significance=2`:
+
+```
+Scaled values:
+  scaled_lower = round(0.0 × 10²) = 0
+  scaled_upper = round(0.9 × 10²) = 90
+  scaled_step = round(0.01 × 10²) = 1
+
+For value v = 0.45:
+  scaled_value = round(0.45 × 10²) = 45
+  subrange_index = floor((45 - 0) / 1) = 45
+  calculated_scaled = 0 + 45 × 1 = 45
+  max_digits = len("90") = 2
+  current_digits = len("45") = 2
+  padding = 2 - 2 = 0
+  code_part = "45"
+
+For value v = 0.05:
+  scaled_value = round(0.05 × 10²) = 5
+  subrange_index = floor((5 - 0) / 1) = 5
+  calculated_scaled = 0 + 5 × 1 = 5
+  max_digits = len("90") = 2
+  current_digits = len("5") = 1
+  padding = 2 - 1 = 1
+  code_part = "05"
+```
+
+### Categorical & Ordinal Parameters
+
+For categorical and ordinal parameters, a **location dictionary** maps each discrete value to an integer code:
+
+$$
+\text{code} = \text{location\_dict}[\text{value}]
+$$
+
+The code is padded with leading zeros to match the maximum code width:
+
+$$
+\text{max\_code\_width} = \text{len}(\text{str}(\max(\text{location\_dict values})))
+$$
+
+**Example:** For `topology` with mapping `{0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6}`:
+
+```
+value = 5 → code_dict["5"] = 5 → max_width = 1 → code_part = "5"
+value = 2 → code_dict["2"] = 2 → max_width = 1 → code_part = "2"
+```
+
+### Missing Values (NA)
+
+When a parameter value is `NA` (e.g., a conditional parameter that's not active):
+
+For numeric parameters:
+$$
+\text{code\_part} = \text{"X"} \times \text{len}(\text{str}(\text{scaled\_upper}))
+$$
+
+For categorical parameters:
+$$
+\text{code\_part} = \text{"X"} \times \text{max\_code\_width}
+$$
+
+### Final Location Code
+
+The final location code is the concatenation of all parameter codes in order:
+
+$$
+\text{location\_code} = \text{code\_param\_1} + \text{code\_param\_2} + \ldots + \text{code\_param\_n}
+$$
+
+**Example:** For a configuration with `topology=1`, `particles=25`, `phi1=0.45`:
+
+```
+code_topology = "1"
+code_particles = (scaled: 250) = "250"
+code_phi1 = (scaled: 45) = "045"
+
+location_code = "1" + "250" + "045" = "1250045"
+```
+
+### Granularity Levels (L0-L5)
+
+Different granularity levels use different step sizes, controlling how many configurations map to each node:
+
+- **L0 (finest)**: Smallest steps → More nodes, each representing fewer configurations
+- **L5 (coarsest)**: Largest steps → Fewer nodes, each representing more configurations
+
+For example, with `inertia` ∈ `[0.0, 0.9]` and `significance=2`:
+- **L0**: `step=0.01` → 90 possible codes (0-89)
+- **L1**: `step=0.05` → 18 possible codes (0-17)
+- **L5**: `step=0.45` → 2 possible codes (0-1)
+
+This creates a **hierarchical parameter space representation**, allowing analysis at multiple levels of abstraction.
+
 ## Aditional Data
 
 ### Experiments
