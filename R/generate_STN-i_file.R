@@ -13,26 +13,26 @@
 # Usage:
 # Rscript generate_STN-i_file.R --input=<input_dir> --general_parameters=<general_params_file> /
 #                               --parameters=<params_file_or_dir> --output=<output_dir> /
-#                               [--name=<output_name>] [--best=<min|max>] /
-#                               [--criteria=<min|max|mean|median|mode>] /
+#                               [--name=<output_name>] [--best_criteria=<min|max>] /
+#                               [--quality_criteria=<min|max|mean|median|mode>] /
 #                               [--significance=<integer>] [--instances=<instances_file>] /
 #                               [--na_ranking=<TRUE|FALSE>] /
-#                               [--representative=<min|max|mean|median|mode>] /
+#                               [--representative_criteria=<min|max|mean|median|mode>] /
 #                               [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
-# --input              : (Required) Directory containing input .Rdata files
-# --general_parameters : (Required) CSV file with general parameters for data processing
-# --parameters         : (Required) Directory or CSV file with location parameters
-# --output            : (Required) Output directory for STN-i files
-# --name              : (Optional) Name of the output STN-i file
-# --best              : (Optional) Criterion for best value ('min' or 'max', default: 'min')
-# --criteria          : (Optional) Quality criterion ('min','max','mean','median','mode', default: 'mean')
-# --significance      : (Optional) Significance level for numerical parameters (default: 2)
-# --instances         : (Optional) CSV file with instance optimum values
-# --na_ranking        : (Optional) Consider NA as worst possible value in rankings (default: FALSE)
-# --representative    : (Optional) Criterion for representative configuration (default: 'mean')
-# --verbose           : (Optional) Show detailed processing information (default: FALSE)
+# --input                   : (Required) Directory containing input .Rdata files
+# --general_parameters      : (Required) CSV file with general parameters for data processing
+# --parameters              : (Required) Directory or CSV file with location parameters
+# --output                  : (Required) Output directory for STN-i files
+# --name                    : (Optional) Name of the output STN-i file
+# --best_criteria           : (Optional) Criterion for best value configurations ('min' or 'max', default: 'min')
+# --quality_criteria        : (Optional) Quality criterion ('min','max','mean','median','mode', default: 'mean')
+# --significance            : (Optional) Significance level for numerical parameters (default: 2)
+# --instances               : (Optional) CSV file with instance optimum values
+# --na_ranking              : (Optional) Consider NA as worst possible value in rankings (default: FALSE)
+# --representative_criteria : (Optional) Criterion for representative configuration (default: 'mean')
+# --verbose                 : (Optional) Show detailed processing information (default: FALSE)
 #
 # Requirements:
 # - R with the following packages installed:
@@ -94,12 +94,12 @@ option_list <- list(
               default=NULL,
               help="Nombre del archivo STN-i de salida [default= %default]"),
 
-  make_option(c("-b", "--best"),
+  make_option(c("-b", "--best_criteria"),
               type="character", 
               default="min",
               help="Criterio para seleccionar el mejor valor ('min' o 'max') de una configuración pre-agrupamiento [default= %default]"),
 
-  make_option(c("-c", "--criteria"),
+  make_option(c("-c", "--quality_criteria"),
               type="character", 
               default="mean",
               help="Criterio para la calidad de configuraciones agrupadas ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
@@ -119,7 +119,7 @@ option_list <- list(
               default=FALSE,
               help="Considerar NA como peor valor posible en rankings [default= %default]"),
 
-  make_option(c("-r", "--representative"),
+  make_option(c("-r", "--representative_criteria"),
               type="character",
               default="mean",
               help="Criterio para la configuración representativa de una locación ('min', 'max', 'mean', 'median', 'mode') [default= %default]"),
@@ -150,9 +150,6 @@ if (is.null(opt$output)) {
 
 # Process input directory
 input_dir <- normalizePath(opt$input)
-# if (!dir.exists(input_dir)) {
-#   stop(sprintf("El directorio de entrada no existe: %s", input_dir))
-# }
 
 # Process general parameters file
 general_parameters_file <- normalizePath(opt$general_parameters)
@@ -182,13 +179,13 @@ output_dir <- normalizePath(opt$output, mustWork = FALSE)
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Validate if best criteria is either 'min' or 'max'
-if (!(opt$best %in% c("min", "max"))) {
-  stop("El criterio 'best' debe ser 'min' o 'max'")
+if (!(opt$best_criteria %in% c("min", "max"))) {
+  stop("El criterio 'best_criteria' debe ser 'min' o 'max'")
 }
 
 # Validate if quality criteria is valid
-if (!(opt$criteria %in% c("min", "max", "mean", "median", "mode"))) {
-  stop("El criterio 'criteria' debe ser uno de los siguientes: 'min', 'max', 'mean', 'median', 'mode'")
+if (!(opt$quality_criteria %in% c("min", "max", "mean", "median", "mode"))) {
+  stop("El criterio 'quality_criteria' debe ser uno de los siguientes: 'min', 'max', 'mean', 'median', 'mode'")
 }
 
 # Validate if significance is a positive integer
@@ -219,7 +216,7 @@ if (!is.logical(opt$na_ranking)) {
 }
 
 # Validate if representative criteria is valid
-if (!(opt$representative %in% c("min", "max", "mean", "median", "mode"))) {
+if (!(opt$representative_criteria %in% c("min", "max", "mean", "median", "mode"))) {
   stop("El criterio 'representative' debe ser uno de los siguientes: 'min', 'max', 'mean', 'median', 'mode'")
 }
 
@@ -238,7 +235,7 @@ if (need_process_rdata && opt$verbose) {
     parameters_file = general_parameters_file,
     results_dir = results_dir,
     optimum_file = instances_file,
-    best_criteria = opt$best,
+    best_criteria = opt$best_criteria,
     is_na_ranking = opt$na_ranking,
     verbose = opt$verbose
   )
@@ -271,8 +268,8 @@ for (parameter_file in parameter_files) {
     parameters_file = parameter_file,
     output_dir = output_dir,
     output_name = current_name,
-    quality_criteria = opt$criteria,
-    representative_criteria = opt$representative,
+    quality_criteria = opt$quality_criteria,
+    representative_criteria = opt$representative_criteria,
     significance = opt$significance,
     verbose = opt$verbose
   )

@@ -21,27 +21,24 @@
 process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum_file = NULL, best_criteria = "min", is_na_ranking = FALSE, verbose = FALSE) {
   # List all Rdata files
   files <- list.files(input_dir, pattern = "\\.Rdata$", full.names = TRUE)
-  
+
   # Create Results directory if it doesn't exist
   dir.create(results_dir, showWarnings = FALSE, recursive = TRUE)
-  
+
   # Read parameters
   parameters <- read.csv(parameters_file, header = TRUE, stringsAsFactors = FALSE, sep = ";")
   parameters$NAME <- trimws(parameters$NAME)
   parameters$TYPE <- trimws(parameters$TYPE)
-  
-  # Initialize results storage
-  all_results <- list()
-  
-    # Process each Rdata file
+
+  # Process each Rdata file
   for (file in files) {
     if (verbose) cat("Procesando archivo:", basename(file), "\n")
     seed_dir <- file.path(results_dir, tools::file_path_sans_ext(basename(file)))
     dir.create(seed_dir, showWarnings = FALSE, recursive = TRUE)
-    
+
     tryCatch({
       # Load irace results with suppressed output
-      irace_results <- suppressMessages(suppressWarnings(read_logfile(file)))      # Create configurations file
+      irace_results <- suppressMessages(suppressWarnings(read_logfile(file)))
       if (verbose) cat("  Creando archivo configurations.csv...\n")
       configs_file <- file.path(seed_dir, "configurations.csv")
       configs <- create_configurations_file(
@@ -51,7 +48,7 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
         parameters,
         configs_file
       )
-      
+
       # Create trajectories file
       if (verbose) cat("  Creando archivo trajectories.csv...\n")
       trajectories_file <- file.path(seed_dir, "trajectories.csv")
@@ -62,7 +59,7 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
         length(irace_results$allElites) - 1,
         trajectories_file
       )
-      
+
       # Create instances file
       if (verbose) cat("  Creando archivo instances.csv...\n")
       instances_file <- file.path(seed_dir, "instances.csv")
@@ -72,7 +69,7 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
         optimum_file,
         instances_file
       )
-      
+
       # Create results file
       if (verbose) cat("  Creando archivo results.csv...\n")
       results_file <- file.path(seed_dir, "results.csv")
@@ -83,25 +80,10 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
         best_criteria,
         is_na_ranking
       )
-      
-      # Store results
-      all_results[[basename(file)]] <- list(
-        configurations = configs,
-        experiments = results,
-        trajectories = trajectories,
-        instances = instances_df
-      )
     }, error = function(e) {
       cat("Error procesando archivo", basename(file), ":", conditionMessage(e), "\n")
-      all_results[[basename(file)]] <- list(
-        configurations = data.frame(),
-        experiments = data.frame(),
-        trajectories = data.frame(),
-        instances = data.frame()
-      )
     })
   }
-  #return(all_results)
 }
 
 #' Create configurations file
@@ -1061,56 +1043,56 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
   trajectories_df$NEW_CONFIG_ID_1 <- NULL
   trajectories_df$NEW_CONFIG_ID_2 <- NULL
 
-  # TEMPORAL: Calcular suma total de CONFIG_COUNT para validación
-  total_config_count <- sum(locations_df$CONFIG_COUNT)
+  # # TEMPORAL: Calcular suma total de CONFIG_COUNT para validación
+  # total_config_count <- sum(locations_df$CONFIG_COUNT)
   
-  # Validación: verificar que todas las locaciones están en SOLUTION_1 o SOLUTION_2
-  unique_locations_in_file <- unique(c(trajectories_df$SOLUTION_1, trajectories_df$SOLUTION_2))
-  locations_in_df <- locations_df$LOCATION_CODE
-  missing_locations <- setdiff(locations_in_df, unique_locations_in_file)
+  # # Validación: verificar que todas las locaciones están en SOLUTION_1 o SOLUTION_2
+  # unique_locations_in_file <- unique(c(trajectories_df$SOLUTION_1, trajectories_df$SOLUTION_2))
+  # locations_in_df <- locations_df$LOCATION_CODE
+  # missing_locations <- setdiff(locations_in_df, unique_locations_in_file)
 
-  # Unificar por SOLUTION_2 para evitar duplicados
-  unique_solution2_data <- trajectories_df[!duplicated(trajectories_df$SOLUTION_2), ]
+  # # Unificar por SOLUTION_2 para evitar duplicados
+  # unique_solution2_data <- trajectories_df[!duplicated(trajectories_df$SOLUTION_2), ]
   
-  cat("========================================\n")
-  cat("VALIDACIÓN - Archivo:", output_name, "\n")
-  cat("----------------------------------------\n")
-  cat("DATOS PRE-LOCACIONES (Configuraciones):\n")
-  cat("  Total de configuraciones únicas:", length(configurations_with_quality), "\n")
-  cat("  Suma CONFIG_COUNT (de configs):", sum(sapply(configurations_with_quality, function(x) x$CONFIG_COUNT)), "\n")
-  cat("  Mejor calidad (FINAL_MNRG):", sprintf(paste0("%.", significance, "f"), min(sapply(configurations_with_quality, function(x) x$FINAL_MNRG), na.rm = TRUE)), "\n")
-  cat("----------------------------------------\n")
-  cat("DATOS POST-LOCACIONES (Agrupadas):\n")
-  cat("  Total de locaciones creadas:", nrow(locations_df), "\n")
-  cat("  Suma CONFIG_COUNT (de locations):", total_config_count, "\n")
-  cat("  Mejor calidad (FINAL_QUALITY):", sprintf(paste0("%.", significance, "f"), min(locations_df$FINAL_QUALITY, na.rm = TRUE)), "\n")
-  cat("----------------------------------------\n")
-  cat("DATOS EN ARCHIVO (Usando solo SOLUTION_2):\n")
-  cat("  Total de locaciones únicas (SOLUTION_2):", length(unique(trajectories_df$SOLUTION_2)), "\n")
-  unique_solution2_data <- trajectories_df[!duplicated(trajectories_df$SOLUTION_2), ]
-  cat("  Suma CONFIG_COUNT (CONFIG_COUNT_2):", sum(unique_solution2_data$CONFIG_COUNT_2, na.rm = TRUE), "\n")
-  cat("  Mejor calidad (QUALITY_2):", sprintf(paste0("%.", significance, "f"), min(unique_solution2_data$QUALITY_2, na.rm = TRUE)), "\n")
-  cat("  Total de trayectorias guardadas:", nrow(trajectories_df), "\n")
+  # cat("========================================\n")
+  # cat("VALIDACIÓN - Archivo:", output_name, "\n")
+  # cat("----------------------------------------\n")
+  # cat("DATOS PRE-LOCACIONES (Configuraciones):\n")
+  # cat("  Total de configuraciones únicas:", length(configurations_with_quality), "\n")
+  # cat("  Suma CONFIG_COUNT (de configs):", sum(sapply(configurations_with_quality, function(x) x$CONFIG_COUNT)), "\n")
+  # cat("  Mejor calidad (FINAL_MNRG):", sprintf(paste0("%.", significance, "f"), min(sapply(configurations_with_quality, function(x) x$FINAL_MNRG), na.rm = TRUE)), "\n")
+  # cat("----------------------------------------\n")
+  # cat("DATOS POST-LOCACIONES (Agrupadas):\n")
+  # cat("  Total de locaciones creadas:", nrow(locations_df), "\n")
+  # cat("  Suma CONFIG_COUNT (de locations):", total_config_count, "\n")
+  # cat("  Mejor calidad (FINAL_QUALITY):", sprintf(paste0("%.", significance, "f"), min(locations_df$FINAL_QUALITY, na.rm = TRUE)), "\n")
+  # cat("----------------------------------------\n")
+  # cat("DATOS EN ARCHIVO (Usando solo SOLUTION_2):\n")
+  # cat("  Total de locaciones únicas (SOLUTION_2):", length(unique(trajectories_df$SOLUTION_2)), "\n")
+  # unique_solution2_data <- trajectories_df[!duplicated(trajectories_df$SOLUTION_2), ]
+  # cat("  Suma CONFIG_COUNT (CONFIG_COUNT_2):", sum(unique_solution2_data$CONFIG_COUNT_2, na.rm = TRUE), "\n")
+  # cat("  Mejor calidad (QUALITY_2):", sprintf(paste0("%.", significance, "f"), min(unique_solution2_data$QUALITY_2, na.rm = TRUE)), "\n")
+  # cat("  Total de trayectorias guardadas:", nrow(trajectories_df), "\n")
   
-  # Verificar si la mejor locación está en el archivo
-  best_location_idx <- which.min(locations_df$FINAL_QUALITY)
-  best_location_code <- locations_df$LOCATION_CODE[best_location_idx]
-  best_location_quality <- locations_df$FINAL_QUALITY[best_location_idx]
-  is_in_solution1 <- best_location_code %in% trajectories_df$SOLUTION_1
-  is_in_solution2 <- best_location_code %in% trajectories_df$SOLUTION_2
-  if (is_in_solution1 || is_in_solution2) {
-    cat("  ✓ Mejor locación", best_location_code, "con calidad", sprintf(paste0("%.", significance, "f"), best_location_quality), "SÍ está en trayectorias\n")
-  } else {
-    cat("  ⚠️  ADVERTENCIA: Mejor locación", best_location_code, "con calidad", sprintf(paste0("%.", significance, "f"), best_location_quality), "NO está en trayectorias!\n")
-  }
+  # # Verificar si la mejor locación está en el archivo
+  # best_location_idx <- which.min(locations_df$FINAL_QUALITY)
+  # best_location_code <- locations_df$LOCATION_CODE[best_location_idx]
+  # best_location_quality <- locations_df$FINAL_QUALITY[best_location_idx]
+  # is_in_solution1 <- best_location_code %in% trajectories_df$SOLUTION_1
+  # is_in_solution2 <- best_location_code %in% trajectories_df$SOLUTION_2
+  # if (is_in_solution1 || is_in_solution2) {
+  #   cat("  ✓ Mejor locación", best_location_code, "con calidad", sprintf(paste0("%.", significance, "f"), best_location_quality), "SÍ está en trayectorias\n")
+  # } else {
+  #   cat("  ⚠️  ADVERTENCIA: Mejor locación", best_location_code, "con calidad", sprintf(paste0("%.", significance, "f"), best_location_quality), "NO está en trayectorias!\n")
+  # }
   
-  if (length(missing_locations) > 0) {
-    cat("  ⚠️  ADVERTENCIA: Hay", length(missing_locations), "locaciones NO guardadas en trayectorias!\n")
-    cat("  Locaciones faltantes:", paste(missing_locations, collapse = ", "), "\n")
-  } else {
-    cat("  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)\n")
-  }
-  cat("========================================\n")
+  # if (length(missing_locations) > 0) {
+  #   cat("  ⚠️  ADVERTENCIA: Hay", length(missing_locations), "locaciones NO guardadas en trayectorias!\n")
+  #   cat("  Locaciones faltantes:", paste(missing_locations, collapse = ", "), "\n")
+  # } else {
+  #   cat("  ✓ Todas las locaciones están en las trayectorias (SOLUTION_1 o SOLUTION_2)\n")
+  # }
+  # cat("========================================\n")
 
   # Write output files
   dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
@@ -1661,7 +1643,7 @@ get_stn_i_data <- function(input_file) {
 get_stn_i_palette_colors <- function(palette = 1) {
   palette_colors <- switch(as.character(palette),
     "1" = list(
-      node = list(regular = "gray70", elite = "orange", best = "red", shapes = "black"),
+      node = list(regular = "black", elite = "orange", best = "red", shapes = "black"),
       edge = list(improving = "gray50",
                   equal     = rgb(0, 0, 250, max = 255, alpha = 180),
                   worsening = rgb(0, 250, 0, max = 255, alpha = 180))
@@ -1789,43 +1771,15 @@ stn_i_decorate <- function(STN_i, problem_type = "min", show_regular = TRUE, sho
   # Filter vertices according to settings
   to_remove <- c()
   if (!show_regular) {
-    to_remove <- c(to_remove, V(STN_i)[Quality == "REGULAR"]$name)
+    to_remove <- c(to_remove, V(STN_i)[IS_ELITE == FALSE]$name)
   }
   if (!show_start_regular) {
-    to_remove <- c(to_remove, V(STN_i)[Topology == "START" & Quality == "REGULAR"]$name)
+    to_remove <- c(to_remove, V(STN_i)[STARTS == 0 & IS_ELITE == FALSE]$name)
   }
 
   # Remove duplicates before deletion
   to_remove <- unique(to_remove)
   STN_i <- delete_vertices(STN_i, to_remove)
-
-  # Retrieve edge list and corresponding fitness values
-  edge_list <- as_edgelist(STN_i)
-  node_fitness <- V(STN_i)$Fitness
-  node_names <- V(STN_i)$name
-
-  # Extract fitness of origin and destination nodes for each edge
-  fitness_from <- node_fitness[match(edge_list[, 1], node_names)]
-  fitness_to   <- node_fitness[match(edge_list[, 2], node_names)]
-
-  # Assign edge types based on fitness comparison
-  if (ecount(STN_i) > 0) {
-    # Initialize edge types - use a character vector approach
-    edge_types <- rep("EQUAL", ecount(STN_i))
-    
-    if (problem_type == "min") {
-      # For minimization: improving means fitness_to < fitness_from
-      edge_types[fitness_to < fitness_from] <- "IMPROVING"
-      edge_types[fitness_to > fitness_from] <- "WORSENING"
-    } else {
-      # For maximization: improving means fitness_to > fitness_from
-      edge_types[fitness_to > fitness_from] <- "IMPROVING"
-      edge_types[fitness_to < fitness_from] <- "WORSENING"
-    }
-    
-    # Assign all edge types at once
-    E(STN_i)$Type <- edge_types
-  }
 
   # Assign edge colors based on type
   E(STN_i)$color[E(STN_i)$Type == "IMPROVING"] <- palette_colors$edge$improving
@@ -1835,21 +1789,51 @@ stn_i_decorate <- function(STN_i, problem_type = "min", show_regular = TRUE, sho
   # Set edge width proportional to number of visits (weight)
   E(STN_i)$width <- E(STN_i)$weight
 
-  # Assign node shapes based on Topology type
-  V(STN_i)[V(STN_i)$Topology == "STANDARD"]$shape <- "circle"
-  V(STN_i)[V(STN_i)$Topology == "START"]$shape <- "square"
-  V(STN_i)[V(STN_i)$Topology == "END"]$shape <- "triangle"
+  # TODO: Mover esto o similar a la función de creación del .Rdata, usando TYPE y guardar el nombre (también CLASS para el tema de élite o regular(?))
+  # Assign node shapes based on combination of configuration topology (STARTS, STANDARDS, ENDS)
+  node_shapes <- character(vcount(STN_i))
+  for (i in 1:vcount(STN_i)) {
+    has_start <- V(STN_i)$STARTS[i] > 0
+    has_standard <- V(STN_i)$STANDARDS[i] > 0
+    has_end <- V(STN_i)$ENDS[i] > 0
+    
+    if (has_start && !has_standard && !has_end) {
+      # Start only → square
+      node_shapes[i] <- "square"
+    } else if (!has_start && !has_standard && has_end) {
+      # End only → triangle
+      node_shapes[i] <- "triangle"
+    } else if (!has_start && has_standard && !has_end) {
+      # Standard only → diamond
+      node_shapes[i] <- "diamond"
+    } else if (has_start && !has_standard && has_end) {
+      # Start + End (no Standard) → cross
+      node_shapes[i] <- "cross"
+    } else if (has_start && has_standard && !has_end) {
+      # Start + Standard (no End) → star
+      node_shapes[i] <- "star"
+    } else if (!has_start && has_standard && has_end) {
+      # Standard + End (no Start) → ellipse
+      node_shapes[i] <- "ellipse"
+    } else {
+      # Start + Standard + End → circle
+      node_shapes[i] <- "circle"
+    }
+  }
+  V(STN_i)$shape <- node_shapes
 
-  # Assign node colors based on Quality
-  V(STN_i)[V(STN_i)$Quality == "REGULAR"]$color <- palette_colors$node$regular
-  V(STN_i)[V(STN_i)$Quality == "ELITE"]$color <- palette_colors$node$elite
-  V(STN_i)[V(STN_i)$Quality == "BEST"]$color <- palette_colors$node$best
+  # Assign node colors based on IS_ELITE and IS_BEST flags
+  V(STN_i)[V(STN_i)$IS_ELITE == FALSE]$color <- palette_colors$node$regular
+  V(STN_i)[V(STN_i)$IS_ELITE == TRUE]$color <- palette_colors$node$elite
+  V(STN_i)[V(STN_i)$IS_BEST == TRUE]$color <- palette_colors$node$best
 
-  # Set node size proportional to in-degree (number of incoming visits)
-  V(STN_i)$size <- strength(STN_i, mode = "in") + 1
+  # Set node size proportional to CONFIGURATIONS count (how many times node appears)
+  # V(STN_i)$size <- V(STN_i)$CONFIGURATIONS + 1
+  V(STN_i)$size <- 5
 
   # Slightly increase the size of BEST nodes for visibility
-  V(STN_i)[V(STN_i)$Quality == "BEST"]$size <- V(STN_i)[V(STN_i)$Quality == "BEST"]$size + 0.5
+  #V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size <- V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size + 0.5
+  V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size <- V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size + 2
 
   return(STN_i)
 }
@@ -1909,43 +1893,147 @@ stn_i_plot_create <- function(input_file, show_regular = TRUE, show_start_regula
 #' \dontrun{
 #' save_stn_i_plot("output/stn_i_plot.pdf", STN_i, layout_data, palette_colors, nsizef = 1, ewidthf = 0.5, asize = 0.3, ecurv = 0.3)
 #' }
-save_stn_i_plot <- function(output_file_path, STN_i, layout_data, palette_colors, nsizef = 1, ewidthf = 0.5, asize = 0.3, ecurv = 0.3) {
-  # Ensure the file name ends in .pdf
-  if (!grepl("\\.pdf$", output_file_path)) {
+save_stn_i_plot <- function(output_file_path, STN_i, layout_data,
+                            palette_colors, nsizef = 1, ewidthf = 0.5,
+                            asize = 0.3, ecurv = 0.3) {
+
+  if (!grepl("\\.pdf$", output_file_path))
     output_file_path <- paste0(output_file_path, ".pdf")
+
+  # Helper: extract per-vertex values
+  get_vals <- function(params, name, v, n) {
+    x <- params("vertex", name)
+    if (length(x) == 1) rep(x, n) else x[v]
   }
 
-  # Define triangle shape
-  mytriangle <- function(coords, v = NULL, params) {
-    vertex.color <- params("vertex", "color")
-    if (length(vertex.color) != 1 && !is.null(v)) {
-      vertex.color <- vertex.color[v]
+  # Generic polygon plotter
+  polygon_shape <- function(coords, v, params, fpoly) {
+    n <- nrow(coords)
+    cols  <- get_vals(params, "color", v, n)
+    sizes <- get_vals(params, "size",  v, n)
+
+    for (i in seq_len(n)) {
+      poly <- fpoly(coords[i,1], coords[i,2], sizes[i])
+      polygon(poly$x, poly$y, col = cols[i], border = NA)
     }
-    vertex.size <- 1 / 200 * params("vertex", "size")
-    if (length(vertex.size) != 1 && !is.null(v)) {
-      vertex.size <- vertex.size[v]
-    }
-    symbols(x = coords[, 1], y = coords[, 2], bg = vertex.color, col = vertex.color,
-            stars = cbind(vertex.size, vertex.size, vertex.size),
-            add = TRUE, inches = FALSE)
   }
-  # Register triangle as a custom shape (reuses circle clipping)
-  add_shape("triangle", clip = shapes("circle")$clip, plot = mytriangle)
 
-  # Define legend components based on the palette
-  legend.txt <- c("Start", "Standard", "End", "Regular", "Elite", "Best", "Improve", "Equal", "Worse")
-  legend.col <- c(
-    palette_colors$node$shapes, palette_colors$node$shapes, palette_colors$node$shapes,
-    palette_colors$node$regular, palette_colors$node$elite, palette_colors$node$best,
-    palette_colors$edge$improving, palette_colors$edge$equal, palette_colors$edge$worsening
-  )
-  legend.shape <- c(15, 21, 17, 21, 21, 21, NA, NA, NA)
-  legend.lty <- c(NA, NA, NA, NA, NA, NA, 1, 1, 1)
+  # Circle
+  f_circle <- function(x, y, s) {
+    r <- s * 0.5
+    t <- seq(0, 2*pi, length.out = 60)
+    list(
+      x = x + r*cos(t),
+      y = y + r*sin(t)
+    )
+  }
 
-  # Open PDF device
-  pdf(output_file_path)
+  # Square
+  f_square <- function(x, y, s) {
+    r <- s * 0.5
+    k <- r / sqrt(2)   # para que quepa dentro del mismo radio
+    list(
+      x = x + c(-k, k, k, -k),
+      y = y + c(k,  k, -k, -k)
+    )
+  }
 
-  # Compute adjusted node sizes
+  # Triangle
+  f_triangle <- function(x, y, s) {
+    r <- s * 0.5
+    ang <- seq(pi/2, pi/2 + 2*pi, length.out = 4)[1:3]
+    list(
+      x = x + r * cos(ang),
+      y = y + r * sin(ang)
+    )
+  }
+
+  # Ellipse
+  f_ellipse <- function(x, y, s) {
+    r1 <- s * 0.5
+    r2 <- r1 * 0.60
+    t  <- seq(0, 2*pi, length.out=60)
+    list(
+      x = x + r1*cos(t),
+      y = y + r2*sin(t)
+    )
+  }
+
+  # Cross
+  f_cross <- function(x, y, s) {
+    r <- s * 0.5
+    t <- r * 0.30
+    list(
+      x = x + c(
+        -t,  t,   t,   r,   r,   t,   t,  -t,
+        -t, -r,  -r,  -t
+      ),
+      y = y + c(
+        r,  r,   t,   t,  -t,  -t,  -r,  -r,
+        -t, -t,   t,   t
+      )
+    )
+  }
+
+  # Star
+  f_star <- function(x, y, s) {
+    r1 <- s * 0.5
+    r2 <- r1 * 0.45
+    k  <- 5
+    t  <- seq(0, 2*pi, length.out = 2*k + 1)
+    rad <- rep(c(r1, r2), k)[1:(2*k)]
+    list(
+      x = x + rad * cos(t),
+      y = y + rad * sin(t)
+    )
+  }
+
+  # Diamond
+  f_diamond <- function(x, y, s) {
+    r <- s * 0.5
+    list(
+      x = x + c(0,  r,  0, -r),
+      y = y + c(r,  0, -r,  0)
+    )
+  }
+
+  # --------------------------------------------------------------------
+  # Register all shapes
+  # --------------------------------------------------------------------
+  add_shape("circle",
+            clip = shapes("circle")$clip,
+            plot = function(...) polygon_shape(..., fpoly = f_circle))
+
+  add_shape("square",
+            clip = shapes("circle")$clip,
+            plot = function(...) polygon_shape(..., fpoly = f_square))
+
+  add_shape("triangle",
+            clip = shapes("circle")$clip,
+            plot = function(...) polygon_shape(..., fpoly = f_triangle))
+
+  add_shape("ellipse",
+            clip = shapes("circle")$clip,
+            plot = function(...) polygon_shape(..., fpoly = f_ellipse))
+
+  add_shape("cross",
+            clip = shapes("circle")$clip,
+            plot = function(...) polygon_shape(..., fpoly = f_cross))
+
+  add_shape("star",
+            clip = shapes("circle")$clip,
+            plot = function(...) polygon_shape(..., fpoly = f_star))
+
+  add_shape("diamond",
+            clip = shapes("circle")$clip,
+            plot = function(...) polygon_shape(..., fpoly = f_diamond))
+
+  pdf(output_file_path, width = 11, height = 8)
+
+  # Allow drawing outside
+  par(xpd = NA)
+
+  # --- Node size computation ---
   maxns <- max(V(STN_i)$size)
   if (maxns > 100) {
     nsize <- nsizef * sqrt(V(STN_i)$size) + 1
@@ -1954,21 +2042,97 @@ save_stn_i_plot <- function(output_file_path, STN_i, layout_data, palette_colors
   } else {
     nsize <- nsizef * V(STN_i)$size
   }
-
   ewidth <- ewidthf * E(STN_i)$width
-  title <- paste(layout_data$title, "Nodes:", vcount(STN_i), "Edges:", ecount(STN_i), "Comp:", components(STN_i)$no)
 
-  # Plot graph
-  plot(STN_i, layout = layout_data$coords, vertex.label = "", vertex.size = nsize, main = title, edge.width = ewidth, edge.arrow.size = asize, edge.curved = ecurv)
+  # --- Title ---
+  regular_count <- sum(!V(STN_i)$IS_ELITE, na.rm=TRUE)
+  elite_count   <- sum( V(STN_i)$IS_ELITE,  na.rm=TRUE)
+  ttl <- paste(
+    layout_data$title,
+    "\nNodes:", vcount(STN_i),
+    "Edges:", ecount(STN_i),
+    "Comp:", components(STN_i)$no,
+    "\nRegular:", regular_count,
+    "Elite:",   elite_count
+  )
 
-  # Add legend
-  legend("topleft", legend.txt, pch = legend.shape, col = legend.col, pt.bg = legend.col, lty = legend.lty, cex = 0.7, pt.cex = 1.35, bty = "n")
+  # --- Main graph ---
+  plot(
+    STN_i,
+    layout = layout_data$coords,
+    vertex.label = "",
+    vertex.size  = nsize,
+    edge.width   = ewidth,
+    edge.arrow.size = asize,
+    edge.curved  = ecurv,
+    main = ttl
+  )
 
-  # Close PDF device
+  # --- Left legend construction ---
+
+  # Node data
+  nodes_txt <- c(
+    "Start", "End", "Standard", "Start-End",
+    "Start-Standard", "Standard-End", "Start-Standard-End",
+    "Regular", "Elite", "Best",
+    "Improve", "Equal", "Worse"
+  )
+  nodes_shapes <- c(
+    "square", "triangle", "diamond", "cross",
+    "star", "ellipse", "circle",
+    "circle", "circle", "circle"
+  )
+  nodes_cols <- c(
+    palette_colors$node$shapes, palette_colors$node$shapes, palette_colors$node$shapes, palette_colors$node$shapes,
+    palette_colors$node$shapes, palette_colors$node$shapes, palette_colors$node$shapes,
+    palette_colors$node$regular, palette_colors$node$elite, palette_colors$node$best
+  )
+
+  # Edge data
+  edges_text <- c("Improve", "Equal", "Worse")
+  edges_cols <- c(palette_colors$edge$improving, palette_colors$edge$equal, palette_colors$edge$worsening)
+
+  shape_fun <- list(
+    square = f_square,
+    triangle = f_triangle,
+    diamond  = f_diamond,
+    cross    = f_cross,
+    star     = f_star,
+    ellipse  = f_ellipse,
+    circle   = f_circle
+  )
+
+  # --- Legend coordinates ---
+  xsh <- -1.30
+  xtext <- -1.25
+  y_start <- 0.95
+  dy <- 0.07
+
+  # --- Constant shape size ---
+  shape_size <- 0.05
+
+  # --- Draw node shapes ---
+  for (i in 1:10) {
+    yy <- y_start - (i-1)*dy
+    fn <- shape_fun[[ nodes_shapes[i] ]]
+    poly <- fn(xsh, yy, shape_size)
+    polygon(poly$x, poly$y, col = nodes_cols[i], border = NA)
+    text(xtext, yy, nodes_txt[i], adj = 0, cex = 0.9)
+  }
+
+  # --- Draw edge types ---
+  edge_start <- y_start - 10*dy
+  ey <- edge_start - (0:2)*dy
+  for (i in 1:3) {
+    segments(xsh - 0.02, ey[i], xsh + 0.02, ey[i],
+            col = edges_cols[i], lwd = 2)
+    text(xtext, ey[i], edges_text[i], adj = 0, cex = 0.9)
+  }
+
   dev.off()
-
-  message("STN-i plot saved successfully to: ", output_file_path)
+  message("STN-i plot saved to: ", output_file_path)
 }
+
 
 #' Load and merge multiple STN-i data files from a specified folder.
 #'
@@ -2478,8 +2642,8 @@ merged_stn_i_decorate <- function(merged_STN_i, network_names, problem_type = "m
   V(merged_STN_i)[Topology == "START"]$shape <- "square"
   V(merged_STN_i)[Topology == "END"]$shape <- "triangle"
 
-  # Set node size proportional to in-degree (number of incoming visits)
-  V(merged_STN_i)$size <- strength(merged_STN_i, mode = "in") + 1
+  # Set node size proportional to Count (how many times node appears across networks)
+  V(merged_STN_i)$size <- V(merged_STN_i)$Count + 1
 
   # Set edge width proportional to weight
   E(merged_STN_i)$width <- E(merged_STN_i)$weight

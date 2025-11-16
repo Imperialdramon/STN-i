@@ -175,8 +175,24 @@ if (!opt$palette %in% 1:5) {
   stop("palette must be an integer between 1 and 5")
 }
 
-if (!is.na(opt$zoom_quantile) && (opt$zoom_quantile <= 0 || opt$zoom_quantile >= 1)) {
-  stop("zoom_quantile must be between 0 and 1 (exclusive)")
+# Handle zoom_quantile - NA should be passed as is, or as numeric value
+if (!is.na(opt$zoom_quantile)) {
+  # If it's not NA, validate it's a number between 0 and 1 (exclusive)
+  if (is.character(opt$zoom_quantile) && opt$zoom_quantile == "NA") {
+    # String "NA" - convert to actual NA
+    opt$zoom_quantile <- NA
+  } else if (!is.numeric(opt$zoom_quantile)) {
+    # Try to convert to numeric
+    opt$zoom_quantile <- as.numeric(opt$zoom_quantile)
+    if (is.na(opt$zoom_quantile)) {
+      stop("zoom_quantile must be NA or a numeric value between 0 and 1 (exclusive)")
+    }
+  }
+  
+  # If it's a number, validate the range
+  if (!is.na(opt$zoom_quantile) && (opt$zoom_quantile <= 0 || opt$zoom_quantile >= 1)) {
+    stop("zoom_quantile must be between 0 and 1 (exclusive)")
+  }
 }
 
 # ---------- Process the input file ----------
@@ -209,10 +225,10 @@ if (opt$verbose) cat(sprintf("Saving plot to %s...\n", output_file_path))
 
 # Save the STN-i plot as a PDF
 save_stn_i_plot(
-  output_file_path,
-  STN_i,
-  layout_data,
-  palette_colors,
+  output_file_path = output_file_path,
+  STN_i = STN_i,
+  layout_data = layout_data,
+  palette_colors = palette_colors,
   nsizef = opt$size_factor,
   ewidthf = opt$size_factor,
   asize = 0.3,
