@@ -2046,14 +2046,22 @@ save_stn_i_plot <- function(output_file_path, STN_i, layout_data,
 
   # --- Title ---
   regular_count <- sum(!V(STN_i)$IS_ELITE, na.rm=TRUE)
-  elite_count   <- sum( V(STN_i)$IS_ELITE,  na.rm=TRUE)
+  elite_count <- sum( V(STN_i)$IS_ELITE, na.rm=TRUE)
+  best_count <- sum( V(STN_i)$IS_BEST, na.rm=TRUE)
+  improving_count <- sum(E(STN_i)$Type == "IMPROVING", na.rm=TRUE)
+  equal_count <- sum(E(STN_i)$Type == "EQUAL", na.rm=TRUE)
+  worsening_count <- sum(E(STN_i)$Type == "WORSENING", na.rm=TRUE)
   ttl <- paste(
     layout_data$title,
+    ", Comp:", components(STN_i)$no,
     "\nNodes:", vcount(STN_i),
-    "Edges:", ecount(STN_i),
-    "Comp:", components(STN_i)$no,
-    "\nRegular:", regular_count,
-    "Elite:",   elite_count
+    ", Regular:", regular_count,
+    ", Elite:", elite_count,
+    ", Best:", best_count,
+    "\nEdges:", ecount(STN_i),
+    ", Improving:", improving_count,
+    ", Equal:", equal_count,
+    ", Worsening:", worsening_count
   )
 
   # --- Main graph ---
