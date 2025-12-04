@@ -57,7 +57,7 @@ experiments["PSO-X"]="BH BH-65 BL BL-32"
 levels="L0 L1 L2 L3 L4 L5"
 
 # Metric file types to aggregate
-metric_types=("" "_nodes" "_configurations")
+metric_types=("_nodes" "_elite_nodes" "_configurations")
 
 # Determine output suffix based on mode
 if [[ "$MODE" == "Individuals-Elites" ]]; then
@@ -77,14 +77,14 @@ for alg in "${algorithms[@]}"; do
     # Process each metric type (complete, nodes, configurations)
     for metric_type in "${metric_types[@]}"; do
         # Define output file based on metric type
-        if [[ -z "$metric_type" ]]; then
-            output_file="$others_dir/All_Metrics${output_suffix}.csv"
-            file_suffix="_stn_i_metrics.csv"
-            echo "  Processing complete metrics..."
-        elif [[ "$metric_type" == "_nodes" ]]; then
+        if [[ "$metric_type" == "_nodes" ]]; then
             output_file="$others_dir/All_Metrics${output_suffix}_nodes.csv"
             file_suffix="_stn_i_metrics_nodes.csv"
             echo "  Processing node-focused metrics..."
+        elif [[ "$metric_type" == "_elite_nodes" ]]; then
+            output_file="$others_dir/All_Metrics${output_suffix}_elite_nodes.csv"
+            file_suffix="_stn_i_metrics_elite_nodes.csv"
+            echo "  Processing elite node-focused metrics..."
         elif [[ "$metric_type" == "_configurations" ]]; then
             output_file="$others_dir/All_Metrics${output_suffix}_configurations.csv"
             file_suffix="_stn_i_metrics_configurations.csv"

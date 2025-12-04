@@ -82,15 +82,15 @@ run_plot_stn_i() {
 
 # Define algorithms and experiments
 declare -A experiments
-#experiments["ACOTSP"]="BL BL-45 BH BH-90"
-#experiments["PSO-X"]="BL BL-32 BH BH-65"
-experiments["ACOTSP"]="BL"
+experiments["ACOTSP"]="BL BL-45 BH BH-90"
+experiments["PSO-X"]="BL BL-32 BH BH-65"
 
 # Define locations type per algorithm
 declare -A locations_type
 #locations_type["ACOTSP"]="L0 L1 L2 L3 L4 L5"
 #locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
 locations_type["ACOTSP"]="L0"
+locations_type["PSO-X"]="L0"
 
 # Valid options to iterate
 VALID_LAYOUTS=("fr")
@@ -99,7 +99,8 @@ VALID_LAYOUTS=("fr")
 VALID_PALETTES=(1)
 #VALID_PALETTES=(1 2 3 4 5)
 
-VALID_SHOW_REGULAR=("TRUE" "FALSE")
+#VALID_SHOW_REGULAR=("TRUE" "FALSE")
+VALID_SHOW_REGULAR=("FALSE")
 # Note: SHOW_START_REGULAR only makes sense when SHOW_REGULAR=TRUE
 # When SHOW_REGULAR=FALSE, SHOW_START_REGULAR must also be FALSE
 

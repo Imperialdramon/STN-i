@@ -100,6 +100,7 @@ if (is.null(opt$output_file)) {
   input_basename <- tools::file_path_sans_ext(basename(input_file))
   output_file_name <- paste0(input_basename, "_metrics.csv")
   output_file_nodes <- paste0(input_basename, "_metrics_nodes.csv")
+  output_file_elite_nodes <- paste0(input_basename, "_metrics_elite_nodes.csv")
   output_file_configs <- paste0(input_basename, "_metrics_configurations.csv")
 } else {
   output_file_name <- opt$output_file
@@ -107,6 +108,7 @@ if (is.null(opt$output_file)) {
     output_file_name <- paste0(output_file_name, ".csv")
   }
   output_file_nodes <- sub("\\.csv$", "_nodes.csv", output_file_name)
+  output_file_elite_nodes <- sub("\\.csv$", "_elite_nodes.csv", output_file_name)
   output_file_configs <- sub("\\.csv$", "_configurations.csv", output_file_name)
 }
 
@@ -118,23 +120,22 @@ if (opt$verbose) cat(sprintf("Loading STN-i data from %s...\n", input_file))
 stn_i_result <- get_stn_i_data(input_file)
 
 # Obtain the three types of metrics
-# stn_i_metrics <- get_stn_i_metrics(stn_i_result)
 stn_i_metrics_nodes <- get_stn_i_metrics_nodes(stn_i_result)
+stn_i_metrics_elite_nodes <- get_stn_i_metrics_elite_nodes(stn_i_result)
 stn_i_metrics_configurations <- get_stn_i_metrics_configurations(stn_i_result)
 
 # ---------- Save results ----------
 
 # Construct the full paths for the output files
-# output_file_path <- file.path(output_folder, output_file_name)
 output_file_path_nodes <- file.path(output_folder, output_file_nodes)
+output_file_path_elite_nodes <- file.path(output_folder, output_file_elite_nodes)
 output_file_path_configs <- file.path(output_folder, output_file_configs)
-
-# Save all three metrics files
-# if (opt$verbose) cat(sprintf("Saving complete metrics to %s...\n", output_file_path))
-# save_stn_i_metrics(stn_i_metrics, output_file_path)
 
 if (opt$verbose) cat(sprintf("Saving nodes metrics to %s...\n", output_file_path_nodes))
 save_stn_i_metrics(stn_i_metrics_nodes, output_file_path_nodes)
+
+if (opt$verbose) cat(sprintf("Saving elite nodes metrics to %s...\n", output_file_path_elite_nodes))
+save_stn_i_metrics(stn_i_metrics_elite_nodes, output_file_path_elite_nodes)
 
 if (opt$verbose) cat(sprintf("Saving configurations metrics to %s...\n", output_file_path_configs))
 save_stn_i_metrics(stn_i_metrics_configurations, output_file_path_configs)

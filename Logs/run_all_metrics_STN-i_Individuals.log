@@ -1,4 +1,4 @@
-=== STN-i data generation started at Sun Nov  9 00:08:38 -03 2025 ===
+=== STN-i data generation started at Wed Dec  3 21:14:24 -03 2025 ===
 Mode: Individuals
 === Processing algorithm: ACOTSP ===
 >> Generating: 
@@ -14,10 +14,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L0_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  523348 28.0    1196642   64   965107 51.6
-Vcells 1075271  8.3    8388608   64  8382183 64.0
+Ncells  576966 30.9    1197965   64  1197965   64
+Vcells 1287588  9.9    8388608   64  8388606   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -32,10 +33,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L1_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  523348 28.0    1196642   64   965107 51.6
-Vcells 1075271  8.3    8388608   64  8382164 64.0
+Ncells  576966 30.9    1197965   64  1197965   64
+Vcells 1287588  9.9    8388608   64  8388606   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -50,10 +52,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L2_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  523323 28.0    1196560   64   965056 51.6
-Vcells 1074734  8.2    8388608   64  8388596 64.0
+Ncells  576887 30.9    1198045   64  1198045   64
+Vcells 1286835  9.9    8388608   64  8388606   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -68,10 +71,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L3_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  522965 28.0    1196731   64   880748 47.1
-Vcells 1067094  8.2    8388608   64  8381076 64.0
+Ncells  575595 30.8    1196688   64  1196688   64
+Vcells 1275519  9.8    8388608   64  8388598   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -86,10 +90,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L4_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  522194 27.9    1193905 63.8   877114 46.9
-Vcells 1050923  8.1    8388608 64.0  8382508 64.0
+Ncells  573190 30.7    1194902 63.9  1194902 63.9
+Vcells 1252904  9.6    8388608 64.0  8388601 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -104,10 +109,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Metrics/BL-L5_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  521127 27.9    1191771 63.7   875594 46.8
-Vcells 1028578  7.9    8388608 64.0  8388281 64.0
+Ncells  569695 30.5    1199842 64.1  1191729 63.7
+Vcells 1221587  9.4    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -122,10 +128,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L0_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 520008 27.8    1202668 64.3   665588 35.6
-Vcells 998857  7.7    8388608 64.0  7580944 57.9
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  559044 29.9    1196862   64  1196862   64
+Vcells 1152776  8.8    8388608   64  8388605   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -140,10 +147,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L1_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 520008 27.8    1202711 64.3   665588 35.6
-Vcells 998857  7.7    8388608 64.0  7580858 57.9
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  559044 29.9    1196862   64  1196862   64
+Vcells 1152776  8.8    8388608   64  8388605   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -158,10 +166,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L2_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 520001 27.8    1202651 64.3   665588 35.6
-Vcells 998698  7.7    8388608 64.0  7572599 57.8
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  559007 29.9    1196831   64  1196831   64
+Vcells 1152497  8.8    8388608   64  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -176,10 +185,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L3_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 519827 27.8    1202142 64.3   665588 35.6
-Vcells 994930  7.6    8388608 64.0  7365045 56.2
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  558295 29.9    1196680   64  1196680   64
+Vcells 1146605  8.8    8388608   64  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -194,10 +204,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L4_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 519433 27.8    1200802 64.2   665588 35.6
-Vcells 986514  7.6    8388608 64.0  6896272 52.7
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  556762 29.8    1195380 63.9  1143310 61.1
+Vcells 1133612  8.7    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -212,10 +223,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Metrics/BL-45-L5_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518868 27.8    1149685 61.4   665588 35.6
-Vcells 974677  7.5    8388608 64.0  6226326 47.6
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  554810 29.7    1194902 63.9  1194902 63.9
+Vcells 1116244  8.6    8388608 64.0  8388577 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -230,10 +242,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L0_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  531748 28.4    1191088 63.7  1108187 59.2
-Vcells 1269511  9.7    8388608 64.0  8388348 64.0
+Ncells  624908 33.4    1216622   65  1216622   65
+Vcells 1640552 12.6    8388608   64  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -248,10 +261,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L1_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  531748 28.4    1191088 63.7  1108186 59.2
-Vcells 1269511  9.7    8388608 64.0  8388347 64.0
+Ncells  624908 33.4    1216622   65  1216622   65
+Vcells 1640552 12.6    8388608   64  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -266,10 +280,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L2_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  531471 28.4    1190557 63.6  1108154 59.2
-Vcells 1263542  9.7    8388608 64.0  8385722 64.0
+Ncells  623910 33.4    1215657   65  1215657   65
+Vcells 1631720 12.5    8388608   64  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -284,10 +299,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L3_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  529829 28.3    1213631 64.9  1107934 59.2
-Vcells 1228458  9.4    8388608 64.0  8384942 64.0
+Ncells  618264 33.1    1212977 64.8  1197552   64
+Vcells 1580884 12.1    8388608 64.0  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -302,10 +318,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L4_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  527531 28.2    1207625 64.5   982353 52.5
-Vcells 1179002  9.0    8388608 64.0  8387346 64.0
+Ncells  609537 32.6    1206211 64.5  1206211 64.5
+Vcells 1506655 11.5    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -320,10 +337,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Metrics/BH-L5_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  525537 28.1    1204094 64.4   872341 46.6
-Vcells 1136222  8.7    8388608 64.0  8384542 64.0
+Ncells  601849 32.2    1200671 64.2  1148241 61.4
+Vcells 1442499 11.1    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -338,10 +356,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L0_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  525072 28.1    1200517 64.2   985836 52.7
-Vcells 1116727  8.6    8388608 64.0  8385473 64.0
+Ncells  589357 31.5    1203402 64.3  1203402 64.3
+Vcells 1372181 10.5    8388608 64.0  8388606 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -356,10 +375,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L1_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  525072 28.1    1200517 64.2   985836 52.7
-Vcells 1116727  8.6    8388608 64.0  8385456 64.0
+Ncells  589357 31.5    1203425 64.3  1203425 64.3
+Vcells 1372181 10.5    8388608 64.0  8388606 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -374,10 +394,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L2_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  524954 28.1    1200240 64.1   983653 52.6
-Vcells 1114123  8.6    8388608 64.0  8384660 64.0
+Ncells  588842 31.5    1203148 64.3  1203148 64.3
+Vcells 1368004 10.5    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -392,10 +413,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L3_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  524171 28.0    1198808 64.1   967813 51.7
-Vcells 1097270  8.4    8388608 64.0  8384146 64.0
+Ncells  585933 31.3    1200265 64.2  1198723 64.1
+Vcells 1342771 10.3    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -410,10 +432,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L4_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  522763 28.0    1196048 63.9   881352 47.1
-Vcells 1067338  8.2    8388608 64.0  8384521 64.0
+Ncells  581150 31.1    1196497 63.9  1196497 63.9
+Vcells 1299900 10.0    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -428,10 +451,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Metrics/BH-90-L5_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  521476 27.9    1192497 63.7   876535 46.9
-Vcells 1039851  8.0    8388608 64.0  8383740 64.0
+Ncells  576042 30.8    1192637 63.7  1192637 63.7
+Vcells 1258284  9.6    8388608 64.0  8388606 64.0
 ✅ Success: Generated 
 === Processing algorithm: PSO-X ===
 >> Generating: 
@@ -447,10 +471,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L0_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518834 27.8    1149588 61.4   665588 35.6
-Vcells 969013  7.4    8388608 64.0  6180431 47.2
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  547475 29.3    1194717 63.9  1194717 63.9
+Vcells 1079231  8.3    8388608 64.0  8388606 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -465,10 +490,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L1_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518831 27.8    1149580 61.4   665588 35.6
-Vcells 968942  7.4    8388608 64.0  6176920 47.2
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  547443 29.3    1194680 63.9  1194680 63.9
+Vcells 1079021  8.3    8388608 64.0  8388575 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -483,10 +509,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L2_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518720 27.8    1149262 61.4   665588 35.6
-Vcells 966561  7.4    8388608 64.0  6044777 46.2
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  546945 29.3    1194562 63.8  1194562 63.8
+Vcells 1074971  8.3    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -501,10 +528,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L3_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518347 27.7    1148197 61.4   665588 35.6
-Vcells 958538  7.4    8388608 64.0  5600486 42.8
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  545257 29.2    1193562 63.8  1193562 63.8
+Vcells 1061385  8.1    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -519,10 +547,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L4_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 517848 27.7    1146771 61.3   665588 35.6
-Vcells 948089  7.3    8388608 64.0  5005786 38.2
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  543488 29.1    1190531 63.6  1190531 63.6
+Vcells 1045796  8.0    8388608 64.0  8388606 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -537,10 +566,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Metrics/BL-L5_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 517117 27.7    1144682 61.2   665588 35.6
-Vcells 932690  7.2    8388608 64.0  4137688 31.6
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  540937 28.9    1185622 63.4  1185622 63.4
+Vcells 1022761  7.9    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -555,10 +585,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L0_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 517352 27.7    1145354 61.2   665588 35.6
-Vcells 936153  7.2    8388608 64.0  4415665 33.7
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  541361 29.0    1186331 63.4  1186331 63.4
+Vcells 1028275  7.9    8388608 64.0  8388595 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -573,10 +604,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L1_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 517351 27.7    1145351 61.2   665588 35.6
-Vcells 936130  7.2    8388608 64.0  4414579 33.7
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  541354 29.0    1186314 63.4  1186314 63.4
+Vcells 1028228  7.9    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -591,10 +623,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L2_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 517280 27.7    1145148 61.2   665588 35.6
-Vcells 934605  7.2    8388608 64.0  4330016 33.1
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  541037 28.9    1186065 63.4  1186065 63.4
+Vcells 1025623  7.9    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -609,10 +642,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L3_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 517033 27.7    1144442 61.2   665588 35.6
-Vcells 929266  7.1    8388608 64.0  4036201 30.8
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  539799 28.9    1185585 63.4  1185585 63.4
+Vcells 1016091  7.8    8388608 64.0  8388603 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -627,10 +661,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L4_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 516686 27.6    1143451 61.1   665588 35.6
-Vcells 921881  7.1    8388608 64.0  3623288 27.7
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  538280 28.8    1199917 64.1  1199917 64.1
+Vcells 1003696  7.7    8388608 64.0  8388604 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -645,10 +680,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Metrics/BL-32-L5_stn_i_metrics_configurations.csv
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 516327 27.6    1142425 61.1   665588 35.6
-Vcells 914150  7.0    8388608 64.0  3196198 24.4
+Ncells 536460 28.7    1193417 63.8  1193417 63.8
+Vcells 989868  7.6    8388608 64.0  8388607 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -663,10 +699,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L0_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  523585 28.0    1197122   64   965713 51.6
-Vcells 1077626  8.3    8388608   64  8386361 64.0
+Ncells  573190 30.7    1198631 64.1  1195348 63.9
+Vcells 1272788  9.8    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -681,10 +718,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L1_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  523559 28.0    1197082   64   965675 51.6
-Vcells 1077058  8.3    8388608   64  8383542 64.0
+Ncells  573073 30.7    1198568 64.1  1185247 63.3
+Vcells 1271847  9.8    8388608 64.0  8388604 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -699,10 +737,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L2_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  522720 28.0    1195454 63.9   879042   47
-Vcells 1058951  8.1    8388608 64.0  8387511   64
+Ncells  569760 30.5    1196257 63.9  1196257 63.9
+Vcells 1243980  9.5    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -717,10 +756,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L3_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  521182 27.9    1191128 63.7   874003 46.7
-Vcells 1025391  7.9    8388608 64.0  8384039 64.0
+Ncells  562757 30.1    1200028 64.1  1200028 64.1
+Vcells 1187917  9.1    8388608 64.0  8388606 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -735,10 +775,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L4_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 519907 27.8    1202420 64.3   665588 35.6
-Vcells 998102  7.7    8388608 64.0  7462022 57.0
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  557769 29.8    1196594   64  1196594   64
+Vcells 1145461  8.8    8388608   64  8388607   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -753,10 +794,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Metrics/BH-L5_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518373 27.7    1148271 61.4   665588 35.6
-Vcells 965566  7.4    8388608 64.0  5638019 43.1
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  552815 29.6    1193174 63.8  1193174 63.8
+Vcells 1098493  8.4    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -771,10 +813,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L0_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L0_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L0_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  520391 27.8    1191728 63.7   722898 38.7
-Vcells 1006390  7.7    8388608 64.0  8061862 61.6
+Ncells  558885 29.9    1198680 64.1  1198680 64.1
+Vcells 1156939  8.9    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -789,10 +832,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L1_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L1_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L1_stn_i_metrics_configurations.csv
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  520380 27.8    1191648 63.7   722835 38.7
-Vcells 1006159  7.7    8388608 64.0  8048771 61.5
+Ncells  558852 29.9    1198662 64.1  1178589   63
+Vcells 1156628  8.9    8388608 64.0  8388588   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -807,10 +851,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L2_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L2_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L2_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 519936 27.8    1202465 64.3   665588 35.6
-Vcells 996693  7.7    8388608 64.0  7494446 57.2
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  557130 29.8    1196677   64  1196677   64
+Vcells 1142088  8.8    8388608   64  8388608   64
 ✅ Success: Generated 
 >> Generating: 
 
@@ -825,10 +870,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L3_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L3_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L3_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518951 27.8    1149922 61.5   665588 35.6
-Vcells 975270  7.5    8388608 64.0  6323867 48.3
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  552454 29.6    1193791 63.8  1193791 63.8
+Vcells 1105396  8.5    8388608 64.0  8388606 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -843,10 +889,11 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L4_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L4_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L4_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 518156 27.7    1147651 61.3   665589 35.6
-Vcells 957941  7.4    8388608 64.0  5376213 41.1
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  548890 29.4    1192742 63.7  1192742 63.7
+Vcells 1076636  8.3    8388608 64.0  8388608 64.0
 ✅ Success: Generated 
 >> Generating: 
 
@@ -861,9 +908,10 @@ The following object is masked from ‘package:base’:
     union
 
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L5_stn_i_metrics_nodes.csv
+STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L5_stn_i_metrics_elite_nodes.csv
 STN-i metrics saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Metrics/BH-65-L5_stn_i_metrics_configurations.csv
-         used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 517318 27.7    1145257 61.2   665588 35.6
-Vcells 939813  7.2    8388608 64.0  4379445 33.5
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  545256 29.2    1186262 63.4  1186262 63.4
+Vcells 1046696  8.0    8388608 64.0  8388597 64.0
 ✅ Success: Generated 
-=== STN-i files generation finished at Sun Nov  9 00:09:01 -03 2025 ===
+=== STN-i files generation finished at Wed Dec  3 21:36:13 -03 2025 ===
