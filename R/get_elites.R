@@ -5,43 +5,40 @@
 # Author: Pablo Estobar
 #
 # Description:
-# This script processes multiple irace .Rdata files and extracts all elite
-# configurations, creating two output files:
+# This script processes configuration CSV files from multiple scenarios
+# and extracts all elite configurations, creating two output files:
 # 1. A tab-separated .txt file containing unique elite configurations
-# 2. A CSV file mapping runs to configurations
+# 2. A CSV file mapping scenarios to elite configurations with ESCENARIO info
 #
 # Usage:
 # Rscript get_elites.R --directories=<dir1,dir2,...> --output=<output_dir> /
 #                      --name=<output_name> /
-#                      --parameters=<parameters_file> /
+#                      [--parameters=<parameters_file>] /
 #                      [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
-# --directories        : (Required) Comma-separated list of directories containing .Rdata files
+# --directories        : (Required) Comma-separated list of parent directories containing Results subdirectories
 # --output            : (Required) Directory where output files will be saved
 # --name             : (Required) Base name for output files
+# --parameters        : (Optional) Path to Parameters.csv file. If not provided, will search in output or parent directory
 # --verbose          : (Optional) Whether to show detailed processing information (default: FALSE)
 #
 # Requirements:
 # - R with the following packages installed:
-#     - irace
 #     - optparse
 #
 # Notes:
-# - Input directories should contain valid irace .Rdata files
+# - Searches for configurations.csv files in Results/{SEED_ID}/ subdirectories
+# - Extracts rows where IS_ELITE == TRUE
 # - Output files will be named <name>_configs.txt and <name>_mapping.csv
 #########################################################################
 
 # ---------- Validate required packages ----------
-if (!requireNamespace("irace", quietly = TRUE)) {
-    stop("Error: The irace package is not installed. Please install it with 'install.packages(\"irace\")'", call. = FALSE)
-}
 if (!requireNamespace("optparse", quietly = TRUE)) {
     stop("Error: The optparse package is not installed. Please install it with 'install.packages(\"optparse\")'", call. = FALSE)
 }
 
 # ---------- Load required packages ----------
-library(irace)
 library(optparse)
 
 # ---------- Load utility functions ----------
@@ -51,7 +48,7 @@ source("R/utils.R")
 option_list <- list(
     make_option(c("-d", "--directories"),
                 type = "character",
-                help = "Comma-separated list of directories containing .Rdata files"),
+                help = "Comma-separated list of parent directories containing Results subdirectories"),
     
     make_option(c("-o", "--output"),
                 type = "character",
@@ -63,7 +60,8 @@ option_list <- list(
     
     make_option(c("-p", "--parameters"),
                 type = "character",
-                help = "Path to parameters CSV file"),
+                default = NULL,
+                help = "Path to Parameters.csv file [default: auto-detect]"),
     
     make_option(c("-v", "--verbose"),
                 type = "logical",
@@ -85,20 +83,11 @@ if (is.null(opt$output)) {
 if (is.null(opt$name)) {
     stop("Output name is required (-n/--name)")
 }
-if (is.null(opt$parameters)) {
-    stop("Parameters file is required (-p/--parameters)")
-}
 
 # Process paths
 directories <- strsplit(opt$directories, ",")[[1]]
 directories <- normalizePath(directories, mustWork = TRUE)
 output_dir <- normalizePath(opt$output, mustWork = FALSE)
-parameters_file <- normalizePath(opt$parameters, mustWork = TRUE)
-
-# Read parameters
-parameters <- read.csv(parameters_file, header = TRUE, stringsAsFactors = FALSE, sep = ";")
-parameters$NAME <- trimws(parameters$NAME)
-parameters$TYPE <- trimws(parameters$TYPE)
 
 # Create output directory if needed
 if (!dir.exists(output_dir)) {
@@ -109,57 +98,227 @@ if (!dir.exists(output_dir)) {
 configs_file <- file.path(output_dir, paste0(opt$name, "_configs.txt"))
 mapping_file <- file.path(output_dir, paste0(opt$name, "_mapping.csv"))
 
-if (opt$verbose) cat("Processing directories...\n")
-
-# Store all run data
-runs_data <- list()
-
-# Process each directory
-for (dir in directories) {
-    if (opt$verbose) cat(sprintf("Reading from %s...\n", dir))
-    
-    # Get all .Rdata files
-    rdata_files <- list.files(dir, pattern = "\\.Rdata$", full.names = TRUE)
-    
-    for (file in rdata_files) {
-        if (opt$verbose) cat(sprintf("  Loading %s...\n", basename(file)))
-        
-        # Load the .Rdata file
-        load(file)
-        
-        # Store the run data with the filename as its name
-        runs_data[[basename(file)]] <- iraceResults
+# Try to find parameters file
+params_file <- NULL
+if (!is.null(opt$parameters) && file.exists(opt$parameters)) {
+    # Use provided parameters file if it exists
+    params_file <- opt$parameters
+} else {
+    # Try to find in output directory
+    candidate <- file.path(output_dir, "Parameters.csv")
+    if (file.exists(candidate)) {
+        params_file <- candidate
+    } else {
+        # Try parent directory
+        candidate <- file.path(dirname(output_dir), "Parameters.csv")
+        if (file.exists(candidate)) {
+            params_file <- candidate
+        }
     }
 }
 
-if (opt$verbose) cat("Processing elite configurations...\n")
+# Read parameters if available
+parameters_info <- NULL
+if (!is.null(params_file)) {
+    if (opt$verbose) cat(sprintf("Reading parameters file from %s...\n", params_file))
+    parameters_info <- read.csv(params_file, sep = ";", stringsAsFactors = FALSE)
+    colnames(parameters_info) <- trimws(tolower(colnames(parameters_info)))
+} else {
+    if (opt$verbose) cat("Warning: Parameters file not found. Categorical types may not be properly formatted.\n")
+}
 
-# Process elite configurations
-result <- process_elite_configurations(
-    runs_data,
-    parameters
+# Function to format parameter values according to their type
+format_parameter_value <- function(param_name, value, parameters_info) {
+    if (is.null(parameters_info)) {
+        return(value)
+    }
+    
+    param_row <- parameters_info[tolower(parameters_info$name) == tolower(param_name), ]
+    if (nrow(param_row) == 0) {
+        return(value)
+    }
+    
+    param_type <- param_row$type[1]
+    
+    # Handle NA values
+    if (is.na(value)) {
+        return("NA")
+    }
+    
+    # Format categorical parameters with quotes
+    if (param_type == "c") {
+        return(paste0('"', as.character(value), '"'))
+    }
+    
+    # Format numeric and integer parameters without quotes
+    return(as.character(value))
+}
+
+if (opt$verbose) cat("Processing directories for configurations.csv files...\n")
+all_elite_configs_list <- list()
+scenario_mapping <- data.frame(
+    ESCENARIO = character(),
+    SEED_ID = character(),
+    CONFIG_ID = integer(),
+    stringsAsFactors = FALSE
 )
+
+# Process each parent directory
+for (parent_dir in directories) {
+    if (opt$verbose) cat(sprintf("Searching in %s...\n", parent_dir))
+    
+    # Extract ESCENARIO name from parent directory path
+    # Path structure: .../Individuals/{ESCENARIO}/Results/{SEED_ID}/
+    path_parts <- strsplit(parent_dir, "/")[[1]]
+    ESCENARIO <- NA
+    
+    # Find "Individuals" in the path and get the next element as ESCENARIO
+    for (i in seq_along(path_parts)) {
+        if (path_parts[i] == "Individuals" && i < length(path_parts)) {
+            ESCENARIO <- path_parts[i + 1]
+            break
+        }
+    }
+    
+    if (is.na(ESCENARIO)) {
+        if (opt$verbose) cat(sprintf("  Warning: Could not extract ESCENARIO name from %s\n", parent_dir))
+        ESCENARIO <- "UNKNOWN"
+    }
+    
+    # Check if parent_dir already ends with Results
+    if (basename(parent_dir) == "Results") {
+        results_dir <- parent_dir
+    } else {
+        results_dir <- file.path(parent_dir, "Results")
+    }
+    
+    if (dir.exists(results_dir)) {
+        # Get all scenario subdirectories
+        scenario_dirs <- list.dirs(results_dir, recursive = FALSE, full.names = TRUE)
+        
+        for (scenario_dir in scenario_dirs) {
+            SEED_ID <- basename(scenario_dir)
+            config_file <- file.path(scenario_dir, "configurations.csv")
+            
+            if (file.exists(config_file)) {
+                if (opt$verbose) cat(sprintf("  Reading %s...\n", config_file))
+                
+                # Read the configurations file
+                configs <- read.csv(config_file, sep = ";", stringsAsFactors = FALSE)
+                
+                # Filter only elite configurations
+                if ("IS_ELITE" %in% colnames(configs)) {
+                    elite_configs <- configs[configs$IS_ELITE == TRUE, ]
+                    
+                    if (nrow(elite_configs) > 0) {
+                        # Store elite configurations with scenario context
+                        for (i in 1:nrow(elite_configs)) {
+                            CONFIG_ID <- elite_configs[i, "CONFIG_ID"]
+                            config_key <- paste(ESCENARIO, SEED_ID, CONFIG_ID, sep = "_")
+                            
+                            # Store the full config row
+                            all_elite_configs_list[[config_key]] <- list(
+                                ESCENARIO = ESCENARIO,
+                                SEED_ID = SEED_ID,
+                                CONFIG_ID = CONFIG_ID,
+                                config_row = elite_configs[i, ]
+                            )
+                            
+                            # Add mapping entry
+                            mapping_entry <- data.frame(
+                                ESCENARIO = ESCENARIO,
+                                SEED_ID = SEED_ID,
+                                CONFIG_ID = CONFIG_ID,
+                                stringsAsFactors = FALSE
+                            )
+                            scenario_mapping <- rbind(scenario_mapping, mapping_entry)
+                        }
+                        
+                        if (opt$verbose) {
+                            cat(sprintf("    Found %d elite configurations\n", nrow(elite_configs)))
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+if (opt$verbose) cat("Processing elite configurations and formatting parameters...\n")
+
+# Extract parameter columns (exclude CONFIG_ID and IS_ELITE)
+if (length(all_elite_configs_list) > 0) {
+    # Get first config to determine parameter columns
+    first_config <- all_elite_configs_list[[1]]$config_row
+    param_cols <- setdiff(colnames(first_config), c("CONFIG_ID", "IS_ELITE"))
+    
+    # Build unique configurations with proper formatting
+    unique_configs_list <- list()
+    config_seen <- character()
+    
+    for (config_key in names(all_elite_configs_list)) {
+        config_row <- all_elite_configs_list[[config_key]]$config_row
+        
+        # Extract parameter values and format them according to type
+        formatted_row <- list()
+        raw_values <- c()  # For uniqueness check
+        
+        for (param in param_cols) {
+            raw_value <- config_row[[param]]
+            raw_values <- c(raw_values, as.character(raw_value))
+            
+            # Format value according to parameter type
+            formatted_value <- format_parameter_value(param, raw_value, parameters_info)
+            formatted_row[[param]] <- formatted_value
+        }
+        
+        # Create signature for uniqueness check (use raw values)
+        config_sig <- paste(raw_values, collapse = "|")
+        
+        if (!(config_sig %in% config_seen)) {
+            config_seen <- c(config_seen, config_sig)
+            unique_configs_list[[length(unique_configs_list) + 1]] <- as.data.frame(formatted_row, stringsAsFactors = FALSE)
+        }
+    }
+    
+    # Combine into data frame
+    if (length(unique_configs_list) > 0) {
+        unique_configs <- do.call(rbind, unique_configs_list)
+        rownames(unique_configs) <- NULL
+    } else {
+        unique_configs <- data.frame()
+    }
+} else {
+    unique_configs <- data.frame()
+}
 
 if (opt$verbose) cat("Writing output files...\n")
 
-# Write configurations file
-write.table(result$unique_elites, 
-            file = configs_file,
-            sep = "\t",
-            row.names = FALSE,
-            quote = FALSE)
+# Write configurations file (tab-separated)
+if (nrow(unique_configs) > 0) {
+    # Create output content as matrix
+    output_matrix <- rbind(colnames(unique_configs), unique_configs)
+    
+    # Convert to character matrix for writing
+    output_char <- apply(output_matrix, 1, function(row) {
+        paste(row, collapse = "\t")
+    })
+    
+    # Write to file
+    writeLines(output_char, configs_file)
+}
 
 # Write mapping file
-write.table(result$runs_mapping,
+write.table(scenario_mapping,
             file = mapping_file,
             sep = ";",
             row.names = FALSE,
             quote = FALSE)
 
 if (opt$verbose) {
-    cat(sprintf("Found %d unique elite configurations across %d runs\n",
-                nrow(result$unique_elites),
-                nrow(result$runs_mapping)))
+    cat(sprintf("Found %d unique elite configurations across %d scenario references\n",
+                nrow(unique_configs),
+                nrow(scenario_mapping)))
     cat(sprintf("Results saved to:\n  %s\n  %s\n",
                 configs_file,
                 mapping_file))
