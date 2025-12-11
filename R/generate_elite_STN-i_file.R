@@ -50,6 +50,11 @@ library(optparse)
 # ---------- Load utility functions ----------
 source("R/utils.R")
 
+# TODO: Utilizar múltiples archivos .Rdata por cada ejecución de testing elite
+# TODO: Construir nuevos archivos basados en los archivos de configurations y trayectories, aprovechando el mapping se configuraciones, que permitirá idenfificar el escenario y semilla al que va cada configuración elite.
+# TODO: Construir archivo de instances de élite basado en los experimentos de testing, considerando el optimum como el mejor valor entre todas las configuraciones elite.
+# TODO: Traer todas las funciones a este archivo.
+
 # Define command line options
 option_list <- list(
     make_option(c("-e", "--elites_dir"),
