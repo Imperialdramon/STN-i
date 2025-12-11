@@ -195,49 +195,7 @@ if (!is.na(opt$zoom_quantile)) {
   }
 }
 
-# ---------- Process the input file ----------
-
-if (opt$verbose) cat("Processing STN-i data...\n")
-
-# Obtain the palette colors
-palette_colors <- get_stn_i_palette_colors(opt$palette)
-
-# Load the STN-i object decorated
-STN_i <- stn_i_plot_create(
-  input_file = input_file,
-  show_regular = opt$show_regular,
-  show_start_regular = opt$show_start_regular,
-  palette_colors = palette_colors,
-  zoom_quantile = opt$zoom_quantile
-)
-
-if (opt$verbose) cat(sprintf("Generating layout with %s algorithm...\n", opt$layout_type))
-
-# Obtain layout data
-layout_data <- get_layout_data(STN_i, opt$layout_type)
-
-# ---------- Save result ----------
-
-# Construct the full path for the output file
-output_file_path <- file.path(output_folder, output_file_name)
-
-if (opt$verbose) cat(sprintf("Saving plot to %s...\n", output_file_path))
-
-# Save the STN-i plot as a PDF
-save_stn_i_plot(
-  output_file_path = output_file_path,
-  STN_i = STN_i,
-  layout_data = layout_data,
-  palette_colors = palette_colors,
-  nsizef = opt$size_factor,
-  ewidthf = opt$size_factor,
-  asize = 0.3,
-  ecurv = 0.3
-)
-
-if (opt$verbose) cat("Done.\n")
-
-#  ---------- Functions ----------
+# ---------- Functions ----------
 
 #' Get palette colors for STN-i visualization
 #'
@@ -758,7 +716,49 @@ save_stn_i_plot <- function(output_file_path, STN_i, layout_data,
   message("STN-i plot saved to: ", output_file_path)
 }
 
-#  ---------- Clean up ----------
+# ---------- Process the input file ----------
+
+if (opt$verbose) cat("Processing STN-i data...\n")
+
+# Obtain the palette colors
+palette_colors <- get_stn_i_palette_colors(opt$palette)
+
+# Load the STN-i object decorated
+STN_i <- stn_i_plot_create(
+  input_file = input_file,
+  show_regular = opt$show_regular,
+  show_start_regular = opt$show_start_regular,
+  palette_colors = palette_colors,
+  zoom_quantile = opt$zoom_quantile
+)
+
+if (opt$verbose) cat(sprintf("Generating layout with %s algorithm...\n", opt$layout_type))
+
+# Obtain layout data
+layout_data <- get_layout_data(STN_i, opt$layout_type)
+
+# ---------- Save result ----------
+
+# Construct the full path for the output file
+output_file_path <- file.path(output_folder, output_file_name)
+
+if (opt$verbose) cat(sprintf("Saving plot to %s...\n", output_file_path))
+
+# Save the STN-i plot as a PDF
+save_stn_i_plot(
+  output_file_path = output_file_path,
+  STN_i = STN_i,
+  layout_data = layout_data,
+  palette_colors = palette_colors,
+  nsizef = opt$size_factor,
+  ewidthf = opt$size_factor,
+  asize = 0.3,
+  ecurv = 0.3
+)
+
+if (opt$verbose) cat("Done.\n")
+
+# ---------- Clean up ----------
 
 # Clear the workspace and garbage collection
 rm(list = ls())

@@ -114,35 +114,7 @@ if (is.null(opt$output_file)) {
 
 if (opt$verbose) cat(sprintf("Loading STN-i data from %s...\n", input_file))
 
-# ---------- Obtain the STN-i metrics ----------
-
-# Load the STN-i object from the input file
-stn_i_result <- get_stn_i_data(input_file)
-
-# Obtain the three types of metrics
-stn_i_metrics_nodes <- get_stn_i_metrics_nodes(stn_i_result)
-stn_i_metrics_elite_nodes <- get_stn_i_metrics_elite_nodes(stn_i_result)
-stn_i_metrics_configurations <- get_stn_i_metrics_configurations(stn_i_result)
-
-# ---------- Save results ----------
-
-# Construct the full paths for the output files
-output_file_path_nodes <- file.path(output_folder, output_file_nodes)
-output_file_path_elite_nodes <- file.path(output_folder, output_file_elite_nodes)
-output_file_path_configs <- file.path(output_folder, output_file_configs)
-
-if (opt$verbose) cat(sprintf("Saving nodes metrics to %s...\n", output_file_path_nodes))
-save_stn_i_metrics(stn_i_metrics_nodes, output_file_path_nodes)
-
-if (opt$verbose) cat(sprintf("Saving elite nodes metrics to %s...\n", output_file_path_elite_nodes))
-save_stn_i_metrics(stn_i_metrics_elite_nodes, output_file_path_elite_nodes)
-
-if (opt$verbose) cat(sprintf("Saving configurations metrics to %s...\n", output_file_path_configs))
-save_stn_i_metrics(stn_i_metrics_configurations, output_file_path_configs)
-
-if (opt$verbose) cat("Done.\n")
-
-#  ---------- Functions ----------
+# ---------- Functions ----------
 
 #' Get STN-i metrics focused on nodes
 #'
@@ -655,13 +627,39 @@ save_stn_i_metrics <- function(stn_i_metrics, output_file_path) {
   message(paste("STN-i metrics saved to:", output_file_path))
 }
 
-#  ---------- Clean up ----------
+# ---------- Obtain the STN-i metrics ----------
+
+# Load the STN-i object from the input file
+stn_i_result <- get_stn_i_data(input_file)
+
+# Obtain the three types of metrics
+stn_i_metrics_nodes <- get_stn_i_metrics_nodes(stn_i_result)
+stn_i_metrics_elite_nodes <- get_stn_i_metrics_elite_nodes(stn_i_result)
+stn_i_metrics_configurations <- get_stn_i_metrics_configurations(stn_i_result)
+
+# ---------- Save results ----------
+
+# Construct the full paths for the output files
+output_file_path_nodes <- file.path(output_folder, output_file_nodes)
+output_file_path_elite_nodes <- file.path(output_folder, output_file_elite_nodes)
+output_file_path_configs <- file.path(output_folder, output_file_configs)
+
+if (opt$verbose) cat(sprintf("Saving nodes metrics to %s...\n", output_file_path_nodes))
+save_stn_i_metrics(stn_i_metrics_nodes, output_file_path_nodes)
+
+if (opt$verbose) cat(sprintf("Saving elite nodes metrics to %s...\n", output_file_path_elite_nodes))
+save_stn_i_metrics(stn_i_metrics_elite_nodes, output_file_path_elite_nodes)
+
+if (opt$verbose) cat(sprintf("Saving configurations metrics to %s...\n", output_file_path_configs))
+save_stn_i_metrics(stn_i_metrics_configurations, output_file_path_configs)
+
+if (opt$verbose) cat("Done.\n")
+
+# ---------- Clean up ----------
 
 # Clear the workspace and garbage collection
 rm(list = ls())
 gc()
 quit(save = "no")
-
-# TODO: Document all metrics on functions
 
 # nolint end

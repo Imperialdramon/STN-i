@@ -3,7 +3,7 @@
 # ==============================================================================
 # Script: aggregate_all_metrics_STN-i.sh
 # Description: Aggregates ALL individual experiment metrics into three files
-#              per algorithm, stored in Others/:
+#              per algorithm, stored in General-Metrics/:
 #              - All_Metrics.csv (complete metrics)
 #              - All_Metrics_nodes.csv (node-focused metrics)
 #              - All_Metrics_configurations.csv (configuration-focused metrics)
@@ -16,9 +16,9 @@
 #        ./aggregate_all_metrics_STN-i.sh --mode=Individuals-Elites
 #
 # Output:
-#   Experiments/<Algorithm>/Others/All_Metrics.csv
-#   Experiments/<Algorithm>/Others/All_Metrics_nodes.csv
-#   Experiments/<Algorithm>/Others/All_Metrics_configurations.csv
+#   Experiments/<Algorithm>/General-Metrics/All_Metrics.csv
+#   Experiments/<Algorithm>/General-Metrics/All_Metrics_nodes.csv
+#   Experiments/<Algorithm>/General-Metrics/All_Metrics_configurations.csv
 #   (or with _Elites suffix if using Individuals-Elites mode)
 # ==============================================================================
 
@@ -70,23 +70,23 @@ fi
 for alg in "${algorithms[@]}"; do
     echo "Processing $alg ($MODE)..."
     
-    # Create Others directory if it doesn't exist
-    others_dir="Experiments/$alg/Others"
-    mkdir -p "$others_dir"
+    # Create General-Metrics directory if it doesn't exist
+    metrics_dir="Experiments/$alg/General-Metrics"
+    mkdir -p "$metrics_dir"
     
     # Process each metric type (complete, nodes, configurations)
     for metric_type in "${metric_types[@]}"; do
         # Define output file based on metric type
         if [[ "$metric_type" == "_nodes" ]]; then
-            output_file="$others_dir/All_Metrics${output_suffix}_nodes.csv"
+            output_file="$metrics_dir/All_Metrics${output_suffix}_nodes.csv"
             file_suffix="_stn_i_metrics_nodes.csv"
             echo "  Processing node-focused metrics..."
         elif [[ "$metric_type" == "_elite_nodes" ]]; then
-            output_file="$others_dir/All_Metrics${output_suffix}_elite_nodes.csv"
+            output_file="$metrics_dir/All_Metrics${output_suffix}_elite_nodes.csv"
             file_suffix="_stn_i_metrics_elite_nodes.csv"
             echo "  Processing elite node-focused metrics..."
         elif [[ "$metric_type" == "_configurations" ]]; then
-            output_file="$others_dir/All_Metrics${output_suffix}_configurations.csv"
+            output_file="$metrics_dir/All_Metrics${output_suffix}_configurations.csv"
             file_suffix="_stn_i_metrics_configurations.csv"
             echo "  Processing configuration-focused metrics..."
         fi
