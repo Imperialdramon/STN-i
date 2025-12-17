@@ -533,9 +533,9 @@ For numeric parameters (integer or real types), we create **discrete buckets** u
 
 Given a parameter value `v` in the range `[lower_bound, upper_bound]` with step size `step`:
 
-$$
-\text{subrange\_index} = \left\lfloor \frac{v - \text{lower\_bound}}{\text{step}} \right\rfloor
-$$
+```math
+\mathrm{subrange\_index} = \left\lfloor \frac{v - \mathrm{lower\_bound}}{\mathrm{step}} \right\rfloor
+```
 
 This formula assigns each value to a bucket `[k \cdot step, (k+1) \cdot step)` where `k = subrange_index`.
 
@@ -548,60 +548,65 @@ This formula assigns each value to a bucket `[k \cdot step, (k+1) \cdot step)` w
 
 To avoid floating-point precision issues, we perform all calculations using **integer arithmetic**:
 
-$$
-\text{scale} = 10^{\text{significance}}
-$$
+```math
+\mathrm{scale} = 10^{\mathrm{significance}}
+```
 
-$$
-\text{scaled\_lower} = \text{round}(\text{lower\_bound} \times \text{scale})
-$$
+```math
+\mathrm{scaled\_lower} = \mathrm{round}(\mathrm{lower\_bound} \times \mathrm{scale})
+```
 
-$$
-\text{scaled\_upper} = \text{round}(\text{upper\_bound} \times \text{scale})
-$$
+```math
+\mathrm{scaled\_upper} = \mathrm{round}(\mathrm{upper\_bound} \times \mathrm{scale})
+```
 
-$$
-\text{scaled\_step} = \text{round}(\text{step} \times \text{scale})
-$$
+```math
+\mathrm{scaled\_step} = \mathrm{round}(\mathrm{step} \times \mathrm{scale})
+```
 
-$$
-\text{scaled\_value} = \text{round}(v \times \text{scale})
-$$
+```math
+\mathrm{scaled\_value} = \mathrm{round}(v \times \mathrm{scale})
+```
 
 #### Subrange Index in Scaled Space
 
-$$
-\text{subrange\_index} = \left\lfloor \frac{\text{scaled\_value} - \text{scaled\_lower}}{\text{scaled\_step}} \right\rfloor
-$$
+```math
+\mathrm{subrange\_index} = \left\lfloor \frac{\mathrm{scaled\_value} - \mathrm{scaled\_lower}}{\mathrm{scaled\_step}} \right\rfloor
+```
 
 With clamping to ensure the index stays within valid bounds:
 
-$$
-\text{subrange\_index} = \min\left(\max(\text{subrange\_index}, 0), \left\lfloor \frac{\text{scaled\_upper} - \text{scaled\_lower}}{\text{scaled\_step}} \right\rfloor\right)
-$$
+```math
+\mathrm{subrange\_index} = \min\left(
+  \max(\mathrm{subrange\_index}, 0),
+  \left\lfloor
+    \frac{\mathrm{scaled\_upper} - \mathrm{scaled\_lower}}{\mathrm{scaled\_step}}
+  \right\rfloor
+\right)
+```
 
 #### Code Generation for Numeric Parameters
 
 1. Calculate the **starting value of the bucket**:
-$$
-\text{calculated\_scaled} = \text{scaled\_lower} + \text{subrange\_index} \times \text{scaled\_step}
-$$
+```math
+\mathrm{calculated\_scaled} = \mathrm{scaled\_lower} + \mathrm{subrange\_index} \times \mathrm{scaled\_step}
+```
 
 2. Determine **digit padding** (to maintain fixed-width formatting):
-$$
-\text{max\_digits} = \text{len}(\text{str}(\text{scaled\_upper}))
-$$
-$$
-\text{current\_digits} = \text{len}(\text{str}(\text{calculated\_scaled}))
-$$
-$$
-\text{padding} = \text{max\_digits} - \text{current\_digits}
-$$
+```math
+\mathrm{max\_digits} = \mathrm{len}(\mathrm{str}(\mathrm{scaled\_upper}))
+```
+```math
+\mathrm{current\_digits} = \mathrm{len}(\mathrm{str}(\mathrm{calculated\_scaled}))
+```
+```math
+\mathrm{padding} = \mathrm{max\_digits} - \mathrm{current\_digits}
+```
 
 3. Format as code part:
-$$
-\text{code\_part} = \text{``0''} \times \text{padding} + \text{str}(\text{calculated\_scaled})
-$$
+```math
+\mathrm{code\_part} = \texttt{"0"} \times \mathrm{padding} + \mathrm{str}(\mathrm{calculated\_scaled})
+```
 
 **Example:** For `inertia` with `lower_bound=0.0`, `upper_bound=0.9`, `step=0.01`, `significance=2`:
 
@@ -634,15 +639,15 @@ For value v = 0.05:
 
 For categorical and ordinal parameters, a **location dictionary** maps each discrete value to an integer code:
 
-$$
-\text{code} = \text{location\_dict}[\text{value}]
-$$
+```math
+\mathrm{code} = \mathrm{location\_dict}[\mathrm{value}]
+```
 
 The code is padded with leading zeros to match the maximum code width:
 
-$$
-\text{max\_code\_width} = \text{len}(\text{str}(\max(\text{location\_dict values})))
-$$
+```math
+\mathrm{max\_code\_width} = \mathrm{len}(\mathrm{str}(\max(\mathrm{location\_dict\ values})))
+```
 
 **Example:** For `topology` with mapping `{0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6}`:
 
@@ -656,22 +661,22 @@ value = 2 → code_dict["2"] = 2 → max_width = 1 → code_part = "2"
 When a parameter value is `NA` (e.g., a conditional parameter that's not active):
 
 For numeric parameters:
-$$
-\text{code\_part} = \text{``X''} \times \text{len}(\text{str}(\text{scaled\_upper}))
-$$
+```math
+\mathrm{code\_part} = \texttt{"X"} \times \mathrm{len}(\mathrm{str}(\mathrm{scaled\_upper}))
+```
 
 For categorical parameters:
-$$
-\text{code\_part} = \text{``X''} \times \text{max\_code\_width}
-$$
+```math
+\mathrm{code\_part} = \texttt{"X"} \times \mathrm{max\_code\_width}
+```
 
 ### Final Location Code
 
 The final location code is the concatenation of all parameter codes in order:
 
-$$
-\text{location\_code} = \text{code\_param\_1} + \text{code\_param\_2} + \ldots + \text{code\_param\_n}
-$$
+```math
+\mathrm{location\_code} = \mathrm{code\_param\_1} + \mathrm{code\_param\_2} + \ldots + \mathrm{code\_param\_n}
+```
 
 **Example:** For a configuration with `topology=1`, `particles=25`, `phi1=0.45`:
 
