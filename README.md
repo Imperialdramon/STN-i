@@ -600,7 +600,7 @@ $$
 
 3. Format as code part:
 $$
-\text{code\_part} = \text{"0"} \times \text{padding} + \text{str}(\text{calculated\_scaled})
+\text{code\_part} = \text{``0''} \times \text{padding} + \text{str}(\text{calculated\_scaled})
 $$
 
 **Example:** For `inertia` with `lower_bound=0.0`, `upper_bound=0.9`, `step=0.01`, `significance=2`:
@@ -657,12 +657,12 @@ When a parameter value is `NA` (e.g., a conditional parameter that's not active)
 
 For numeric parameters:
 $$
-\text{code\_part} = \text{"X"} \times \text{len}(\text{str}(\text{scaled\_upper}))
+\text{code\_part} = \text{``X''} \times \text{len}(\text{str}(\text{scaled\_upper}))
 $$
 
 For categorical parameters:
 $$
-\text{code\_part} = \text{"X"} \times \text{max\_code\_width}
+\text{code\_part} = \text{``X''} \times \text{max\_code\_width}
 $$
 
 ### Final Location Code
