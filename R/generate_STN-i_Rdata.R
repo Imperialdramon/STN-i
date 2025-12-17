@@ -80,7 +80,7 @@ library(dplyr)
 library(optparse)
 
 # ---------- Load utility functions ----------
-source("R/utils.R")
+source("R/Functions/network_utils.R")
 
 # Define command line options
 option_list <- list(

@@ -1,4 +1,35 @@
-#!/usr/bin/env Rscript
+# nolint start
+#########################################################################
+# Optimum File Generation Script
+#
+# Description:
+# This script processes multiple Rdata files containing irace results
+# and generates a single CSV file listing the best quality values
+# for each instance across all files.
+#
+# Usage:
+# Rscript generate_optimum_file.R --input=<input_directory> --output=<output_directory> 
+#                                [--name=<output_file_name>] 
+#                                [--best=<min|max>]
+#
+# Arguments:
+# --input         : (Optional) Path to a single input directory containing Rdata files.
+# --directories   : (Optional) Comma-separated paths to multiple input directories containing Rdata files.
+# --output        : (Required) Path to the output directory where the optimum CSV file will be saved.
+# --name          : (Optional) Name of the output CSV file (default: "Optimum.csv").
+# --best          : (Optional) Criteria for selecting the best value ('min' or 'max', default: "min").
+#
+# Requirements:
+# - R with the following packages installed:
+#     - tools
+#     - irace
+#     - utils
+#     - optparse
+# Notes:
+# - At least one input directory must be provided.
+# - The output will be saved as a CSV file containing the best values for each instance.
+# - Designed for execution from command line using named arguments.
+#########################################################################
 
 # ---------- Validate required packages ----------
 if (!requireNamespace("tools", quietly = TRUE)) {
@@ -188,3 +219,12 @@ optimum_df <- data.frame(
 output_file <- file.path(output_dir, opt$name)
 write.table(optimum_df, file = output_file, sep = ";", row.names = FALSE, quote = FALSE)
 cat(sprintf("Archivo de óptimos guardado en: %s\n", output_file))
+
+# ---------- Clean up ----------
+
+# Clear the workspace and garbage collection
+rm(list = ls())
+gc()
+quit(save = "no")
+
+# nolint end

@@ -81,30 +81,59 @@ run_plot_stn_i() {
 }
 
 # Define algorithms and experiments
+# Note: Add or remove experiments as needed (space-separated)
 declare -A experiments
 #experiments["ACOTSP"]="BL BL-45 BH BH-90"
 #experiments["PSO-X"]="BL BL-32 BH BH-65"
-experiments["PSO-X"]="BL"
+#experiments["ACOTSP"]="BL BL-45 BH BH-90"
+experiments["PSO-X"]="BL BL-32 BH BH-65"
 
-# Define locations type per algorithm
+# Define location types for each algorithm
+# Note: Add or remove location types as needed (space-separated)
 declare -A locations_type
 #locations_type["ACOTSP"]="L0 L1 L2 L3 L4 L5"
 #locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
 #locations_type["ACOTSP"]="L0"
 locations_type["PSO-X"]="L0"
 
-# Valid options to iterate
+# List of valid graph layouts
+# Note: Change layout function based on different criteria
 VALID_LAYOUTS=("fr")
 #VALID_LAYOUTS=("fr" "kk" "circle" "grid" "sphere" "random" "drl" "graphopt")
 
+# List of valid color palette
+# Note: Change color schemes based on different criteria
 VALID_PALETTES=(1)
 #VALID_PALETTES=(1 2 3 4 5)
 
-#VALID_SHOW_REGULAR=("TRUE" "FALSE")
-VALID_SHOW_REGULAR=("FALSE")
-# Note: SHOW_START_REGULAR only makes sense when SHOW_REGULAR=TRUE
-# When SHOW_REGULAR=FALSE, SHOW_START_REGULAR must also be FALSE
+# List of valid shape options
+# Note: Change node shapes based on different criteria
+VALID_SHAPE_OPTIONS=(1)
+#VALID_SHAPE_OPTIONS=(1 2 3)
 
+# List of valid size types
+# Note: Change node sizes based on different criteria
+VALID_SIZE_TYPES=("equals" "elite_out_degree")
+#VALID_SIZE_TYPES=("equals" "configurations" "out_degree" "in_degree" "degree" "elite_out_degree")
+
+# List of all valid combinations: "SHOW_REGULAR SHOW_START_REGULAR SHOW_SINGLE_NODES"
+# Note: SHOW_REGULAR = FALSE implies SHOW_START_REGULAR = FALSE (no regular nodes to show)
+# Note 2: SHOW_SINGLE_NODES = FALSE implies SHOW_START_REGULAR = FALSE (no single nodes to show)
+# Therefore: SHOW_START_REGULAR = TRUE only when SHOW_REGULAR = TRUE AND SHOW_SINGLE_NODES = TRUE
+# VALID_SHOW_PARAMETERS=(
+#   "FALSE FALSE TRUE"
+#   "FALSE FALSE FALSE"
+#   "TRUE FALSE TRUE"
+#   "TRUE FALSE FALSE"
+#   "TRUE TRUE TRUE"
+# )
+VALID_SHOW_PARAMETERS=(
+  "FALSE FALSE FALSE"
+  "FALSE FALSE TRUE"
+)
+
+# List of valid zoom quantiles (NA means no zoom)
+# Note: Zooming in may hide some nodes if they are outside the quantile range (based on quality)
 VALID_ZOOM_QUANTILES=("NA")
 #VALID_ZOOM_QUANTILES=("NA" "0.1" "0.2" "0.3" "0.4" "0.5" "0.6" "0.7" "0.8" "0.9")
 
@@ -126,33 +155,33 @@ for alg in "${!experiments[@]}"; do
       # Loop over valid options
       for palette in "${VALID_PALETTES[@]}"; do
         for layout in "${VALID_LAYOUTS[@]}"; do
-          for show_regular in "${VALID_SHOW_REGULAR[@]}"; do
-            # Determine valid SHOW_START_REGULAR values based on SHOW_REGULAR
-            if [[ "$show_regular" == "TRUE" ]]; then
-              valid_start_regular=("TRUE" "FALSE")
-            else
-              # When SHOW_REGULAR=FALSE, SHOW_START_REGULAR must be FALSE
-              valid_start_regular=("FALSE")
-            fi
-            
-            for show_start_regular in "${valid_start_regular[@]}"; do
-              for zoom_quantile in "${VALID_ZOOM_QUANTILES[@]}"; do
-                output_dir="${base_output_dir}/${loc}"
-                mkdir -p "$output_dir"
+          for shape_option in "${VALID_SHAPE_OPTIONS[@]}"; do
+            for size_type in "${VALID_SIZE_TYPES[@]}"; do
+              for show_params in "${VALID_SHOW_PARAMETERS[@]}"; do
+                # Extract individual parameters from the combination
+                read -r show_regular show_start_regular show_single_nodes <<< "$show_params"
                 
-                output_file="${exp}-${loc}-P_${palette}-L_${layout}-SR_${show_regular}-SSR_${show_start_regular}-Z_${zoom_quantile}.pdf"
+                for zoom_quantile in "${VALID_ZOOM_QUANTILES[@]}"; do
+                  output_dir="${base_output_dir}/${loc}"
+                  mkdir -p "$output_dir"
+                  
+                  output_file="${exp}-${loc}-P_${palette}-L_${layout}-W_${shape_option}-T_${size_type}-SR_${show_regular}-SSR_${show_start_regular}-SN_${show_single_nodes}-Z_${zoom_quantile}.pdf"
 
-                run_plot_stn_i \
-                  -i "$input_file" \
-                  -o "$output_dir" \
-                  -f "$output_file" \
-                  -l "$layout" \
-                  -r "$show_regular" \
-                  -s "$show_start_regular" \
-                  -z "$SIZE_FACTOR" \
-                  -p "$palette" \
-                  -q "$zoom_quantile" \
-                  -v "$VERBOSE"
+                  run_plot_stn_i \
+                    -i "$input_file" \
+                    -o "$output_dir" \
+                    -f "$output_file" \
+                    -l "$layout" \
+                    -r "$show_regular" \
+                    -s "$show_start_regular" \
+                    -n "$show_single_nodes" \
+                    -w "$shape_option" \
+                    -t "$size_type" \
+                    -z "$SIZE_FACTOR" \
+                    -p "$palette" \
+                    -q "$zoom_quantile" \
+                    -v "$VERBOSE"
+                done
               done
             done
           done

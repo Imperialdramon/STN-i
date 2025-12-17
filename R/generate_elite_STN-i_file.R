@@ -48,7 +48,9 @@ library(irace)
 library(optparse)
 
 # ---------- Load utility functions ----------
-source("R/utils.R")
+source("R/Functions/network_utils.R")
+
+# TODO: Agregar correctamente los sources
 
 # TODO: Utilizar múltiples archivos .Rdata por cada ejecución de testing elite
 # TODO: Construir nuevos archivos basados en los archivos de configurations y trayectories, aprovechando el mapping se configuraciones, que permitirá idenfificar el escenario y semilla al que va cada configuración elite.
