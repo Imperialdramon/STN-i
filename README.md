@@ -6,429 +6,520 @@ This repository contains the implementation of Search Trajectory Networks (STN) 
 - [Overview](#overview)
 - [Project Structure](#project-structure)
 - [Scripts Description](#scripts-description)
-- [Usage Examples](#usage-examples)
+  - [Data Generation Scripts](#data-generation-scripts)
+  - [Metric Calculation Scripts](#metric-calculation-scripts)
 - [Automation Scripts](#automation-scripts)
+- [Location Code Generation Algorithm](#location-code-generation-algorithm)
+- [Additional Data](#additional-data)
 
 ## Overview
 
 STN-i creates network representations where:
-- Nodes represent configurations evaluated by irace
-- Edges represent transitions between configurations
-- Node attributes include fitness values and configuration types
-- Edge attributes include transition frequencies
+- **Nodes** represent configurations evaluated by irace
+- **Edges** represent transitions between configurations
+- **Node attributes** include fitness values, elite status, and configuration types
+- **Edge attributes** include transition frequencies and improvement types
 
 The project supports:
 - Individual STN-i generation for single irace executions
-- Merged STN-i creation from multiple executions
-- Network visualization with various layout algorithms
-- Metric calculation for network analysis
+- Network visualization with customizable layouts, colors, shapes, and sizes
+- Comprehensive metric calculation for network analysis
+- Elite configuration extraction and analysis
+- Batch processing through automation scripts
 
 ## Project Structure
 
 ```
 STN-i/
-├── R/                      # R scripts
+├── R/                      # R scripts for data processing and visualization
+│   ├── generate_STN-i_file.R
+│   ├── generate_STN-i_Rdata.R
+│   ├── plot_STN-i.R
+│   ├── metrics_STN-i.R
+│   ├── generate_optimum_file.R
+│   ├── get_elites.R
+│   ├── generate_elite_STN-i_file.R
+│   ├── box_plot_best_elite_STN-i.R
+│   └── Functions/          # Utility functions
 ├── Experiments/           
-│   ├── ACOTSP/            # ACOTSP algorithm data
-│   │   ├── Individuals/   # Individual executions
-│   │   ├── Locations/     # Location files
-│   │   ├── Multiple/      # Merged networks
-│   │   └── Others/        # Additional data
-│   └── PSO-X/             # PSO algorithm data
-├── Authomatize/           # Automation scripts
-└── Logs/                  # Execution logs
+│   ├── ACOTSP/             # ACOTSP algorithm data
+│   │   ├── Individuals/    # Individual STN-i per execution
+│   │   ├── Individuals-Elites/ # Elite-only STN-i
+│   │   ├── General-Metrics/    # Aggregated metrics
+│   │   ├── Locations/      # Location parameter files
+│   │   └── Others/         # Parameters and optimum files
+│   └── PSO-X/              # PSO-X algorithm data
+├── Authomatize/            # Bash automation scripts
+└── Logs/                   # Execution logs
 ```
 
 ## Scripts Description
 
 ### Data Generation Scripts
 
-#### `get_elites.R`
-Extracts and processes elite configurations from multiple irace executions.
+#### `generate_STN-i_file.R`
+Processes irace execution data (.Rdata files) and generates STN-i trace files in CSV format. This script handles parameter discretization, configuration grouping by location codes, and trajectory extraction.
 
+**Usage:**
+```bash
+Rscript R/generate_STN-i_file.R \
+  --input=<input_dir> \
+  --general_parameters=<general_params_file> \
+  --parameters=<params_file_or_dir> \
+  --output=<output_dir> \
+  [--name=<output_name>] \
+  [--best_criteria=<min|max>] \
+  [--quality_criteria=<min|max|mean|median|mode>] \
+  [--significance=<integer>] \
+  [--instances=<instances_file>] \
+  [--na_ranking=<TRUE|FALSE>] \
+  [--representative_criteria=<min|max|mean|median|mode>] \
+  [--verbose=<TRUE|FALSE>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -i | --input | Directory containing input .Rdata files from irace executions | - | Yes |
+| -g | --general_parameters | CSV file with general parameters for data processing | - | Yes |
+| -p | --parameters | Directory or CSV file with location-specific parameters | - | Yes |
+| -o | --output | Output directory for STN-i trace files | - | Yes |
+| -n | --name | Name of the output STN-i file | auto | No |
+| -b | --best_criteria | Criterion for best value configurations before grouping ('min' or 'max') | min | No |
+| -c | --quality_criteria | Quality criterion for grouped configurations ('min','max','mean','median','mode') | mean | No |
+| -s | --significance | Significance level (decimal places) for numerical parameters | 2 | No |
+| -t | --instances | CSV file with instance optimum values | NULL | No |
+| -k | --na_ranking | Consider NA as worst possible value in rankings | FALSE | No |
+| -r | --representative_criteria | Criterion for representative configuration of a location ('min','max','mean','median','mode') | mean | No |
+| -v | --verbose | Show detailed processing information | FALSE | No |
+
+**Complete Example:**
+```bash
+Rscript R/generate_STN-i_file.R \
+  --input="Experiments/ACOTSP/Individuals/BH/Data" \
+  --general_parameters="Experiments/ACOTSP/Others/Parameters.csv" \
+  --parameters="Experiments/ACOTSP/Locations" \
+  --output="Experiments/ACOTSP/Individuals/BH/STN-i-Files" \
+  --name="BH" \
+  --best_criteria="min" \
+  --quality_criteria="mean" \
+  --significance=2 \
+  --instances="Experiments/ACOTSP/Others/Optimum.csv" \
+  --na_ranking=FALSE \
+  --representative_criteria="mean" \
+  --verbose=TRUE
+```
+
+---
+
+#### `generate_STN-i_Rdata.R`
+Converts STN-i trace files (CSV) into graph objects (.Rdata) using the igraph package. The resulting graph contains all node and edge attributes needed for visualization and analysis.
+
+**Usage:**
+```bash
+Rscript R/generate_STN-i_Rdata.R \
+  --input=<input_file> \
+  --output=<output_folder> \
+  [--output_file=<output_file_name>] \
+  [--problem_type=<min|max>] \
+  [--best_known_solution=<numeric_value>] \
+  [--number_of_runs=<integer_value>] \
+  [--network_name=<name>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -i | --input | Path to STN-i trace file (.csv) | - | Yes |
+| -o | --output | Output folder for .Rdata files | - | Yes |
+| -f | --output_file | Name of the output file | input_name_stn_i.Rdata | No |
+| -p | --problem_type | Optimization objective ('min' or 'max') | min | No |
+| -b | --best_known_solution | Best-known solution value | computed from data | No |
+| -n | --number_of_runs | Number of independent runs to include | max found | No |
+| -m | --network_name | Name for the network | input file name | No |
+
+**Complete Example:**
+```bash
+Rscript R/generate_STN-i_Rdata.R \
+  --input="Experiments/ACOTSP/Individuals/BH/STN-i-Files/BH-L0.csv" \
+  --output="Experiments/ACOTSP/Individuals/BH/STN-i-RData" \
+  --output_file="BH-L0_stn_i.Rdata" \
+  --problem_type="min" \
+  --best_known_solution=6110 \
+  --number_of_runs=20 \
+  --network_name="BH-L0"
+```
+
+---
+
+#### `plot_STN-i.R`
+Generates PDF visualizations of STN-i networks with extensive customization options for layout, colors, shapes, and node sizes.
+
+**Usage:**
+```bash
+Rscript R/plot_STN-i.R \
+  --input=<input_file> \
+  --output=<output_folder> \
+  [--output_file=<output_file_name>] \
+  [--layout_type=<value>] \
+  [--show_regular=<TRUE|FALSE>] \
+  [--show_start_regular=<TRUE|FALSE>] \
+  [--show_single_nodes=<TRUE|FALSE>] \
+  [--size_factor=<value>] \
+  [--palette=<value>] \
+  [--shape_option=<value>] \
+  [--size_type=<value>] \
+  [--zoom_quantile=<value>] \
+  [--verbose=<TRUE|FALSE>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -i | --input | Path to STN-i .Rdata file | - | Yes |
+| -o | --output | Output folder for plot PDF | - | Yes |
+| -f | --output_file | Name of the output PDF file | input_name.pdf | No |
+| -l | --layout_type | Layout algorithm: fr, kk, circle, grid, sphere, random, drl, graphopt | fr | No |
+| -r | --show_regular | Include regular (non-elite) nodes | TRUE | No |
+| -s | --show_start_regular | Include start regular nodes | FALSE | No |
+| -n | --show_single_nodes | Include isolated nodes (degree = 0) | TRUE | No |
+| -z | --size_factor | Scaling factor for node sizes and edge widths | 1.0 | No |
+| -p | --palette | Color scheme (1-5). Palette 1: regular=black, elite=orange, best=red | 1 | No |
+| -w | --shape_option | Shape scheme (1-3) for node types | 1 | No |
+| -t | --size_type | Size type: equals, configurations, out_degree, in_degree, degree, elite_out_degree | equals | No |
+| -q | --zoom_quantile | Focus on best configurations (0-1, where 0.25 = top 25%) | NA | No |
+| -v | --verbose | Show detailed processing information | FALSE | No |
+
+**Shape Options:**
+- **Option 1**: Start=square, End=triangle, Standard=diamond, Start-End=cross, Start-Standard=star, Standard-End=ellipse, Start-Standard-End=circle
+- **Option 2**: Start=triangle, End=square, Standard=diamond, Start-End=ellipse, Start-Standard=cross, Standard-End=star, Start-Standard-End=circle
+- **Option 3**: Start=diamond, End=cross, Standard=star, Start-End=ellipse, Start-Standard=circle, Standard-End=square, Start-Standard-End=triangle
+
+**Size Types:**
+- **equals**: All nodes have the same size
+- **configurations**: Size proportional to number of times the configuration appears
+- **out_degree**: Size proportional to number of outgoing transitions
+- **in_degree**: Size proportional to number of incoming transitions
+- **degree**: Size proportional to total connections
+- **elite_out_degree**: Regular nodes = base size, elite nodes = count of connections to regular nodes
+
+**Complete Example:**
+```bash
+Rscript R/plot_STN-i.R \
+  --input="Experiments/ACOTSP/Individuals/BH/STN-i-RData/BH-L0_stn_i.Rdata" \
+  --output="Experiments/ACOTSP/Individuals/BH/STN-i-Plots" \
+  --output_file="BH-L0-P_1-L_fr-W_1-T_equals-SR_TRUE-SSR_FALSE-SN_TRUE-Z_NA.pdf" \
+  --layout_type="fr" \
+  --show_regular=TRUE \
+  --show_start_regular=FALSE \
+  --show_single_nodes=TRUE \
+  --size_factor=1.0 \
+  --palette=1 \
+  --shape_option=1 \
+  --size_type="equals" \
+  --zoom_quantile=NA \
+  --verbose=FALSE
+```
+
+---
+
+### Metric Calculation Scripts
+
+#### `metrics_STN-i.R`
+Calculates comprehensive network metrics for STN-i analysis, including node counts, edge types, connectivity, and search efficiency measures.
+
+**Usage:**
+```bash
+Rscript R/metrics_STN-i.R \
+  --input=<input_file> \
+  --output=<output_folder> \
+  [--output_file=<output_file_name>] \
+  [--verbose=<TRUE|FALSE>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -i | --input | Path to STN-i .Rdata file | - | Yes |
+| -o | --output | Output folder for metrics CSV | - | Yes |
+| -f | --output_file | Name of the output CSV file | input_name_metrics.csv | No |
+| -v | --verbose | Show detailed processing information | FALSE | No |
+
+**Complete Example:**
+```bash
+Rscript R/metrics_STN-i.R \
+  --input="Experiments/ACOTSP/Individuals/BH/STN-i-RData/BH-L0_stn_i.Rdata" \
+  --output="Experiments/ACOTSP/Individuals/BH/STN-i-Metrics" \
+  --output_file="BH-L0_stn_i_metrics.csv" \
+  --verbose=TRUE
+```
+
+The script generates three metric files:
+- **`*_metrics.csv`**: Complete metrics including all network properties
+- **`*_metrics_nodes.csv`**: Node-focused metrics (counts, rates, connectivity)
+- **`*_metrics_elite_nodes.csv`**: Elite-specific metrics
+- **`*_metrics_configurations.csv`**: Configuration-focused metrics
+
+**Calculated Metrics:**
+
+##### Network Structure Metrics
+| Metric | Description | Type | Range |
+|--------|-------------|------|--------|
+| nodes | Total number of configurations | Integer | [1, ∞) |
+| regular_nodes | Number of non-elite configurations | Integer | [0, nodes] |
+| elite_nodes | Number of elite configurations | Integer | [0, nodes] |
+| start_nodes | Number of initial configurations | Integer | [0, nodes] |
+| standard_nodes | Number of intermediate configurations | Integer | [0, nodes] |
+| end_nodes | Number of final configurations | Integer | [0, nodes] |
+| edges | Total number of transitions | Integer | [0, ∞) |
+| worsening_edges | Transitions to worse configurations | Integer | [0, edges] |
+| equal_edges | Transitions to equal quality configurations | Integer | [0, edges] |
+| improving_edges | Transitions to better configurations | Integer | [0, edges] |
+| best_nodes | Number of configurations with best performance | Integer | [1, nodes] |
+
+##### Configuration Type Metrics
+| Metric | Description | Type | Range |
+|--------|-------------|------|--------|
+| regular_start_nodes | Non-elite initial configurations | Integer | [0, start_nodes] |
+| elite_start_nodes | Elite initial configurations | Integer | [0, start_nodes] |
+| regular_start_configuration_rate | Proportion of start nodes that are regular | Float | [0, 1] |
+| elite_start_configuration_rate | Proportion of start nodes that are elite | Float | [0, 1] |
+| regular_configuration_rate | Overall proportion of regular configurations | Float | [0, 1] |
+| elite_configuration_rate | Overall proportion of elite configurations | Float | [0, 1] |
+
+---
+
+#### `generate_optimum_file.R`
+Processes multiple irace .Rdata files and generates a CSV file with the best quality values for each instance across all executions.
+
+**Usage:**
+```bash
+Rscript R/generate_optimum_file.R \
+  [--input=<input_directory>] \
+  [--directories=<dir1,dir2,...>] \
+  --output=<output_directory> \
+  [--name=<output_file_name>] \
+  [--best=<min|max>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -i | --input | Single input directory containing .Rdata files | - | No* |
+| -d | --directories | Comma-separated paths to multiple input directories | - | No* |
+| -o | --output | Output directory for the optimum CSV file | - | Yes |
+| -n | --name | Name of the output CSV file | Optimum.csv | No |
+| -b | --best | Criteria for best value ('min' or 'max') | min | No |
+
+*At least one of --input or --directories must be provided.
+
+**Complete Example:**
+```bash
+Rscript R/generate_optimum_file.R \
+  --directories="Experiments/ACOTSP/Individuals/BH/Data,Experiments/ACOTSP/Individuals/BH-90/Data,Experiments/ACOTSP/Individuals/BL/Data,Experiments/ACOTSP/Individuals/BL-45/Data" \
+  --output="Experiments/ACOTSP/Others" \
+  --name="Optimum.csv" \
+  --best="min"
+```
+
+---
+
+#### `get_elites.R`
+Extracts elite configurations from multiple irace execution scenarios and creates mapping files for elite-focused analysis.
+
+**Usage:**
 ```bash
 Rscript R/get_elites.R \
   --directories=<dir1,dir2,...> \
   --output=<output_dir> \
   --name=<output_name> \
-  [--verbose=TRUE|FALSE]
+  [--parameters=<parameters_file>] \
+  [--verbose=<TRUE|FALSE>]
 ```
+
+**Parameters:**
 
 | Short | Long Parameter | Description | Default | Required |
 |-------|---------------|-------------|---------|----------|
-| -d    | --directories | Comma-separated list of directories containing .Rdata files | - | Yes |
-| -o    | --output | Directory where output files will be saved | - | Yes |
-| -n    | --name | Base name for output files | - | Yes |
-| -v    | --verbose | Show detailed processing information | FALSE | No |
+| -d | --directories | Comma-separated list of parent directories containing Results subdirectories | - | Yes |
+| -o | --output | Directory where output files will be saved | - | Yes |
+| -n | --name | Base name for output files | - | Yes |
+| -p | --parameters | Path to Parameters.csv file | auto-detect | No |
+| -v | --verbose | Show detailed processing information | FALSE | No |
 
 The script generates two output files:
-1. `<name>_configs.txt`: Tab-separated file containing unique elite configurations
-2. `<name>_mapping.csv`: CSV file mapping runs to configurations
+1. **`<name>_configs.txt`**: Tab-separated file containing unique elite configurations with parameter values
+2. **`<name>_mapping.csv`**: CSV file mapping each scenario/run to its elite configuration IDs with ESCENARIO metadata
 
-#### `generate_STN-i_file.R`
-Generates STN-i files from irace execution data.
-
-```bash
-Rscript R/generate_STN-i_file.R \
-  --input=<input_folder> \
-  --output=<output_folder> \
-  [--problem_type=<min|max>] \
-  [--verbose=TRUE|FALSE]
-```
-
-| Short | Long Parameter  | Description                                  | Default | Required |
-|-------|----------------|----------------------------------------------|---------|----------|
-| -i    | --input        | Path to irace execution results folder       | -       | Yes      |
-| -o    | --output       | Path where STN-i files will be saved        | -       | Yes      |
-| -p    | --problem_type | Optimization type (min/max)                 | min     | No       |
-| -v    | --verbose      | Show detailed processing information        | FALSE   | No       |
-
-#### `generate_elite_STN-i_file.R`
-Processes elite configurations from irace testing results and generates STN-i files for each scenario. This script filters testing data to include only elite configurations from each run.
-
-```bash
-Rscript R/generate_elite_STN-i_file.R \
-  --elites_dir=<elites_dir> \
-  --directories=<dir1,dir2,...> \
-  --output=<output_dir> \
-  --parameters=<params_file> \
-  [--best=<min|max>] \
-  [--na_ranking=TRUE|FALSE] \
-  [--verbose=TRUE|FALSE]
-```
-
-| Short | Long Parameter | Description | Default | Required |
-|-------|---------------|-------------|---------|----------|
-| -e    | --elites_dir  | Directory containing elite data (irace.Rdata with testing results) | - | Yes |
-| -d    | --directories | Comma-separated list of scenario directories with .Rdata files | - | Yes |
-| -o    | --output      | Output directory for elite STN-i files | - | Yes |
-| -p    | --parameters  | CSV file with parameters definition | - | Yes |
-| -b    | --best        | Criterion for best value ('min' or 'max') | min | No |
-| -n    | --na_ranking  | Consider NA as worst value in rankings | FALSE | No |
-| -v    | --verbose     | Show detailed processing information | FALSE | No |
-
-The script generates four files per run:
-1. `configurations.csv`: Elite configurations with parameter values
-2. `instances.csv`: Testing instances with seeds and optimal values
-3. `results.csv`: Performance metrics for elite configurations
-4. `trajectories.csv`: Evolution paths between elite configurations
-
-**Usage Examples:**
+**Complete Examples:**
 
 ACOTSP case:
 ```bash
-Rscript R/generate_elite_STN-i_file.R \
-  -e "Experiments/ACOTSP/Individuals-Elites/General-Data" \
-  -d "Experiments/ACOTSP/Individuals/BH/Data,Experiments/ACOTSP/Individuals/BH-90/Data,Experiments/ACOTSP/Individuals/BL/Data,Experiments/ACOTSP/Individuals/BL-45/Data" \
-  -o "Experiments/ACOTSP/Individuals-Elites" \
-  -p "Experiments/ACOTSP/Others/Parameters.csv" \
-  -b "min" \
-  -v FALSE
+Rscript R/get_elites.R \
+  --directories="Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
+  --output="Experiments/ACOTSP/Individuals-Elites/Configurations" \
+  --parameters="Experiments/ACOTSP/Others/Parameters.csv" \
+  --name="All_Elites" \
+  --verbose=TRUE
 ```
 
 PSO-X case:
 ```bash
-Rscript R/generate_elite_STN-i_file.R \
-  -e "Experiments/PSO-X/Individuals-Elites/General-Data" \
-  -d "Experiments/PSO-X/Individuals/BH/Data,Experiments/PSO-X/Individuals/BH-65/Data,Experiments/PSO-X/Individuals/BL/Data,Experiments/PSO-X/Individuals/BL-32/Data" \
-  -o "Experiments/PSO-X/Individuals-Elites" \
-  -p "Experiments/PSO-X/Others/Parameters.csv" \
-  -b "min" \
-  -v FALSE
+Rscript R/get_elites.R \
+  --directories="Experiments/PSO-X/Individuals/BH/Results,Experiments/PSO-X/Individuals/BH-65/Results,Experiments/PSO-X/Individuals/BL/Results,Experiments/PSO-X/Individuals/BL-32/Results" \
+  --output="Experiments/PSO-X/Individuals-Elites/Configurations" \
+  --parameters="Experiments/PSO-X/Others/Parameters.csv" \
+  --name="All_Elites" \
+  --verbose=TRUE
 ```
 
-#### `generate_STN-i_Rdata.R`
-Creates R data objects from STN-i files.
+---
 
-```bash
-Rscript R/generate_STN-i_Rdata.R \
-  --input=<input_file> \
-  --output=<output_folder> \
-  [--problem_type=<min|max>] \
-  [--verbose=TRUE|FALSE]
-```
+#### `generate_elite_STN-i_file.R`
+**TODO:** Processes elite configurations from irace testing results and generates STN-i files for each scenario.
 
-| Short | Long Parameter  | Description                                  | Default | Required |
-|-------|----------------|----------------------------------------------|---------|----------|
-| -i    | --input        | Path to STN-i file (.csv)                   | -       | Yes      |
-| -o    | --output       | Path where RData files will be saved        | -       | Yes      |
-| -p    | --problem_type | Optimization type (min/max)                 | min     | No       |
-| -v    | --verbose      | Show detailed processing information        | FALSE   | No       |
+---
 
-#### `generate_merged_STN-i_Rdata.R`
-Merges multiple STN-i networks into a single unified network.
+#### `box_plot_best_elite_STN-i.R`
+**TODO:** Creates box plot visualizations comparing best and elite configurations across scenarios.
 
-```bash
-Rscript R/generate_merged_STN-i_Rdata.R \
-  --input=<input_folder> \
-  --output=<output_folder> \
-  [--output_file=<file_name>] \
-  [--criteria=<mean|min|max|median|mode>] \
-  [--verbose=TRUE|FALSE]
-```
-
-| Short | Long Parameter  | Description                                  | Default | Required |
-|-------|----------------|----------------------------------------------|---------|----------|
-| -i    | --input        | Folder containing STN-i RData files         | -       | Yes      |
-| -o    | --output       | Path where merged network will be saved     | -       | Yes      |
-| -f    | --output_file  | Name for the output file                    | auto    | No       |
-| -c    | --criteria     | Method for resolving node conflicts         | mean    | No       |
-| -v    | --verbose      | Show detailed processing information        | FALSE   | No       |
-
-### Visualization Scripts
-
-#### `plot_STN-i.R`
-Generates visual representations of individual STN-i networks.
-
-```bash
-Rscript R/plot_STN-i.R \
-  --input=<input_file> \
-  --output=<output_folder> \
-  [--output_file=<file_name>] \
-  [--layout_type=<layout>] \
-  [--show_regular=TRUE|FALSE] \
-  [--show_start_regular=TRUE|FALSE] \
-  [--size_factor=<value>] \
-  [--palette=<1-5>] \
-  [--zoom_quantile=<0-1>] \
-  [--verbose=TRUE|FALSE]
-```
-
-| Short | Long Parameter      | Description                              | Default | Required |
-|-------|-------------------|------------------------------------------|---------|----------|
-| -i    | --input           | Path to STN-i RData file                | -       | Yes      |
-| -o    | --output          | Path where plots will be saved          | -       | Yes      |
-| -f    | --output_file     | Name for the output PDF file            | auto    | No       |
-| -l    | --layout_type     | Network layout algorithm                | fr      | No       |
-| -r    | --show_regular    | Include regular nodes                   | TRUE    | No       |
-| -s    | --show_start_regular | Include start regular nodes          | FALSE   | No       |
-| -z    | --size_factor     | Node/edge size scaling                  | 1       | No       |
-| -p    | --palette         | Color scheme (1-5)                      | 1       | No       |
-| -q    | --zoom_quantile   | Focus on network portion (0-1)          | NA      | No       |
-| -v    | --verbose         | Show detailed processing information    | FALSE   | No       |
-
-Available layout types: fr, kk, circle, grid, sphere, random, drl, graphopt
-
-#### `plot_merged_STN-i.R`
-Visualizes merged STN-i networks with additional features.
-
-```bash
-Rscript R/plot_merged_STN-i.R \
-  --input=<input_file> \
-  --output=<output_folder> \
-  [--output_file=<file_name>] \
-  [--layout_type=<layout>] \
-  [--show_regular=TRUE|FALSE] \
-  [--show_start_regular=TRUE|FALSE] \
-  [--show_shared_regular=TRUE|FALSE] \
-  [--show_shared_mixed=TRUE|FALSE] \
-  [--size_factor=<value>] \
-  [--palette=<1-5>] \
-  [--zoom_quantile=<0-1>] \
-  [--verbose=TRUE|FALSE]
-```
-
-| Short | Long Parameter    | Description                             | Default | Required |
-|-------|-------------------|-----------------------------------------|---------|----------|
-| -i    | --input           | Path to merged STN-i RData file         | -       | Yes      |
-| -o    | --output          | Path where plots will be saved          | -       | Yes      |
-| -f    | --output_file     | Name for the output PDF file            | auto    | No       |
-| -l    | --layout_type     | Network layout algorithm                | fr      | No       |
-| -r    | --show_regular    | Include regular nodes                   | TRUE    | No       |
-| -s    | --show_start_regular | Include start regular nodes          | FALSE   | No       |
-| -g    | --show_shared_regular | Show shared regular nodes           | TRUE    | No       |
-| -m    | --show_shared_mixed | Show shared mixed nodes               | TRUE    | No       |
-| -z    | --size_factor     | Node/edge size scaling                  | 1       | No       |
-| -p    | --palette         | Color scheme (1-5)                      | 1       | No       |
-| -q    | --zoom_quantile   | Focus on network portion (0-1)          | NA      | No       |
-| -v    | --verbose         | Show detailed processing information    | FALSE   | No       |
-
-### Metric Calculation Scripts
-
-#### `metrics_STN-i.R`
-Calculates network metrics for individual STN-i networks.
-
-```bash
-Rscript R/metrics_STN-i.R \
-  --input=<input_file> \
-  --output=<output_folder> \
-  [--output_file=<file_name>] \
-  [--verbose=TRUE|FALSE]
-```
-
-| Short | Long Parameter | Description                                 | Default | Required |
-|-------|----------------|---------------------------------------------|---------|----------|
-| -i    | --input        | Path to STN-i RData file                    | -       | Yes      |
-| -o    | --output       | Path where metrics will be saved            | -       | Yes      |
-| -f    | --output_file  | Name for the output CSV file                | auto    | No       |
-| -v    | --verbose      | Show detailed processing information        | FALSE   | No       |
-
-The following metrics are calculated for each STN-i network:
-
-##### Network Structure Metrics
-| Metric Name | Description | Type | Range | Can be NA | Notes |
-|-------------|-------------|------|--------|-----------|-------|
-| nodes | Total number of configurations in the network | Integer | [1, ∞) | No | |
-| regular_nodes | Number of non-elite configurations | Integer | [0, nodes] | No | |
-| elite_nodes | Number of elite configurations | Integer | [0, nodes] | No | nodes = regular_nodes + elite_nodes |
-| start_nodes | Number of initial configurations | Integer | [0, nodes] | No | |
-| standard_nodes | Number of intermediate configurations | Integer | [0, nodes] | No | |
-| end_nodes | Number of final configurations | Integer | [0, nodes] | No | nodes = start_nodes + standard_nodes + end_nodes |
-| edges | Total number of transitions between configurations | Integer | [0, ∞) | No | |
-| worsening_edges | Number of transitions to worse configurations | Integer | [0, edges] | No | |
-| equal_edges | Number of transitions to equal quality configurations | Integer | [0, edges] | No | |
-| improving_edges | Number of transitions to better configurations | Integer | [0, edges] | No | edges = worsening + equal + improving |
-
-##### Configuration Type Metrics
-| Metric Name | Description | Type | Range | Can be NA | Notes |
-|-------------|-------------|------|--------|-----------|-------|
-| regular_start_nodes | Number of non-elite initial configurations | Integer | [0, start_nodes] | No | |
-| elite_start_nodes | Number of elite initial configurations | Integer | [0, start_nodes] | No | start_nodes = regular_start + elite_start |
-| regular_start_configuration_rate | Proportion of initial configurations that are non-elite | Float | [0, 1] | No | regular_start_nodes/start_nodes |
-| elite_start_configuration_rate | Proportion of initial configurations that are elite | Float | [0, 1] | No | elite_start_nodes/start_nodes |
-| regular_configuration_rate | Overall proportion of non-elite configurations | Float | [0, 1] | No | regular_nodes/nodes |
-| elite_configuration_rate | Overall proportion of elite configurations | Float | [0, 1] | No | elite_nodes/nodes |
-| best_nodes | Number of configurations with best performance | Integer | [1, nodes] | No | |
-| start_best_nodes | Number of initial configurations with best performance | Integer | [0, best_nodes] | No | |
-| standard_best_nodes | Number of intermediate configurations with best performance | Integer | [0, best_nodes] | No | |
-| end_best_nodes | Number of final configurations with best performance | Integer | [0, best_nodes] | No | |
-
-##### Connectivity Metrics
-| Metric Name | Description | Type | Range | Can be NA | Notes |
-|-------------|-------------|------|--------|-----------|-------|
-| average_degree | Average number of connections per node | Float | [0, ∞) | No | |
-| average_in_degree | Average number of incoming connections | Float | [0, ∞) | No | |
-| average_out_degree | Average number of outgoing connections | Float | [0, ∞) | No | |
-| average_regular_in_degree | Average incoming connections for non-elite nodes | Float | [0, ∞) | No | |
-| average_regular_out_degree | Average outgoing connections for non-elite nodes | Float | [0, ∞) | No | |
-| average_elite_in_degree | Average incoming connections for elite nodes | Float | [0, ∞) | No | |
-| average_elite_out_degree | Average outgoing connections for elite nodes | Float | [0, ∞) | No | |
-| average_best_in_degree | Average incoming connections for best nodes | Float | [0, ∞) | No | |
-| average_best_out_degree | Average outgoing connections for best nodes | Float | [0, ∞) | No | |
-| best_strength_in | Average weight of incoming connections to best nodes | Float | [0, ∞) | Yes | NA if no incoming connections |
-
-##### Path and Component Metrics
-| Metric Name | Description | Type | Range | Can be NA | Notes |
-|-------------|-------------|------|--------|-----------|-------|
-| average_path_length | Average number of steps between connected nodes | Float | [0, ∞) | Yes | NA if disconnected |
-| paths | Number of unique paths in the network | Integer | [0, ∞) | No | |
-| components | Number of connected components | Integer | [1, nodes] | No | |
-| average_configurations_survival_rates | Average survival rate of configurations | Float | [0, 1] | No | |
-
-##### Rate Metrics
-| Metric Name | Description | Type | Range | Can be NA | Notes |
-|-------------|-------------|------|--------|-----------|-------|
-| best_nodes_rate | Proportion of best performing configurations | Float | [0, 1] | No | best_nodes/nodes |
-| regular_nodes_rate | Proportion of non-elite configurations | Float | [0, 1] | No | regular_nodes/nodes |
-| elite_nodes_rate | Proportion of elite configurations | Float | [0, 1] | No | elite_nodes/nodes |
-| start_nodes_rate | Proportion of initial configurations | Float | [0, 1] | No | start_nodes/nodes |
-| standard_nodes_rate | Proportion of intermediate configurations | Float | [0, 1] | No | standard_nodes/nodes |
-| end_nodes_rate | Proportion of final configurations | Float | [0, 1] | No | end_nodes/nodes |
-| worsening_edges_rate | Proportion of transitions to worse configurations | Float | [0, 1] | No | worsening_edges/edges |
-| equal_edges_rate | Proportion of transitions to equal configurations | Float | [0, 1] | No | equal_edges/edges |
-| improving_edges_rate | Proportion of transitions to better configurations | Float | [0, 1] | No | improving_edges/edges |
-
-
-#### `metrics_merged_STN-i.R`
-Computes metrics for merged networks with additional shared node statistics.
-
-```bash
-Rscript R/metrics_merged_STN-i.R \
-  --input=<input_file> \
-  --output=<output_folder> \
-  [--output_file=<file_name>] \
-  [--verbose=TRUE|FALSE]
-```
-
-| Short | Long Parameter  | Description                                  | Default | Required |
-|-------|----------------|----------------------------------------------|---------|----------|
-| -i    | --input        | Path to merged STN-i RData file             | -       | Yes      |
-| -o    | --output       | Path where metrics will be saved            | -       | Yes      |
-| -f    | --output_file  | Name for the output CSV file                | auto    | No       |
-| -v    | --verbose      | Show detailed processing information        | FALSE   | No       |
-
-Additional metrics over metrics_STN-i.R:
-- Shared node statistics
-- Inter-network connectivity measures
-- Algorithm comparison metrics
-
-On work...
-
-## Usage Examples
-
-Here's a complete workflow example using the ACOTSP data included in the repository:
-
-1. Generate STN-i file from ACOTSP results:
-```bash
-Rscript R/generate_STN-i_file.R \
-  --input=Experiments/ACOTSP/BH-90/Data \
-  --output=Experiments/ACOTSP/BH-90/STN-i-Files \
-  --problem_type=min
-```
-
-2. Create RData object:
-```bash
-Rscript R/generate_STN-i_Rdata.R \
-  --input=Experiments/ACOTSP/BH-90/STN-i-Files/BH-90-L1.csv \
-  --output=Experiments/ACOTSP/BH-90/STN-i-RData
-```
-
-3. Generate visualization:
-```bash
-Rscript R/plot_STN-i.R \
-  --input=Experiments/ACOTSP/BH-90/STN-i-RData/BH-90-L1_stn_i.Rdata \
-  --output=Experiments/ACOTSP/BH-90/STN-i-Plots \
-  --layout_type=fr
-```
-
-4. Calculate metrics:
-```bash
-Rscript R/metrics_STN-i.R \
-  --input=Experiments/ACOTSP/BH-90/STN-i-RData/BH-90-L1_stn_i.Rdata \
-  --output=Experiments/ACOTSP/BH-90/STN-i-Metrics
-```
-
-5. Merge multiple networks:
-```bash
-Rscript R/generate_merged_STN-i_Rdata.R \
-  --input=Experiments/ACOTSP/BH_BH-90/STN-i-RData \
-  --output=Experiments/ACOTSP/BH_BH-90/Merged-STN-i-RData
-```
+---
 
 ## Automation Scripts
 
-The repository includes scripts to automate common workflows:
+The repository includes bash scripts to automate common workflows. All scripts should be run from the repository root.
 
 ### `run_all_generate_STN-i_file.sh`
-Generates STN-i files for all instances in a specified algorithm's data folder.
+Generates STN-i trace files for all experiments and locations.
 
-### `run_all_generate_STN-i_Rdata.sh`
-Creates RData objects for all STN-i files in the specified algorithm folders.
-
-### `run_all_metrics_STN-i.sh`
-Calculates metrics for all STN-i RData files in the specified algorithm folders.
-
-### `aggregate_all_metrics_STN-i.sh`
-Aggregates all metrics from individual experiments into a single CSV file per algorithm.
-
+**Usage:**
 ```bash
-./Authomatize/aggregate_all_metrics_STN-i.sh
+# Using Individuals mode (default)
+./Authomatize/run_all_generate_STN-i_file.sh
+
+# Using Individuals-Elites mode
+./Authomatize/run_all_generate_STN-i_file.sh --mode=Individuals-Elites
 ```
 
-The script will:
-- Process each configured algorithm (ACOTSP, PSO-X)
-- For each experiment type (BH, BH-90, BL, BL-45, etc.)
-- Combine metrics from all levels (L1-L5)
-- Generate a single `All_Metrics.csv` file in the algorithm's Others directory
+**Parameters:**
+- `--mode=<Individuals|Individuals-Elites>`: Processing mode (default: Individuals)
+
+**Output:**
+- Log file in `Logs/run_all_generate_STN-i_file_<MODE>.log`
+- Generated STN-i .csv files in `Experiments/<ALG>/<MODE>/<EXP>/STN-i-Files/`
+
+---
 
 ### `run_all_generate_STN-i_Rdata.sh`
-Creates RData objects for all STN-i files in the specified algorithm folders.
+Converts all STN-i trace files (.csv) to graph objects (.Rdata).
 
-These scripts should be run from the repository root and require proper folder structure as shown in the Project Structure section.
+**Usage:**
+```bash
+# Using Individuals mode (default)
+./Authomatize/run_all_generate_STN-i_Rdata.sh
+
+# Using Individuals-Elites mode
+./Authomatize/run_all_generate_STN-i_Rdata.sh --mode=Individuals-Elites
+```
+
+**Parameters:**
+- `--mode=<Individuals|Individuals-Elites>`: Processing mode (default: Individuals)
+
+**Output:**
+- Log file in `Logs/run_all_generate_STN-i_Rdata_<MODE>.log`
+- Generated .Rdata files in `Experiments/<ALG>/<MODE>/<EXP>/STN-i-RData/`
+
+---
+
+### `run_all_plot_STN-i.sh`
+Generates PDF visualizations for all STN-i networks.
+
+**Usage:**
+```bash
+# Using Individuals mode with default settings
+./Authomatize/run_all_plot_STN-i.sh
+
+# Using Individuals-Elites mode
+./Authomatize/run_all_plot_STN-i.sh --mode=Individuals-Elites
+
+# Custom size factor and verbose output
+./Authomatize/run_all_plot_STN-i.sh --size_factor=1.5 --verbose=TRUE
+```
+
+**Parameters:**
+- `--mode=<Individuals|Individuals-Elites>`: Processing mode (default: Individuals)
+- `--size_factor=<value>`: Scaling factor for node/edge sizes (default: 1.0)
+- `--verbose=<TRUE|FALSE>`: Detailed output (default: FALSE)
+
+**Customization:**
+Edit the script to configure:
+- `VALID_LAYOUTS`: Layout algorithms to use (fr, kk, circle, etc.)
+- `VALID_PALETTES`: Color schemes (1-5)
+- `VALID_SHAPE_OPTIONS`: Shape mappings (1-3)
+- `VALID_SIZE_TYPES`: Node sizing methods (equals, configurations, out_degree, etc.)
+- `VALID_SHOW_PARAMETERS`: Node visibility combinations
+- `VALID_ZOOM_QUANTILES`: Focus levels
+
+**Output:**
+- Log file in `Logs/run_all_plot_STN-i_<MODE>.log`
+- Generated PDF plots in `Experiments/<ALG>/<MODE>/<EXP>/STN-i-Plots/`
+
+---
+
+### `run_all_metrics_STN-i.sh`
+Calculates metrics for all STN-i networks.
+
+**Usage:**
+```bash
+# Using Individuals mode (default)
+./Authomatize/run_all_metrics_STN-i.sh
+
+# Using Individuals-Elites mode
+./Authomatize/run_all_metrics_STN-i.sh --mode=Individuals-Elites
+```
+
+**Parameters:**
+- `--mode=<Individuals|Individuals-Elites>`: Processing mode (default: Individuals)
+
+**Output:**
+- Log file in `Logs/run_all_metrics_STN-i_<MODE>.log`
+- Generated .csv metrics in `Experiments/<ALG>/<MODE>/<EXP>/STN-i-Metrics/`
+
+---
+
+### `aggregate_all_metrics_STN-i.sh`
+Aggregates all metrics from individual experiments into consolidated CSV files per algorithm.
+
+**Usage:**
+```bash
+# Using Individuals mode (default)
+./Authomatize/aggregate_all_metrics_STN-i.sh
+
+# Using Individuals-Elites mode
+./Authomatize/aggregate_all_metrics_STN-i.sh --mode=Individuals-Elites
+```
+
+**Parameters:**
+- `--mode=<Individuals|Individuals-Elites>`: Processing mode (default: Individuals)
+
+**Output:**
+For each algorithm (ACOTSP, PSO-X) in `Experiments/<ALG>/General-Metrics/`:
+- `All_Metrics_nodes.csv`: Node-focused metrics from all experiments
+- `All_Metrics_elite_nodes.csv`: Elite-specific metrics from all experiments
+- `All_Metrics_configurations.csv`: Configuration-focused metrics from all experiments
+
+(Add `_Elites` suffix when using Individuals-Elites mode)
+
+---
 
 ## Location Code Generation Algorithm
 
-The `get_location_code()` function in `R/utils.R` generates unique identifiers (location codes) for configurations by discretizing their parameter values into subranges. This is the mathematical foundation for node grouping in STN-i.
+The `get_location_code()` function in `R/Functions/network_utils.R` generates unique identifiers (location codes) for configurations by discretizing their parameter values into subranges. This is the mathematical foundation for node grouping in STN-i.
 
 ### Core Concept
 
@@ -606,11 +697,13 @@ For example, with `inertia` ∈ `[0.0, 0.9]` and `significance=2`:
 
 This creates a **hierarchical parameter space representation**, allowing analysis at multiple levels of abstraction.
 
-## Aditional Data
+---
+
+## Additional Data
 
 ### Experiments
 
-For the ACOTSP results we use this locations
+#### ACOTSP Location Parameters
 
 | Parámetro     | Condicional | Tipo | Valores           | Equivalencia L1                                   | Equivalencia L2                                   | Equivalencia L3                                   | Equivalencia L4                                   | Equivalencia L5                                   |
 |---------------|-------------|------|-------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|
@@ -626,7 +719,7 @@ For the ACOTSP results we use this locations
 | nnls          | TRUE        | i    | (5, 50)           | step=5, significance=0 | step=15, significance=0 | step=25, significance=0 | step=35, significance=0 | step=45, significance=0 |
 | dlb           | TRUE        | c    | {0, 1}            | {0:0, 1:1} | {0:0, 1:1} | {0:0, 1:1} | {0:0, 1:1} | {0:0, 1:1} |
 
-For the PSO-X results we use this locations
+#### PSO-X Location Parameters
 
 | Parámetro    | Condicional | Tipo | Valores           | Equivalencia L1                                   | Equivalencia L2                                   | Equivalencia L3                                   | Equivalencia L4                                   | Equivalencia L5                                   |
 |---------------|-------------|------|-------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|
