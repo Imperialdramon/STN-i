@@ -17,8 +17,31 @@
 #' @export
 create_configurations_file <- function(allConfigurations, allElites, iterations, parameters, output_file) {
   config_ids <- allConfigurations$.ID.
+  
+  # Check if we're processing all iterations
+  if (length(allElites) < iterations) {
+    warning(sprintf("allElites has only %d elements but iterations=%d was requested", 
+                    length(allElites), iterations))
+    iterations <- length(allElites)
+  }
+  
+  # Convert all IDs to integers for consistent comparison
   is_elite <- sapply(config_ids, function(id) {
-    any(sapply(allElites[1:iterations], function(elite_ids) id %in% elite_ids))
+    id_int <- as.integer(id)
+    any(sapply(allElites[1:iterations], function(elite_ids) {
+      id_int %in% as.integer(elite_ids)
+    }))
+  })
+  
+  # Identify the best configuration (first elite from last iteration)
+  best_config_id <- if (length(allElites) >= iterations && length(allElites[[iterations]]) > 0) {
+    as.integer(allElites[[iterations]][1])
+  } else {
+    NA_integer_
+  }
+  
+  is_best <- sapply(config_ids, function(id) {
+    !is.na(best_config_id) && as.integer(id) == best_config_id
   })
   
   param_names <- intersect(parameters$NAME, colnames(allConfigurations))
@@ -46,6 +69,7 @@ create_configurations_file <- function(allConfigurations, allElites, iterations,
     c(
       CONFIG_ID = as.character(id),
       IS_ELITE = as.character(is_elite[i]),
+      IS_BEST = as.character(is_best[i]),
       param_values
     )
   })
@@ -480,10 +504,9 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
       if (verbose) cat("  Creando archivo configurations.csv...\n")
       configs_file <- file.path(seed_dir, "configurations.csv")
       configs <- create_configurations_file(
-        iraceResults = irace_results,
         allConfigurations = irace_results$allConfigurations,
         allElites = irace_results$allElites,
-        maxElites = length(irace_results$allElites) - 1,
+        iterations = length(irace_results$allElites),
         parameters = parameters,
         output_file = configs_file
       )
@@ -495,7 +518,7 @@ process_rdata_files <- function(input_dir, parameters_file, results_dir, optimum
         iraceResults = irace_results,
         raceData = irace_results$raceData,
         allElites = irace_results$allElites,
-        maxElites = length(irace_results$allElites) - 1,
+        iterations = length(irace_results$allElites),
         output_file = trajectories_file
       )
 

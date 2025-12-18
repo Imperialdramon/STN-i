@@ -14,6 +14,7 @@
 # Rscript get_elites.R --directories=<dir1,dir2,...> --output=<output_dir> /
 #                      --name=<output_name> /
 #                      [--parameters=<parameters_file>] /
+#                      [--best_elites=<TRUE|FALSE>] /
 #                      [--verbose=<TRUE|FALSE>]
 #
 # Arguments:
@@ -21,6 +22,7 @@
 # --output            : (Required) Directory where output files will be saved
 # --name             : (Required) Base name for output files
 # --parameters        : (Optional) Path to Parameters.csv file. If not provided, will search in output or parent directory
+# --best_elites       : (Optional) Only keep the best elite per run using IS_BEST column (default: FALSE)
 # --verbose          : (Optional) Whether to show detailed processing information (default: FALSE)
 #
 # Requirements:
@@ -63,6 +65,11 @@ option_list <- list(
                 default = NULL,
                 help = "Path to Parameters.csv file [default: auto-detect]"),
     
+    make_option(c("-b", "--best_elites"),
+                type = "logical",
+                default = FALSE,
+                help = "Only keep the best elite per run using IS_BEST column [default= %default]"),
+    
     make_option(c("-v", "--verbose"),
                 type = "logical",
                 default = FALSE,
@@ -82,6 +89,11 @@ if (is.null(opt$output)) {
 }
 if (is.null(opt$name)) {
     stop("Output name is required (-n/--name)")
+}
+
+# Validate best_elites argument
+if (!is.logical(opt$best_elites)) {
+    stop("The 'best_elites' argument must be TRUE or FALSE")
 }
 
 # Process paths
@@ -211,6 +223,30 @@ for (parent_dir in directories) {
                     elite_configs <- configs[configs$IS_ELITE == TRUE, ]
                     
                     if (nrow(elite_configs) > 0) {
+                        # If best_elites is TRUE, filter to only the best elite using IS_BEST column
+                        if (opt$best_elites) {
+                            if ("IS_BEST" %in% colnames(elite_configs)) {
+                                best_configs <- elite_configs[elite_configs$IS_BEST == TRUE, ]
+                                
+                                if (nrow(best_configs) > 0) {
+                                    elite_configs <- best_configs
+                                    
+                                    if (opt$verbose) {
+                                        cat(sprintf("    Selected best elite: CONFIG_ID=%s (marked as IS_BEST=TRUE)\n",
+                                                   best_configs$CONFIG_ID[1]))
+                                    }
+                                } else {
+                                    if (opt$verbose) {
+                                        cat("    Warning: No configuration marked as IS_BEST=TRUE, keeping all elites\n")
+                                    }
+                                }
+                            } else {
+                                if (opt$verbose) {
+                                    cat("    Warning: IS_BEST column not found in configurations.csv, keeping all elites\n")
+                                }
+                            }
+                        }
+                        
                         # Store elite configurations with scenario context
                         for (i in 1:nrow(elite_configs)) {
                             CONFIG_ID <- elite_configs[i, "CONFIG_ID"]
@@ -250,7 +286,7 @@ if (opt$verbose) cat("Processing elite configurations and formatting parameters.
 if (length(all_elite_configs_list) > 0) {
     # Get first config to determine parameter columns
     first_config <- all_elite_configs_list[[1]]$config_row
-    param_cols <- setdiff(colnames(first_config), c("CONFIG_ID", "IS_ELITE"))
+    param_cols <- setdiff(colnames(first_config), c("CONFIG_ID", "IS_ELITE", "IS_BEST"))
     
     # Build unique configurations with proper formatting
     unique_configs_list <- list()

@@ -223,15 +223,16 @@ if (!(opt$representative_criteria %in% c("min", "max", "mean", "median", "mode")
 # Create Results directory path
 results_dir <- file.path(dirname(input_dir), "Results")
 
-# Check if we need to process Rdata files
-# In Individuals-Elites mode, Results should already exist from Individuals processing
-# In normal Individuals mode, we need to process Rdata files first
-need_process_rdata <- !dir.exists(results_dir) || length(list.files(results_dir)) == 0
+# Check if we are in Elites mode
+# In Elites mode: input_dir already points to Results/ (no need to process Rdata)
+# In normal mode: input_dir points to Data/ (need to process Rdata to create Results/)
+is_elites_mode <- basename(input_dir) == "Results"
+need_process_rdata <- !is_elites_mode
 
 # ---------- Process Rdata files if needed ----------
 
-if (need_process_rdata && opt$verbose) {
-  cat("Procesando archivos Rdata y creando estructura Results usando parámetros generales...\n")
+if (need_process_rdata) {
+  if (opt$verbose) cat("Procesando archivos Rdata y creando estructura Results usando parámetros generales...\n")
   process_rdata_files(
     input_dir = input_dir,
     parameters_file = general_parameters_file,
