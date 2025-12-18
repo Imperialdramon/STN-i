@@ -330,7 +330,7 @@ Rscript R/generate_optimum_file.R \
 ---
 
 #### `get_elites.R`
-Extracts elite configurations from multiple irace execution scenarios and creates mapping files for elite-focused analysis.
+Extracts elite configurations from multiple irace execution scenarios and creates mapping files for elite-focused analysis. Supports filtering to extract only the best elite configuration per run.
 
 **Usage:**
 ```bash
@@ -339,6 +339,7 @@ Rscript R/get_elites.R \
   --output=<output_dir> \
   --name=<output_name> \
   [--parameters=<parameters_file>] \
+  [--best_elites=<TRUE|FALSE>] \
   [--verbose=<TRUE|FALSE>]
 ```
 
@@ -350,7 +351,12 @@ Rscript R/get_elites.R \
 | -o | --output | Directory where output files will be saved | - | Yes |
 | -n | --name | Base name for output files | - | Yes |
 | -p | --parameters | Path to Parameters.csv file | auto-detect | No |
+| -b | --best_elites | Only keep the best elite per run (marked as IS_BEST in configurations.csv) | FALSE | No |
 | -v | --verbose | Show detailed processing information | FALSE | No |
+
+**Best Elite Selection:**
+
+When `--best_elites=TRUE`, the script extracts only the configuration marked as `IS_BEST=TRUE` in each run's `configurations.csv` file. This best configuration is determined by irace as the first element of the last iteration's elite set (stored in `allElites[[last_iteration]][1]`), representing the best performing configuration found during the tuning process.
 
 The script generates two output files:
 1. **`<name>_configs.txt`**: Tab-separated file containing unique elite configurations with parameter values
@@ -358,14 +364,86 @@ The script generates two output files:
 
 **Complete Examples:**
 
-ACOTSP case:
+Extract all elite configurations:
 ```bash
 Rscript R/get_elites.R \
-  --directories="Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
-  --output="Experiments/ACOTSP/Individuals-Elites/Configurations" \
-  --parameters="Experiments/ACOTSP/Others/Parameters.csv" \
-  --name="All_Elites" \
-  --verbose=TRUE
+  -d "Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
+  -o "Experiments/ACOTSP/Individuals-Elites/Configurations" \
+  -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -n "All_Elites" \
+  -v TRUE
+```
+
+Extract only the best elite per run:
+```bash
+Rscript R/get_elites.R \
+  -d "Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
+  -o "Experiments/ACOTSP/Individuals-Elites/Configurations" \
+  -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -n "Best_Elites" \
+  -b TRUE \
+  -v TRUE
+```
+
+---
+
+#### `generate_summarize_testing.R`
+Processes elite testing results and training data to generate summary files for box plot analysis. This script calculates normalized ranking gaps (MNRG) for elite configurations across testing instances and identifies which training configurations performed best during testing.
+
+**Purpose:**
+
+This script bridges training and testing phases by:
+1. Processing testing results from elite configurations to calculate quality metrics (MNRG)
+2. Matching training configurations (from `configurations.csv`) with their testing performance
+3. Identifying the best training configuration per run using `IS_BEST=TRUE` marker
+4. Generating summary files that map training runs to their representative testing performance
+
+**Usage:**
+```bash
+Rscript R/generate_summarize_testing.R \
+  --testing_dir=<testing_dir> \
+  --scenarios_dir=<scenarios_dir> \
+  --output=<output_dir> \
+  --parameters=<params_file> \
+  [--problem_type=<min|max>] \
+  [--verbose=<TRUE|FALSE>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -t | --testing_dir | Directory containing elite testing .Rdata files | - | Yes |
+| -s | --scenarios_dir | Directory containing scenario subdirectories with Results/ folders | - | Yes |
+| -o | --output | Output directory for generated files | - | Yes |
+| -p | --parameters | CSV file with parameters definition | - | Yes |
+| -m | --problem_type | Optimization objective ('min' or 'max') | min | No |
+| -v | --verbose | Show detailed processing information | FALSE | No |
+
+**Output Files:**
+
+1. **`Optimum_Testing.csv`**: Best values achieved across all elite configurations for each testing instance
+2. **`configurations_results.csv`**: Dictionary of all tested configurations with their parameters and MNRG values
+3. **`<scenario_name>.csv`**: Per-scenario mapping of training runs to their best configuration's testing performance (MNRG)
+
+**Processing Flow:**
+
+1. Reads testing .Rdata files to extract performance matrices of elite configurations
+2. Calculates MNRG (Mean Normalized Ranking Gap) for each configuration across testing instances
+3. For each training scenario, reads `configurations.csv` from `Results/{SEED_ID}/`
+4. Identifies the best configuration per run (marked as `IS_BEST=TRUE`)
+5. Matches training configurations with testing configurations by parameter values
+6. Outputs the testing MNRG value for each training run's best configuration
+
+**Complete Example:**
+```bash
+Rscript R/generate_summarize_testing.R \
+  -t "Experiments/ACOTSP/Individuals-Elites/General-Data/Best-Elites" \
+  -s "Experiments/ACOTSP/Individuals" \
+  -o "Experiments/ACOTSP/Individuals-Elites/Summarize" \
+  -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -m "min" \
+  -v TRUE
 ```
 
 PSO-X case:

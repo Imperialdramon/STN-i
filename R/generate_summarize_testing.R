@@ -360,21 +360,15 @@ all_configs <- iraceResults$allConfigurations
 param_names <- intersect(parameters$NAME, colnames(all_configs))
 param_types <- setNames(parameters$TYPE, parameters$NAME)
 
-# Create configuration data frame
-config_data <- data.frame(CONFIG_ID = sorted_config_ids, stringsAsFactors = FALSE)
-
-# Add parameter values
-for (pname in param_names) {
-    config_data[[pname]] <- sapply(sorted_config_ids, function(id) {
-        config_row <- all_configs[all_configs$.ID. == as.integer(id), , drop = FALSE]
-        
-        if (nrow(config_row) == 0 || is.na(config_row[[pname]])) {
+# Create configuration list using same logic as create_configurations_file
+config_list <- lapply(sorted_config_ids, function(id) {
+    param_row <- all_configs[all_configs$.ID. == as.integer(id), , drop = FALSE]
+    param_values <- sapply(param_names, function(pname) {
+        if (nrow(param_row) == 0 || !(pname %in% colnames(param_row)) || is.na(param_row[[pname]])) {
             return(NA)
         }
-        
-        value <- config_row[[pname]]
+        value <- param_row[[pname]]
         type <- param_types[[pname]]
-        
         if (type %in% c("c", "o", "cat", "ord")) {
             return(as.character(value))
         } else if (type %in% c("i", "int", "i,log")) {
@@ -385,7 +379,14 @@ for (pname in param_names) {
             return(as.character(value))
         }
     })
-}
+    c(
+        CONFIG_ID = as.character(id),
+        param_values
+    )
+})
+
+# Convert to data frame (same as create_configurations_file)
+config_data <- as.data.frame(do.call(rbind, config_list), stringsAsFactors = FALSE)
 
 # Add MNRG values
 config_data$MNRG <- config_mnrg[sorted_config_ids]
@@ -398,24 +399,24 @@ scenario_dirs <- list.dirs(scenarios_dir, recursive = FALSE, full.names = TRUE)
 
 for (scenario_path in scenario_dirs) {
     scenario_name <- basename(scenario_path)
-    data_dir <- file.path(scenario_path, "Data")
+    results_dir <- file.path(scenario_path, "Results")
     
-    if (!dir.exists(data_dir)) {
-        if (opt$verbose) cat(sprintf("  Skipping %s (no Data directory)\n", scenario_name))
+    if (!dir.exists(results_dir)) {
+        if (opt$verbose) cat(sprintf("  Skipping %s (no Results directory)\n", scenario_name))
         next
     }
     
     if (opt$verbose) cat(sprintf("\n  Processing scenario: %s\n", scenario_name))
     
-    # Get all .Rdata files in Data directory
-    training_files <- list.files(data_dir, pattern = "\\.Rdata$", full.names = TRUE)
+    # Get all run subdirectories in Results
+    run_dirs <- list.dirs(results_dir, recursive = FALSE, full.names = TRUE)
     
-    if (length(training_files) == 0) {
-        if (opt$verbose) cat("    No training files found, skipping...\n")
+    if (length(run_dirs) == 0) {
+        if (opt$verbose) cat("    No run directories found, skipping...\n")
         next
     }
     
-    if (opt$verbose) cat(sprintf("    Found %d training files\n", length(training_files)))
+    if (opt$verbose) cat(sprintf("    Found %d run directories\n", length(run_dirs)))
     
     # Create results data frame
     scenario_results <- data.frame(
@@ -425,55 +426,64 @@ for (scenario_path in scenario_dirs) {
         stringsAsFactors = FALSE
     )
     
-    # Process each training file
-    for (training_file in training_files) {
-        run_name <- tools::file_path_sans_ext(basename(training_file))
+    # Process each run directory
+    for (run_dir in run_dirs) {
+        run_name <- basename(run_dir)
+        config_file <- file.path(run_dir, "configurations.csv")
         
-        if (opt$verbose) cat(sprintf("      Processing run: %s\n", run_name))
-        
-        # Load training data
-        load(training_file)
-        
-        # Get the best elite from the last iteration
-        if (is.null(iraceResults$allElites) || length(iraceResults$allElites) == 0) {
-            if (opt$verbose) cat("        Warning: No elites found, skipping...\n")
+        if (!file.exists(config_file)) {
+            if (opt$verbose) cat(sprintf("      Warning: configurations.csv not found for run %s, skipping...\n", run_name))
             next
         }
         
-        last_iter <- length(iraceResults$allElites)
-        best_elite_id <- iraceResults$allElites[[last_iter]][1]
+        if (opt$verbose) cat(sprintf("      Processing run: %s\n", run_name))
         
-        if (opt$verbose) cat(sprintf("        Best elite ID: %s\n", best_elite_id))
+        # Read configurations file
+        run_configs <- read.csv(config_file, sep = ";", stringsAsFactors = FALSE)
         
-        # Get configuration values
-        elite_config <- iraceResults$allConfigurations[iraceResults$allConfigurations$.ID. == best_elite_id, , drop = FALSE]
+        # Find the best elite (IS_BEST == TRUE)
+        if (!"IS_BEST" %in% colnames(run_configs)) {
+            if (opt$verbose) cat("        Warning: IS_BEST column not found, skipping...\n")
+            next
+        }
         
-        # Create parameter signature to match with config_data
-        param_signature <- sapply(param_names, function(pname) {
-            if (nrow(elite_config) == 0 || is.na(elite_config[[pname]])) {
-                return(NA)
+        best_config <- run_configs[run_configs$IS_BEST == TRUE, ]
+        
+        if (nrow(best_config) == 0) {
+            if (opt$verbose) cat("        Warning: No configuration with IS_BEST == TRUE found, skipping...\n")
+            next
+        }
+        
+        if (nrow(best_config) > 1) {
+            if (opt$verbose) cat("        Warning: Multiple configurations with IS_BEST == TRUE found, using first one\n")
+            best_config <- best_config[1, ]
+        }
+        
+        best_config_id <- as.character(best_config$CONFIG_ID)
+        
+        if (opt$verbose) cat(sprintf("        Best elite CONFIG_ID (from training): %s\n", best_config_id))
+        
+        # Extract parameter values from training configurations.csv
+        # These are already formatted as strings in the CSV
+        training_params <- sapply(param_names, function(pname) {
+            if (!(pname %in% colnames(best_config))) {
+                return(NA_character_)
             }
-            
-            value <- elite_config[[pname]]
-            type <- param_types[[pname]]
-            
-            if (type %in% c("c", "o", "cat", "ord")) {
-                return(as.character(value))
-            } else if (type %in% c("i", "int", "i,log")) {
-                return(as.character(as.integer(value)))
-            } else if (type %in% c("r", "real", "r,log")) {
-                return(as.character(as.numeric(value)))
-            } else {
-                return(as.character(value))
-            }
+            value <- best_config[[pname]]
+            # Return as character, already formatted in CSV
+            return(as.character(value))
         })
         
-        # Find matching configuration in config_data
-        matching_config_id <- NA
+        # Find matching configuration in testing data by comparing all parameters
+        matching_config_id <- NA_character_
         for (k in seq_len(nrow(config_data))) {
             match_found <- TRUE
             for (pname in param_names) {
-                if (!identical(config_data[[pname]][k], param_signature[[pname]])) {
+                testing_value <- config_data[[pname]][k]
+                training_value <- training_params[[pname]]
+                
+                # Compare as strings
+                if (!identical(testing_value, training_value)) {
                     match_found <- FALSE
                     break
                 }
@@ -485,14 +495,22 @@ for (scenario_path in scenario_dirs) {
         }
         
         if (is.na(matching_config_id)) {
-            if (opt$verbose) cat("        Warning: Configuration not found in testing data, skipping...\n")
+            if (opt$verbose) {
+                cat("        Warning: Configuration not found in testing data, skipping...\n")
+                cat("        Training configuration parameters:\n")
+                for (pname in param_names) {
+                    cat(sprintf("          %s: %s\n", pname, training_params[[pname]]))
+                }
+            }
             next
         }
         
-        # Get MNRG value
+        if (opt$verbose) cat(sprintf("        Matched to testing CONFIG_ID: %s\n", matching_config_id))
+        
+        # Get MNRG value using the matched testing CONFIG_ID
         mnrg_value <- config_data$MNRG[config_data$CONFIG_ID == matching_config_id]
         
-        # Add to results
+        # Add to results (using training RUN_ID and matched testing CONFIG_ID)
         scenario_results <- rbind(scenario_results, data.frame(
             RUN_ID = run_name,
             CONFIG_ID = matching_config_id,
@@ -565,4 +583,3 @@ gc()
 quit(save = "no")
 
 # nolint end
-
