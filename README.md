@@ -364,7 +364,7 @@ The script generates two output files:
 
 **Complete Examples:**
 
-Extract all elite configurations:
+Extract all elite configurations (ACOTSP):
 ```bash
 Rscript R/get_elites.R \
   -d "Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
@@ -374,12 +374,33 @@ Rscript R/get_elites.R \
   -v TRUE
 ```
 
-Extract only the best elite per run:
+Extract only the best elite per run (ACOTSP):
 ```bash
 Rscript R/get_elites.R \
   -d "Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
   -o "Experiments/ACOTSP/Individuals-Elites/Configurations" \
   -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -n "Best_Elites" \
+  -b TRUE \
+  -v TRUE
+```
+
+Extract all elite configurations (PSO-X):
+```bash
+Rscript R/get_elites.R \
+  -d "Experiments/PSO-X/Individuals/BH/Results,Experiments/PSO-X/Individuals/BH-65/Results,Experiments/PSO-X/Individuals/BL/Results,Experiments/PSO-X/Individuals/BL-32/Results" \
+  -o "Experiments/PSO-X/Individuals-Elites/Configurations" \
+  -p "Experiments/PSO-X/Others/Parameters.csv" \
+  -n "All_Elites" \
+  -v TRUE
+```
+
+Extract only the best elite per run (PSO-X):
+```bash
+Rscript R/get_elites.R \
+  -d "Experiments/PSO-X/Individuals/BH/Results,Experiments/PSO-X/Individuals/BH-65/Results,Experiments/PSO-X/Individuals/BL/Results,Experiments/PSO-X/Individuals/BL-32/Results" \
+  -o "Experiments/PSO-X/Individuals-Elites/Configurations" \
+  -p "Experiments/PSO-X/Others/Parameters.csv" \
   -n "Best_Elites" \
   -b TRUE \
   -v TRUE
@@ -444,16 +465,6 @@ Rscript R/generate_summarize_testing.R \
   -p "Experiments/ACOTSP/Others/Parameters.csv" \
   -m "min" \
   -v TRUE
-```
-
-PSO-X case:
-```bash
-Rscript R/get_elites.R \
-  --directories="Experiments/PSO-X/Individuals/BH/Results,Experiments/PSO-X/Individuals/BH-65/Results,Experiments/PSO-X/Individuals/BL/Results,Experiments/PSO-X/Individuals/BL-32/Results" \
-  --output="Experiments/PSO-X/Individuals-Elites/Configurations" \
-  --parameters="Experiments/PSO-X/Others/Parameters.csv" \
-  --name="All_Elites" \
-  --verbose=TRUE
 ```
 
 ---
