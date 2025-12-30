@@ -469,13 +469,88 @@ Rscript R/generate_summarize_testing.R \
 
 ---
 
-#### `generate_elite_STN-i_file.R`
-**TODO:** Processes elite configurations from irace testing results and generates STN-i files for each scenario.
+#### `box_plot_best_elite_STN-i.R`
+Creates box plot visualizations comparing multiple scenarios using summary CSV files. Generates publication-quality PDF plots with customizable dimensions, resolution, and statistical indicators.
+
+**Purpose:**
+
+This script provides visual comparison of testing performance across different scenarios through box plots. It allows visualization of:
+- Distribution of MNRG values across training runs
+- Median and quartile comparisons between scenarios
+- Outlier detection and visualization
+- Mean values for additional statistical insight
+- Individual data points for transparency
+
+**Usage:**
+```bash
+Rscript R/box_plot_best_elite_STN-i.R \
+  --input=<file1.csv,file2.csv,...> \
+  --output=<output_dir> \
+  --filename=<output_name> \
+  [--title=<plot_title>] \
+  [--show_points=<TRUE|FALSE>] \
+  [--show_outliers=<TRUE|FALSE>] \
+  [--width=<width_inches>] \
+  [--height=<height_inches>] \
+  [--dpi=<resolution>] \
+  [--verbose=<TRUE|FALSE>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -i | --input | Comma-separated list of CSV files to compare | - | Yes |
+| -o | --output | Directory where output PDF will be saved | - | Yes |
+| -f | --filename | Name of the output PDF file (without extension) | - | Yes |
+| -t | --title | Title for the box plot | auto-generated | No |
+| -p | --show_points | Show individual data points on box plot | TRUE | No |
+| -l | --show_outliers | Show outliers (values beyond 1.5×IQR) in red | TRUE | No |
+| -w | --width | Width of the PDF in inches | 10 | No |
+| -e | --height | Height of the PDF in inches | 6 | No |
+| -d | --dpi | Resolution in dots per inch | 300 | No |
+| -v | --verbose | Show detailed processing information | FALSE | No |
+
+**Visualized Metrics:**
+
+Each box plot displays:
+- **Box**: First quartile (Q1), median (Q2), and third quartile (Q3)
+- **Whiskers**: Extend to 1.5 × IQR from quartiles with horizontal lines at endpoints
+- **Outliers** (optional): Red points beyond whiskers
+- **Individual points** (optional): Gray points for normal values, red for outliers
+
+**Complete Examples:**
+
+Generate box plot for ACOTSP scenarios:
+```bash
+Rscript R/box_plot_best_elite_STN-i.R \
+  --input="Experiments/ACOTSP/Individuals-Elites/Summarize/BH.csv,Experiments/ACOTSP/Individuals-Elites/Summarize/BH-90.csv,Experiments/ACOTSP/Individuals-Elites/Summarize/BL.csv,Experiments/ACOTSP/Individuals-Elites/Summarize/BL-45.csv" \
+  --output="Experiments/ACOTSP/Individuals-Elites/Summarize" \
+  --filename="Box_Plot_BH_BH-90_BL_BL-45" \
+  --show_points=TRUE \
+  --show_outliers=TRUE \
+  --verbose=TRUE
+```
+
+Generate box plot for PSO-X scenarios:
+```bash
+Rscript R/box_plot_best_elite_STN-i.R \
+  --input="Experiments/PSO-X/Individuals-Elites/Summarize/BH.csv,Experiments/PSO-X/Individuals-Elites/Summarize/BH-65.csv,Experiments/PSO-X/Individuals-Elites/Summarize/BL.csv,Experiments/PSO-X/Individuals-Elites/Summarize/BL-32.csv" \
+  --output="Experiments/PSO-X/Individuals-Elites/Summarize" \
+  --filename="Box_Plot_BH_BH-65_BL_BL-32" \
+  --title="Box Plots de Escenarios PSO-X: BH, BH-65, BL, BL-32" \
+  --show_points=TRUE \
+  --show_outliers=TRUE \
+  --width=12 \
+  --height=8 \
+  --dpi=300 \
+  --verbose=TRUE
+```
 
 ---
 
-#### `box_plot_best_elite_STN-i.R`
-**TODO:** Creates box plot visualizations comparing best and elite configurations across scenarios.
+#### `generate_elite_STN-i_file.R`
+**TODO:** Processes elite configurations from irace testing results and generates STN-i files for each scenario.
 
 ---
 
