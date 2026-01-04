@@ -247,6 +247,15 @@ create_instances_file <- function(iraceResults, experiments, optimum_file, outpu
 #' for each configuration, including best and mean quality, rankings, normalized rankings,
 #' GAPs, and their respective rankings. It handles NA values according to the specified criteria.
 #' 
+#' The QUALITY metric is computed as: MNRG * (2 - i/N), where:
+#' - MNRG (Mean Normalized Ranking GAP) ranges from 0 to 1, where 0 represents the best performance
+#' - (2 - i/N) ranges from 1 to 2, where 1 is better (achieved when i=N, maximum instances evaluated)
+#' - i is the number of instances evaluated for the configuration
+#' - N is the maximum number of instances evaluated across all configurations
+#' 
+#' This approach prioritizes configurations evaluated on larger instance sets (like elite configurations).
+#' The resulting QUALITY value ranges from 0 to 2, where lower values indicate better configurations.
+#' 
 #' @param experiments Matrix of experiment results (rows: instances, columns: configurations)
 #' @param instances_df Data frame of instances with optimal values
 #' @param output_file Path to save the results CSV file
@@ -266,6 +275,7 @@ create_results_file <- function(experiments, instances_df, output_file, best_cri
       M = numeric(), MR = integer(), MNR = numeric(),
       BG = numeric(), BRG = integer(), BNRG = numeric(),
       MG = numeric(), MRG = integer(), MNRG = numeric(),
+      QUALITY = numeric(),
       stringsAsFactors = FALSE
     )
   } else {
@@ -443,6 +453,8 @@ create_results_file <- function(experiments, instances_df, output_file, best_cri
       # MNRG: Mean normalized GAP ranking per configuration
       results_df$MNRG <- apply(gap_rankings_norm, 2, mean, na.rm = TRUE)
       
+      # QUALITY value: MNRG * (2 - i/N), where i is the number of INSTANCES and N is the max number of instances (elite instances view)
+      results_df$QUALITY <- results_df$MNRG * (2 - (results_df$INSTANCES / max(results_df$INSTANCES, na.rm = TRUE)))
     }, error = function(e) {
       cat("  Error procesando resultados:", conditionMessage(e), "\n")
       results_df <- data.frame(
@@ -452,6 +464,7 @@ create_results_file <- function(experiments, instances_df, output_file, best_cri
         M = numeric(), MR = integer(), MNR = numeric(),
         BG = numeric(), BRG = integer(), BNRG = numeric(),
         MG = numeric(), MRG = integer(), MNRG = numeric(),
+        QUALITY = numeric(),
         stringsAsFactors = FALSE
       )
     })
@@ -889,7 +902,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
           NEW_CONFIG_ID = new_config_id,
           IS_ELITE = as.character(configuration$IS_ELITE),
           RUN_IDS = list(run_counter),
-          MNRG_VALUES = list(results$MNRG),
+          QUALITY_VALUES = list(results$QUALITY),
           ELITE_COUNT = 0,
           REGULAR_COUNT = 0,
           START_COUNT = 0,
@@ -914,7 +927,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
         # Update existing configuration (same parameter combination seen again)
         config_item <- configurations_list[[existing_config_idx]]
         config_item$RUN_IDS[[1]] <- c(config_item$RUN_IDS[[1]], run_counter)
-        config_item$MNRG_VALUES[[1]] <- c(config_item$MNRG_VALUES[[1]], results$MNRG)
+        config_item$QUALITY_VALUES[[1]] <- c(config_item$QUALITY_VALUES[[1]], results$QUALITY)
 
         # Update IS_ELITE if necessary
         if (configuration$IS_ELITE == "TRUE" && config_item$IS_ELITE == "FALSE") {
@@ -1026,7 +1039,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
   if (length(configurations_list) > 0) {
     configurations_df <- do.call(rbind, lapply(configurations_list, function(x) {
       x$RUN_IDS <- I(x$RUN_IDS)
-      x$MNRG_VALUES <- I(x$MNRG_VALUES)
+      x$QUALITY_VALUES <- I(x$QUALITY_VALUES)
       as.data.frame(x, stringsAsFactors = FALSE)
     }))
   } else {
@@ -1046,37 +1059,37 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
   }
 
   # STEP 1: Apply quality_criteria to each configuration
-  # This aggregates MNRG values across runs for each unique configuration
+  # This aggregates QUALITY values across runs for each unique configuration
   configurations_with_quality <- list()
   
   for (i in seq_len(nrow(configurations_df))) {
     # Calculate final quality based on quality_criteria for this configuration on all runs
     config <- configurations_df[i, ]
-    mnrg_values <- as.numeric(config$MNRG_VALUES[[1]])
-    mnrg_values <- mnrg_values[!is.na(mnrg_values)]
-    mnrg_values <- round(mnrg_values, significance)
-    if (length(mnrg_values) == 0) {
-      final_mnrg <- NA
+    quality_values <- as.numeric(config$QUALITY_VALUES[[1]])
+    quality_values <- quality_values[!is.na(quality_values)]
+    quality_values <- round(quality_values, significance)
+    if (length(quality_values) == 0) {
+      final_quality <- NA
     } else if (quality_criteria == "min") {
-      final_mnrg <- min(mnrg_values)
+      final_quality <- min(quality_values)
     } else if (quality_criteria == "max") {
-      final_mnrg <- max(mnrg_values)
+      final_quality <- max(quality_values)
     } else if (quality_criteria == "mean") {
-      final_mnrg <- mean(mnrg_values)
+      final_quality <- mean(quality_values)
     } else if (quality_criteria == "median") {
-      final_mnrg <- median(mnrg_values)
+      final_quality <- median(quality_values)
     } else if (quality_criteria == "mode") {
-      mode_value <- as.numeric(names(sort(table(mnrg_values), decreasing = TRUE)[1]))
-      final_mnrg <- mode_value
+      mode_value <- as.numeric(names(sort(table(quality_values), decreasing = TRUE)[1]))
+      final_quality <- mode_value
     } else {
       stop("Error: quality_criteria debe ser 'min', 'max', 'mean', 'median' o 'mode'", call. = FALSE)
     }
     
     # NOW generate location code based on parameter file (LX)
-    param_cols <- setdiff(names(config), c("NEW_CONFIG_ID", "IS_ELITE", "RUN_IDS", "MNRG_VALUES",
-                                           "ELITE_COUNT", "REGULAR_COUNT", "START_COUNT", "STANDARD_COUNT", "END_COUNT",
-                                           "ELITE_START_COUNT", "ELITE_STANDARD_COUNT", "ELITE_END_COUNT",
-                                           "REGULAR_START_COUNT", "REGULAR_STANDARD_COUNT", "REGULAR_END_COUNT"))
+    param_cols <- setdiff(names(config), c("NEW_CONFIG_ID", "IS_ELITE", "RUN_IDS", "QUALITY_VALUES",
+                                          "ELITE_COUNT", "REGULAR_COUNT", "START_COUNT", "STANDARD_COUNT", "END_COUNT",
+                                          "ELITE_START_COUNT", "ELITE_STANDARD_COUNT", "ELITE_END_COUNT",
+                                          "REGULAR_START_COUNT", "REGULAR_STANDARD_COUNT", "REGULAR_END_COUNT"))
     param_values <- config[param_cols]
     location_code <- get_location_code(param_values, parameters)
     
@@ -1088,7 +1101,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
       NEW_CONFIG_ID = config$NEW_CONFIG_ID,
       LOCATION_CODE = location_code,
       IS_ELITE = config$IS_ELITE,
-      FINAL_MNRG = final_mnrg,
+      FINAL_QUALITY = final_quality,
       CONFIG_COUNT = config_count,
       ELITE_COUNT = config$ELITE_COUNT,
       REGULAR_COUNT = config$REGULAR_COUNT,
@@ -1118,7 +1131,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
   
   for (config_with_quality in configurations_with_quality) {
     loc_code <- config_with_quality$LOCATION_CODE
-    final_mnrg <- config_with_quality$FINAL_MNRG
+    final_quality <- config_with_quality$FINAL_QUALITY
     config_count <- config_with_quality$CONFIG_COUNT
     
     # Get counters directly from configuration (already calculated)
@@ -1152,7 +1165,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
       locations_df$REGULAR_END_COUNT[loc_idx] <- locations_df$REGULAR_END_COUNT[loc_idx] + regular_end_count
       
       # Add this configuration's quality to the location's list
-      locations_df$QUALITIES[[loc_idx]] <- c(locations_df$QUALITIES[[loc_idx]], final_mnrg)
+      locations_df$QUALITIES[[loc_idx]] <- c(locations_df$QUALITIES[[loc_idx]], final_quality)
     } else {
       # Create new location with counters from this configuration
       location_entry <- data.frame(
@@ -1169,7 +1182,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
         REGULAR_START_COUNT = regular_start_count,
         REGULAR_STANDARD_COUNT = regular_standard_count,
         REGULAR_END_COUNT = regular_end_count,
-        QUALITIES = I(list(final_mnrg)),
+        QUALITIES = I(list(final_quality)),
         FINAL_QUALITY = NA,
         stringsAsFactors = FALSE
       )
@@ -1212,7 +1225,7 @@ generate_stn_i <- function(input_dir, parameters_file, output_dir, output_name, 
     cat("Suma de CONFIG_COUNT:", total_configs, "\n")
     cat("Total configuraciones únicas:", total_unique_configs, "\n")
     if (total_configs != total_unique_configs) {
-      cat("⚠️  ADVERTENCIA: La suma de CONFIG_COUNT no coincide con el total de configuraciones únicas!\n")
+      cat("    ADVERTENCIA: La suma de CONFIG_COUNT no coincide con el total de configuraciones únicas!\n")
     }
     cat("Actualizando trayectorias con información de locaciones...\n")
   }

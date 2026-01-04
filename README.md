@@ -53,12 +53,115 @@ STN-i/
 └── Logs/                   # Execution logs
 ```
 
+## Quality Metric (QUALITY)
+
+STN-i uses a composite quality metric called **QUALITY** to evaluate and compare configurations across different irace runs. This metric is particularly designed to handle the challenge that configurations are evaluated on different numbers of instances during the training phase.
+
+### QUALITY Formula
+
+```
+QUALITY = MNRG × (2 - i/N)
+```
+
+Where:
+- **MNRG**: Mean Normalized Ranking Gap (range: [0, 1], where 0 = best)
+- **i**: Number of instances evaluated for the configuration in the current run
+- **N**: Maximum number of instances evaluated across all configurations in the current run
+- **(2 - i/N)**: Instance penalty factor (range: [1, 2], where 1 = best, achieved when i=N)
+
+**Result:** QUALITY ranges from [0, 2], where **lower values indicate better configurations**.
+
+### Components Breakdown
+
+#### 1. MNRG (Mean Normalized Ranking Gap)
+
+MNRG is calculated through a four-step process over the experiments matrix (rows = instances, columns = configurations):
+
+##### Step 1: GAP Calculation (Per Instance)
+For each instance-configuration pair, calculate the percentage gap from the best value:
+
+```
+GAP(instance, config) = 100 × |value(instance, config) - best(instance)| / best(instance)
+```
+
+Where `best(instance)` is the optimal value (from Optimum.csv) or the best value found across all configurations for that instance.
+
+##### Step 2: Horizontal Ranking (Per Instance)
+For each instance (row), rank all configurations by their GAP values:
+
+```
+Rank(instance, config) = rank of GAP(instance, config) among all configs in instance
+```
+
+- Best configuration (lowest GAP) gets rank = 1
+- Worst configuration gets rank = total number of evaluated configs
+- Tied values receive the same rank
+
+**Handling Missing Evaluations (NA values):**
+
+When a configuration was not evaluated on a specific instance (NA in the experiments matrix), the ranking behavior depends on the `is_na_ranking` parameter:
+
+- **`is_na_ranking = FALSE`** (default): NA values are ignored and remain as NA in the ranking matrix. Only configurations actually evaluated on the instance are ranked. This is appropriate when you want to rank based solely on observed performance. **Important:** This approach can implicitly favor configurations eliminated early (with few evaluations), as their MNRG is calculated only from instances where they were evaluated, potentially showing artificially good performance. This is why the QUALITY metric includes the instance penalty factor `(2 - i/N)` to compensate for this effect.
+
+- **`is_na_ranking = TRUE`**: NA values are assigned the worst possible rank: `rank = number_of_evaluated_configs + 1`. This penalizes configurations that were not evaluated (typically because they were eliminated early by irace) by treating their absence as worse than any observed performance.
+
+##### Step 3: Normalization (Per Instance)
+Normalize each rank to the range [0, 1]:
+
+```
+NormalizedRank(instance, config) = (Rank(instance, config) - 1) / (num_configs - 1)
+```
+
+- Rank 1 (best) → 0.0
+- Highest rank (worst) → 1.0
+- Intermediate ranks → proportional values between 0 and 1
+
+##### Step 4: Vertical Averaging (Per Configuration)
+Calculate the mean normalized rank across all instances where the configuration was evaluated:
+
+```
+MNRG(config) = mean(NormalizedRank(instance, config) for all instances where config was evaluated)
+```
+
+**Result:** MNRG ∈ [0, 1], where 0 represents consistently best performance and 1 represents consistently worst performance.
+
+#### 2. Instance Penalty Factor: (2 - i/N)
+
+This factor penalizes configurations evaluated on fewer instances, which are less reliable:
+
+- **i**: Number of instances where the configuration was evaluated (varies per configuration within each run)
+- **N**: Maximum number of instances any configuration was evaluated on in this run (typically the elite configurations see all instances)
+
+**Examples:**
+- Configuration evaluated on all instances (i = N): factor = 2 - N/N = 1.0 (no penalty)
+- Configuration evaluated on half the instances (i = N/2): factor = 2 - 0.5 = 1.5 (moderate penalty)
+- Configuration evaluated on few instances (i → 0): factor → 2.0 (maximum penalty)
+
+**Important:** The values of i and N are **specific to each run**. Different runs may have different N values depending on how many instances irace evaluated during that particular execution.
+
+### Why QUALITY Instead of MNRG Alone?
+
+During irace training:
+- **Elite configurations** are evaluated on many instances (high i, close to N)
+- **Regular configurations** may be eliminated early, evaluated on few instances (low i)
+
+Using MNRG alone would unfairly compare configurations with different levels of evaluation confidence. The instance penalty factor ensures that:
+1. Configurations with more evaluations (more reliable) are preferred when MNRG values are similar
+2. The metric remains interpretable: lower is always better
+3. Elite configurations (evaluated on all instances) receive no penalty
+
+### When MNRG is Used Directly
+
+In **testing scenarios** (e.g., `generate_summarize_testing.R`), all elite configurations are evaluated on the **same complete set of testing instances**. Since i = N for all configurations, the instance penalty factor becomes 1.0 for everyone, making QUALITY = MNRG. In this case, using MNRG directly is appropriate and avoids unnecessary computation.
+
 ## Scripts Description
 
 ### Data Generation Scripts
 
 #### `generate_STN-i_file.R`
 Processes irace execution data (.Rdata files) and generates STN-i trace files in CSV format. This script handles parameter discretization, configuration grouping by location codes, and trajectory extraction.
+
+**Quality Metric:** The script uses the QUALITY value from results.csv files, which combines the Mean Normalized Ranking Gap (MNRG) with the number of instances evaluated per configuration. This metric (QUALITY = MNRG × (2 - i/N)) properly accounts for configurations evaluated on different numbers of instances during training, where lower values indicate better performance.
 
 **Usage:**
 ```bash
@@ -87,7 +190,7 @@ Rscript R/generate_STN-i_file.R \
 | -o | --output | Output directory for STN-i trace files | - | Yes |
 | -n | --name | Name of the output STN-i file | auto | No |
 | -b | --best_criteria | Criterion for best value configurations before grouping ('min' or 'max') | min | No |
-| -c | --quality_criteria | Quality criterion for grouped configurations ('min','max','mean','median','mode') | mean | No |
+| -c | --quality_criteria | Quality criterion for aggregating QUALITY values across runs ('min','max','mean','median','mode') | mean | No |
 | -s | --significance | Significance level (decimal places) for numerical parameters | 2 | No |
 | -t | --instances | CSV file with instance optimum values | NULL | No |
 | -k | --na_ranking | Consider NA as worst possible value in rankings | FALSE | No |

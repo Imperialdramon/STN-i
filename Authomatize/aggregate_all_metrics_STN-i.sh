@@ -109,21 +109,21 @@ for alg in "${algorithms[@]}"; do
                     fi
                     # Append data
                     tail -n +2 "$metrics_file" >> "$output_file"
-                    echo "      ✅ Added: ${exp}-${lvl}${metric_type}"
+                    echo "      Added: ${exp}-${lvl}${metric_type}"
                 else
-                    echo "      ⚠️  Missing: ${exp}-${lvl}${metric_type}"
+                    echo "          Missing: ${exp}-${lvl}${metric_type}"
                 fi
             done
         done
         
         if [[ -f "$output_file" ]] && [[ -s "$output_file" ]]; then
-            echo "    ✅ Saved to: $output_file"
+            echo "    Saved to: $output_file"
         else
-            echo "    ⚠️  Warning: $output_file is empty or was not created"
+            echo "        Warning: $output_file is empty or was not created"
         fi
     done
     
-    echo "✅ Completed $alg ($MODE)"
+    echo "Completed $alg ($MODE)"
 done
 
-echo "🎉 All metrics have been aggregated successfully!"
+echo "All metrics have been aggregated successfully!"

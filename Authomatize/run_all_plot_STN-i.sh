@@ -74,9 +74,9 @@ run_plot_stn_i() {
   echo ">> Plotting: $output_file" | tee -a "$LOG_FILE"
 
   if ! Rscript R/plot_STN-i.R "${args[@]}" >> "$LOG_FILE" 2>&1; then
-    echo "❌ Error: Failed to plot $output_file" | tee -a "$LOG_FILE"
+    echo "Error: Failed to plot $output_file" | tee -a "$LOG_FILE"
   else
-    echo "✅ Success: Generated $output_file" | tee -a "$LOG_FILE"
+    echo "Success: Generated $output_file" | tee -a "$LOG_FILE"
   fi
 }
 
@@ -146,7 +146,7 @@ for alg in "${!experiments[@]}"; do
 
       # Validate input file exists
       if [[ ! -f "$input_file" ]]; then
-        echo "⚠️  Skipping: Input file not found: $input_file" | tee -a "$LOG_FILE"
+        echo "    Skipping: Input file not found: $input_file" | tee -a "$LOG_FILE"
         continue
       fi
 

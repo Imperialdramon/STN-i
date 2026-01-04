@@ -423,6 +423,31 @@ init_stn_i_shapes <- function() {
 #' }
 stn_i_decorate <- function(STN_i, problem_type = "min", show_regular = TRUE, show_start_regular = TRUE, show_single_nodes = TRUE, palette_colors, shape_option = 1, size_type = "equals") {
 
+  # Filter vertices according to settings (before any decoration)
+  to_remove <- c()
+  if (!show_regular) {
+    to_remove <- c(to_remove, V(STN_i)[IS_ELITE == FALSE]$name)
+  }
+  if (!show_start_regular) {
+    to_remove <- c(to_remove, V(STN_i)[IS_ELITE == FALSE & STARTS > 0]$name)
+  }
+  
+  # Remove duplicates before deletion
+  to_remove <- unique(to_remove)
+  
+  # Delete the vertices
+  if (length(to_remove) > 0) {
+    STN_i <- delete_vertices(STN_i, to_remove)
+  }
+  
+  # Remove single nodes (after other removals, to catch isolated nodes)
+  if (!show_single_nodes && vcount(STN_i) > 0) {
+    single_nodes <- V(STN_i)[degree(STN_i, v = V(STN_i), mode = "all") == 0]$name
+    if (length(single_nodes) > 0) {
+      STN_i <- delete_vertices(STN_i, single_nodes)
+    }
+  }
+
   # Assign edge colors based on type
   E(STN_i)$color[E(STN_i)$Type == "IMPROVING"] <- palette_colors$edge$improving
   E(STN_i)$color[E(STN_i)$Type == "WORSENING"] <- palette_colors$edge$worsening
@@ -504,61 +529,10 @@ stn_i_decorate <- function(STN_i, problem_type = "min", show_regular = TRUE, sho
     }
   )
 
-  # Filter vertices according to settings
-  to_remove <- c()
-  if (!show_regular) {
-    to_remove <- c(to_remove, V(STN_i)[IS_ELITE == FALSE]$name)
-  }
-  if (!show_start_regular) {
-    to_remove <- c(to_remove, V(STN_i)[IS_ELITE == FALSE & STARTS > 0]$name)
-  }
-
-  # Remove duplicates before deletion
-  to_remove <- unique(to_remove)
-  
-  # Check if BEST node will be removed
-  best_will_be_removed <- FALSE
-  if (length(to_remove) > 0) {
-    best_nodes <- V(STN_i)[IS_BEST == TRUE]
-    if (length(best_nodes) > 0 && best_nodes$name[1] %in% to_remove) {
-      best_will_be_removed <- TRUE
-    }
-  }
-  
-  # Delete the vertices
-  if (length(to_remove) > 0) {
-    STN_i <- delete_vertices(STN_i, to_remove)
-  }
-  
-  # If BEST was removed, reassign it to the best remaining node
-  if (best_will_be_removed && vcount(STN_i) > 0) {
-    # Reset all IS_BEST flags
-    V(STN_i)$IS_BEST <- FALSE
-    
-    # Find the best fitness among remaining nodes
-    if (problem_type == "min") {
-      best_idx <- which.min(V(STN_i)$Fitness)
-    } else {
-      best_idx <- which.max(V(STN_i)$Fitness)
-    }
-    
-    # Assign IS_BEST to the new best node
-    V(STN_i)$IS_BEST[best_idx] <- TRUE
-    
-    # Update color and size for the new BEST node
-    V(STN_i)$color[best_idx] <- palette_colors$node$best
-  }
-  
-  # Now remove single nodes (after other removals, to catch isolated elites)
-  if (!show_single_nodes && vcount(STN_i) > 0) {
-    single_nodes <- V(STN_i)[degree(STN_i, v = V(STN_i), mode = "all") == 0]$name
-    if (length(single_nodes) > 0) {
-      STN_i <- delete_vertices(STN_i, single_nodes)
-    }
-  }
-
   # Increase size of BEST node for visibility
-  V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size <- V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size * 1.2
+  if (any(V(STN_i)$IS_BEST == TRUE)) {
+    V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size <- V(STN_i)[V(STN_i)$IS_BEST == TRUE]$size * 1.2
+  }
 
   return(STN_i)
 }

@@ -67,9 +67,9 @@ run_generate_rdata() {
   echo ">> Generating: $output_file" | tee -a "$LOG_FILE"
 
   if ! Rscript R/generate_STN-i_file.R "${args[@]}" >> "$LOG_FILE" 2>&1; then
-    echo "❌ Error: Failed to generate $output_file" | tee -a "$LOG_FILE"
+    echo "Error: Failed to generate $output_file" | tee -a "$LOG_FILE"
   else
-    echo "✅ Success: Generated $output_file" | tee -a "$LOG_FILE"
+    echo "Success: Generated $output_file" | tee -a "$LOG_FILE"
   fi
 }
 
@@ -92,7 +92,7 @@ if [[ "$MODE" == "Individuals-Elites" ]]; then
     for exp in ${experiments[$alg]}; do
       results_dir="$RESULTS_BASE_DIR/$alg/$MODE/$exp/Data"
       if [[ ! -d "$results_dir" ]]; then
-        echo "⚠️  Warning: Individuals directory not found for $alg: $results_dir" | tee -a "$LOG_FILE"
+        echo "    Warning: Individuals directory not found for $alg: $results_dir" | tee -a "$LOG_FILE"
         echo "    Make sure Individuals processing has completed successfully" | tee -a "$LOG_FILE"
       fi
     done
@@ -119,7 +119,7 @@ for alg in "${!experiments[@]}"; do
 
     # Validate input directory exists
     if [[ ! -d "$input_dir" ]]; then
-      echo "⚠️  Skipping: Input directory not found: $input_dir" | tee -a "$LOG_FILE"
+      echo "    Skipping: Input directory not found: $input_dir" | tee -a "$LOG_FILE"
       continue
     fi
 
