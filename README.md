@@ -361,38 +361,180 @@ Rscript R/metrics_STN-i.R \
   --verbose=TRUE
 ```
 
-The script generates three metric files:
-- **`*_metrics.csv`**: Complete metrics including all network properties
-- **`*_metrics_nodes.csv`**: Node-focused metrics (counts, rates, connectivity)
-- **`*_metrics_elite_nodes.csv`**: Elite-specific metrics
-- **`*_metrics_configurations.csv`**: Configuration-focused metrics
+**Output Files:**
+
+The script generates three complementary metric files, each focusing on different aspects of the STN-i network:
+
+1. **`*_metrics_nodes.csv`**: General network metrics analyzing grouped configurations (nodes in the graph)
+   - Node and edge counts by type (regular, elite, start, standard, end)
+   - Connectivity metrics (degree distributions, components)
+   - Path analysis (average path length to best nodes)
+   - Overall network topology characteristics
+
+2. **`*_metrics_elite_nodes.csv`**: Elite subnetwork metrics (subgraph containing only elite nodes)
+   - Elite-to-elite connections and transitions
+   - Elite-to-regular outgoing edges
+   - Elite node topology within the subnetwork
+   - Elite-specific connectivity patterns
+
+3. **`*_metrics_configurations.csv`**: Individual configuration metrics (ungrouped, raw configuration counts)
+   - Total configurations analyzed across all runs
+   - Configuration counts by type before grouping into nodes
+   - Distribution statistics (max/min configurations per node)
+   - Configuration-level rates and correlations
 
 **Calculated Metrics:**
 
-##### Network Structure Metrics
-| Metric | Description | Type | Range |
-|--------|-------------|------|--------|
-| nodes | Total number of configurations | Integer | [1, ∞) |
-| regular_nodes | Number of non-elite configurations | Integer | [0, nodes] |
-| elite_nodes | Number of elite configurations | Integer | [0, nodes] |
-| start_nodes | Number of initial configurations | Integer | [0, nodes] |
-| standard_nodes | Number of intermediate configurations | Integer | [0, nodes] |
-| end_nodes | Number of final configurations | Integer | [0, nodes] |
-| edges | Total number of transitions | Integer | [0, ∞) |
-| worsening_edges | Transitions to worse configurations | Integer | [0, edges] |
-| equal_edges | Transitions to equal quality configurations | Integer | [0, edges] |
-| improving_edges | Transitions to better configurations | Integer | [0, edges] |
-| best_nodes | Number of configurations with best performance | Integer | [1, nodes] |
+##### 1. Node Metrics (`*_metrics_nodes.csv`)
 
-##### Configuration Type Metrics
+General network structure based on grouped configurations (nodes):
+
 | Metric | Description | Type | Range |
 |--------|-------------|------|--------|
-| regular_start_nodes | Non-elite initial configurations | Integer | [0, start_nodes] |
-| elite_start_nodes | Elite initial configurations | Integer | [0, start_nodes] |
-| regular_start_configuration_rate | Proportion of start nodes that are regular | Float | [0, 1] |
-| elite_start_configuration_rate | Proportion of start nodes that are elite | Float | [0, 1] |
-| regular_configuration_rate | Overall proportion of regular configurations | Float | [0, 1] |
-| elite_configuration_rate | Overall proportion of elite configurations | Float | [0, 1] |
+| network_name | Name of the STN-i network | String | - |
+| problem_type | Optimization type (min or max) | String | min/max |
+| number_of_runs | Number of independent irace runs | Integer | [1, ∞) |
+| best_known_solution | Best known solution value | Float | ℝ |
+| components | Number of connected components | Integer | [1, nodes] |
+| single_components | Components with single isolated node | Integer | [0, components] |
+| multiple_components | Components with multiple connected nodes | Integer | [0, components] |
+| nodes | Total number of grouped configurations (locations) | Integer | [1, ∞) |
+| regular_nodes | Non-elite configuration groups | Integer | [0, nodes] |
+| elite_nodes | Elite configuration groups | Integer | [0, nodes] |
+| start_nodes | Initial configuration groups | Integer | [0, nodes] |
+| standard_nodes | Intermediate configuration groups | Integer | [0, nodes] |
+| end_nodes | Final configuration groups | Integer | [0, nodes] |
+| edges | Total number of transitions between nodes | Integer | [0, ∞) |
+| worsening_edges | Transitions to worse configurations | Integer | [0, edges] |
+| equal_edges | Transitions to equal fitness | Integer | [0, edges] |
+| improving_edges | Transitions to better configurations | Integer | [0, edges] |
+| max_degree | Maximum total degree (in+out) | Integer | [0, ∞) |
+| min_degree | Minimum total degree (in+out) | Integer | [0, ∞) |
+| average_degree | Average total degree across all nodes | Float | [0, ∞) |
+| average_regular_in_degree | Average in-degree for regular nodes | Float | [0, ∞) |
+| average_elite_in_degree | Average in-degree for elite nodes | Float | [0, ∞) |
+| average_elite_out_degree | Average out-degree for elite nodes | Float | [0, ∞) |
+| best_nodes | Number of nodes with best performance | Integer | [1, nodes] |
+| average_best_in_degree | Average in-degree for best nodes | Float | [0, ∞) |
+| average_best_out_degree | Average out-degree for best nodes | Float | [0, ∞) |
+| best_strength_in | Weighted in-degree for best nodes | Float | [0, ∞) |
+| start_best_nodes | Best nodes that are start nodes | Integer | [0, best_nodes] |
+| standard_best_nodes | Best nodes that are standard nodes | Integer | [0, best_nodes] |
+| end_best_nodes | Best nodes that are end nodes | Integer | [0, best_nodes] |
+| average_path_length | Average shortest path from start to best | Float | [0, ∞) |
+| paths | Number of paths from start to best nodes | Integer | [0, ∞) |
+| best_nodes_rate | Proportion of best nodes | Float | [0, 1] |
+| regular_nodes_rate | Proportion of regular nodes | Float | [0, 1] |
+| elite_nodes_rate | Proportion of elite nodes | Float | [0, 1] |
+| start_nodes_rate | Proportion of start nodes | Float | [0, 1] |
+| standard_nodes_rate | Proportion of standard nodes | Float | [0, 1] |
+| end_nodes_rate | Proportion of end nodes | Float | [0, 1] |
+| worsening_edges_rate | Proportion of worsening edges | Float | [0, 1] |
+| equal_edges_rate | Proportion of equal edges | Float | [0, 1] |
+| improving_edges_rate | Proportion of improving edges | Float | [0, 1] |
+
+##### 2. Elite Node Metrics (`*_metrics_elite_nodes.csv`)
+
+Subnetwork metrics considering only elite configurations:
+
+| Metric | Description | Type | Range |
+|--------|-------------|------|--------|
+| network_name | Name of the STN-i network | String | - |
+| problem_type | Optimization type (min or max) | String | min/max |
+| number_of_runs | Number of independent irace runs | Integer | [1, ∞) |
+| best_known_elite_solution | Best known solution among elites | Float | ℝ |
+| elite_components | Number of components in elite subgraph | Integer | [0, elite_nodes] |
+| single_elite_components | Elite components with single node | Integer | [0, elite_components] |
+| multiple_elite_components | Elite components with multiple nodes | Integer | [0, elite_components] |
+| elite_nodes | Total elite configuration groups | Integer | [0, ∞) |
+| elite_best_nodes | Elite nodes with best performance | Integer | [0, elite_nodes] |
+| elite_start_nodes | Elite nodes that are start nodes | Integer | [0, elite_nodes] |
+| elite_standard_nodes | Elite nodes that are standard nodes | Integer | [0, elite_nodes] |
+| elite_end_nodes | Elite nodes that are end nodes | Integer | [0, elite_nodes] |
+| elite_edges | Total edges between elite nodes | Integer | [0, ∞) |
+| elite_to_elite_worsening_edges | Worsening transitions between elites | Integer | [0, elite_edges] |
+| elite_to_elite_equal_edges | Equal transitions between elites | Integer | [0, elite_edges] |
+| elite_to_elite_improving_edges | Improving transitions between elites | Integer | [0, elite_edges] |
+| elite_to_regular_worsening_edges | Elite to regular worsening transitions | Integer | [0, ∞) |
+| elite_to_regular_equal_edges | Elite to regular equal transitions | Integer | [0, ∞) |
+| elite_to_regular_improving_edges | Elite to regular improving transitions | Integer | [0, ∞) |
+| max_elite_to_elite_degree | Max degree within elite subgraph | Integer | [0, ∞) |
+| min_elite_to_elite_degree | Min degree within elite subgraph | Integer | [0, ∞) |
+| average_elite_to_elite_degree | Average degree within elite subgraph | Float | [0, ∞) |
+| max_in_elite_to_elite_degree | Max in-degree within elite subgraph | Integer | [0, ∞) |
+| min_in_elite_to_elite_degree | Min in-degree within elite subgraph | Integer | [0, ∞) |
+| average_in_elite_to_elite_degree | Average in-degree within elite subgraph | Float | [0, ∞) |
+| max_out_elite_to_elite_degree | Max out-degree within elite subgraph | Integer | [0, ∞) |
+| min_out_elite_to_elite_degree | Min out-degree within elite subgraph | Integer | [0, ∞) |
+| average_out_elite_to_elite_degree | Average out-degree within elite subgraph | Float | [0, ∞) |
+| max_out_elite_to_regular_degree | Max elite to regular out-degree | Integer | [0, ∞) |
+| min_out_elite_to_regular_degree | Min elite to regular out-degree | Integer | [0, ∞) |
+| average_out_elite_to_regular_degree | Average elite to regular out-degree | Float | [0, ∞) |
+| best_elite_nodes_rate | Proportion of best nodes among elites | Float | [0, 1] |
+| start_elite_nodes_rate | Proportion of start nodes among elites | Float | [0, 1] |
+| standard_elite_nodes_rate | Proportion of standard nodes among elites | Float | [0, 1] |
+| end_elite_nodes_rate | Proportion of end nodes among elites | Float | [0, 1] |
+| elite_to_elite_worsening_edges_rate | Proportion of worsening elite-elite edges | Float | [0, 1] |
+| elite_to_elite_equal_edges_rate | Proportion of equal elite-elite edges | Float | [0, 1] |
+| elite_to_elite_improving_edges_rate | Proportion of improving elite-elite edges | Float | [0, 1] |
+
+##### 3. Configuration Metrics (`*_metrics_configurations.csv`)
+
+Individual configuration counts before grouping into nodes:
+
+| Metric | Description | Type | Range |
+|--------|-------------|------|--------|
+| network_name | Name of the STN-i network | String | - |
+| problem_type | Optimization type (min or max) | String | min/max |
+| number_of_runs | Number of independent irace runs | Integer | [1, ∞) |
+| best_known_solution | Best known solution value | Float | ℝ |
+| configurations | Total individual configurations analyzed | Integer | [1, ∞) |
+| regular_configurations | Total regular configurations | Integer | [0, configurations] |
+| elite_configurations | Total elite configurations | Integer | [0, configurations] |
+| start_configurations | Configurations used as starting points | Integer | [0, configurations] |
+| standard_configurations | Configurations in intermediate stages | Integer | [0, configurations] |
+| end_configurations | Configurations at final stages | Integer | [0, configurations] |
+| regular_start_configurations | Regular configs that are start configs | Integer | [0, configurations] |
+| regular_standard_configurations | Regular configs that are standard configs | Integer | [0, configurations] |
+| regular_end_configurations | Regular configs that are end configs | Integer | [0, configurations] |
+| elite_start_configurations | Elite configs that are start configs | Integer | [0, configurations] |
+| elite_standard_configurations | Elite configs that are standard configs | Integer | [0, configurations] |
+| elite_end_configurations | Elite configs that are end configs | Integer | [0, configurations] |
+| max_configurations | Max configurations grouped into single node | Integer | [1, ∞) |
+| min_configurations | Min configurations grouped into single node | Integer | [1, max_configurations] |
+| max_regular_configurations | Max regular configs per node | Integer | [0, ∞) |
+| min_regular_configurations | Min regular configs per node | Integer | [0, max_regular_configurations] |
+| max_elite_configurations | Max elite configs per node | Integer | [0, ∞) |
+| min_elite_configurations | Min elite configs per node | Integer | [0, max_elite_configurations] |
+| max_start_configurations | Max start configs per node | Integer | [0, ∞) |
+| min_start_configurations | Min start configs per node | Integer | [0, max_start_configurations] |
+| max_standard_configurations | Max standard configs per node | Integer | [0, ∞) |
+| min_standard_configurations | Min standard configs per node | Integer | [0, max_standard_configurations] |
+| max_end_configurations | Max end configs per node | Integer | [0, ∞) |
+| min_end_configurations | Min end configs per node | Integer | [0, max_end_configurations] |
+| max_regular_start_configurations | Max regular start configs per node | Integer | [0, ∞) |
+| min_regular_start_configurations | Min regular start configs per node | Integer | [0, max_regular_start_configurations] |
+| max_regular_standard_configurations | Max regular standard configs per node | Integer | [0, ∞) |
+| min_regular_standard_configurations | Min regular standard configs per node | Integer | [0, max_regular_standard_configurations] |
+| max_regular_end_configurations | Max regular end configs per node | Integer | [0, ∞) |
+| min_regular_end_configurations | Min regular end configs per node | Integer | [0, max_regular_end_configurations] |
+| max_elite_start_configurations | Max elite start configs per node | Integer | [0, ∞) |
+| min_elite_start_configurations | Min elite start configs per node | Integer | [0, max_elite_start_configurations] |
+| max_elite_standard_configurations | Max elite standard configs per node | Integer | [0, ∞) |
+| min_elite_standard_configurations | Min elite standard configs per node | Integer | [0, max_elite_standard_configurations] |
+| max_elite_end_configurations | Max elite end configs per node | Integer | [0, ∞) |
+| min_elite_end_configurations | Min elite end configs per node | Integer | [0, max_elite_end_configurations] |
+| regular_configurations_rate | Proportion of regular configurations | Float | [0, 1] |
+| elite_configurations_rate | Proportion of elite configurations | Float | [0, 1] |
+| start_configurations_rate | Proportion of start configurations | Float | [0, 1] |
+| standard_configurations_rate | Proportion of standard configurations | Float | [0, 1] |
+| end_configurations_rate | Proportion of end configurations | Float | [0, 1] |
+| regular_start_configurations_rate | Proportion of regular start configurations | Float | [0, 1] |
+| regular_standard_configurations_rate | Proportion of regular standard configurations | Float | [0, 1] |
+| regular_end_configurations_rate | Proportion of regular end configurations | Float | [0, 1] |
+| elite_start_configurations_rate | Proportion of elite start configurations | Float | [0, 1] |
+| elite_standard_configurations_rate | Proportion of elite standard configurations | Float | [0, 1] |
+| elite_end_configurations_rate | Proportion of elite end configurations | Float | [0, 1] |
 
 ---
 
