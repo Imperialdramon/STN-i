@@ -53,7 +53,7 @@ get_stn_i_metrics_nodes <- function(stn_i_result) {
   metrics$regular_nodes <- sum(V(STN_i)$IS_ELITE == FALSE)
   metrics$elite_nodes <- sum(V(STN_i)$IS_ELITE == TRUE)
   metrics$start_nodes <- sum(V(STN_i)$STARTS > 0)
-  metrics$standard_nodes <- sum(V(STN_i)$STANDARD > 0)
+  metrics$standard_nodes <- sum(V(STN_i)$STANDARDS > 0)
   metrics$end_nodes <- sum(V(STN_i)$ENDS > 0)
 
   # Compute edges quantity metrics
@@ -100,7 +100,7 @@ get_stn_i_metrics_nodes <- function(stn_i_result) {
     metrics$average_best_out_degree <- mean(degree(STN_i, v = best_ids, mode = "out"), na.rm = TRUE)
     metrics$best_strength_in <- sum(strength(STN_i, vids = best_ids,  mode="in")) / number_of_runs
     metrics$start_best_nodes <- sum(V(STN_i)$STARTS > 0 & V(STN_i)$IS_BEST == TRUE)
-    metrics$standard_best_nodes <- sum(V(STN_i)$STANDARD > 0 & V(STN_i)$IS_BEST == TRUE)
+    metrics$standard_best_nodes <- sum(V(STN_i)$STANDARDS > 0 & V(STN_i)$IS_BEST == TRUE)
     metrics$end_best_nodes <- sum(V(STN_i)$ENDS > 0 & V(STN_i)$IS_BEST == TRUE)
   } else {
     metrics$average_best_in_degree <- NA
@@ -265,7 +265,7 @@ get_stn_i_metrics_elite_nodes <- function(stn_i_result) {
   metrics$elite_nodes <- vcount(ESTN_i)
   metrics$elite_best_nodes <- sum(V(ESTN_i)$IS_BEST == TRUE)
   metrics$elite_start_nodes <- sum(V(ESTN_i)$STARTS > 0)
-  metrics$elite_standard_nodes <- sum(V(ESTN_i)$STANDARD > 0)
+  metrics$elite_standard_nodes <- sum(V(ESTN_i)$STANDARDS > 0)
   metrics$elite_end_nodes <- sum(V(ESTN_i)$ENDS > 0)
 
   # Compute edges quantity metrics
