@@ -398,6 +398,13 @@ General network structure based on grouped configurations (nodes):
 | components | Number of connected components | Integer | [1, nodes] |
 | single_components | Components with single isolated node | Integer | [0, components] |
 | multiple_components | Components with multiple connected nodes | Integer | [0, components] |
+| max_distance | Maximum diameter among multiple components | Integer | [0, ∞) |
+| mean_distance | Average diameter among multiple components | Float | [0, ∞) |
+| sd_distance | Standard deviation of diameters | Float | [0, ∞) |
+| min_nodes_multiple_components | Minimum nodes in multiple components | Integer | [2, ∞) |
+| max_nodes_multiple_components | Maximum nodes in multiple components | Integer | [2, ∞) |
+| mean_nodes_multiple_components | Average nodes in multiple components | Float | [2, ∞) |
+| sd_nodes_multiple_components | Standard deviation of nodes in multiple components | Float | [0, ∞) |
 | nodes | Total number of grouped configurations (locations) | Integer | [1, ∞) |
 | regular_nodes | Non-elite configuration groups | Integer | [0, nodes] |
 | elite_nodes | Elite configuration groups | Integer | [0, nodes] |
@@ -446,6 +453,13 @@ Subnetwork metrics considering only elite configurations:
 | elite_components | Number of components in elite subgraph | Integer | [0, elite_nodes] |
 | single_elite_components | Elite components with single node | Integer | [0, elite_components] |
 | multiple_elite_components | Elite components with multiple nodes | Integer | [0, elite_components] |
+| max_elite_distance | Maximum diameter among multiple elite components | Integer | [0, ∞) |
+| mean_elite_distance | Average diameter among multiple elite components | Float | [0, ∞) |
+| sd_elite_distance | Standard deviation of elite diameters | Float | [0, ∞) |
+| min_nodes_multiple_elite_components | Minimum nodes in multiple elite components | Integer | [2, ∞) |
+| max_nodes_multiple_elite_components | Maximum nodes in multiple elite components | Integer | [2, ∞) |
+| mean_nodes_multiple_elite_components | Average nodes in multiple elite components | Float | [2, ∞) |
+| sd_nodes_multiple_elite_components | Std dev of nodes in multiple elite components | Float | [0, ∞) |
 | elite_nodes | Total elite configuration groups | Integer | [0, ∞) |
 | elite_best_nodes | Elite nodes with best performance | Integer | [0, elite_nodes] |
 | elite_start_nodes | Elite nodes that are start nodes | Integer | [0, elite_nodes] |

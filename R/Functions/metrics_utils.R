@@ -1,5 +1,59 @@
 # nolint start
 
+#' Calculate distance metrics for a directed graph
+#'
+#' This function computes various distance-related metrics for a directed graph,
+#' including the number of connected components, maximum, mean, and standard deviation
+#' of diameters of the components, and statistics on the sizes of the components.
+#' 
+#' @param graph An igraph directed graph object.
+#' 
+#' @return A list containing distance metrics.
+#' 
+#' @examples
+#' \dontrun{
+#' library(igraph)
+#' g <- make_ring(10, directed = TRUE)
+#' distance_metrics <- distances(g)
+#' print(distance_metrics)
+#' }
+#' 
+#' @export
+components_distances <- function(graph) {
+  comps <- components(graph, mode = "weak")
+  components <- comps$no
+  sizes <- comps$csize
+  valid_components <- which(sizes > 1)
+  numV <- length(valid_components)
+  sizes_val <- comps$csize[valid_components]
+  if (length(valid_components) == 0) {
+    return(0)
+  }
+
+  diameters <- sapply(valid_components, function(i) {
+    nodes <- V(graph)[comps$membership == i]
+    subg <- induced_subgraph(graph, nodes)
+    diameter(
+      subg,
+      directed = TRUE,
+      weights = NA
+    )
+  })
+
+  return(list(
+    components = components, # Number of components
+    single_components = components - numV, # Number of single-node components
+    multiple_components = numV, # Number of valid components (with more than 1 node)
+    max_distance = max(diameters), # Maximum diameter among all multiple components
+    mean_distance = mean(diameters), # Average diameter among all multiple components
+    sd_distance = sd(diameters), # Standard deviation of diameters
+    min_nodes_multiple_components = min(sizes_val), # Minimum number of nodes in valid components
+    max_nodes_multiple_components = max(sizes_val), # Maximum number of nodes in valid components
+    mean_nodes_multiple_components = mean(sizes_val), # Average number of nodes in valid components
+    sd_nodes_multiple_components = sd(sizes_val) # Standard deviation of nodes in valid components
+  ))
+}
+
 #' Get STN-i metrics focused on nodes
 #'
 #' This function extracts metrics related to nodes from an STN-i result.
@@ -36,17 +90,30 @@ get_stn_i_metrics_nodes <- function(stn_i_result) {
   # Compute components metric
   # Single: one node, no edges
   # Multiple: more than one node, with edges
-  comp_data <- components(STN_i)
-  metrics$components <- comp_data$no
-  if (metrics$components > 0) {
-    comp_membership <- comp_data$membership
-    comp_sizes <- table(comp_membership)
-    metrics$single_components <- sum(comp_sizes == 1)
-    metrics$multiple_components <- sum(comp_sizes > 1)
-  } else {
-    metrics$single_components <- 0
-    metrics$multiple_components <- 0
-  }
+  # comp_data <- components(STN_i)
+  # metrics$components <- comp_data$no
+  # if (metrics$components > 0) {
+  #   comp_membership <- comp_data$membership
+  #   comp_sizes <- table(comp_membership)
+  #   metrics$single_components <- sum(comp_sizes == 1)
+  #   metrics$multiple_components <- sum(comp_sizes > 1)
+  # } else {
+  #   metrics$single_components <- 0
+  #   metrics$multiple_components <- 0
+  # }
+
+  # Compute distance-based component metrics (using diameters)
+  distances_data <- components_distances(STN_i)
+  metrics$components <- distances_data$components
+  metrics$single_components <- distances_data$single_components
+  metrics$multiple_components <- distances_data$multiple_components
+  metrics$max_distance <- distances_data$max_distance
+  metrics$mean_distance <- distances_data$mean_distance
+  metrics$sd_distance <- distances_data$sd_distance
+  metrics$min_nodes_multiple_components <- distances_data$min_nodes_multiple_components
+  metrics$max_nodes_multiple_components <- distances_data$max_nodes_multiple_components
+  metrics$mean_nodes_multiple_components <- distances_data$mean_nodes_multiple_components
+  metrics$sd_nodes_multiple_components <- distances_data$sd_nodes_multiple_components
 
   # Compute nodes quantity metrics
   metrics$nodes <- vcount(STN_i)
@@ -249,17 +316,30 @@ get_stn_i_metrics_elite_nodes <- function(stn_i_result) {
   # Compute component metrics
   # Single: components with 1 node
   # Multiple: components with more than 1 node
-  comp_data <- components(ESTN_i)
-  metrics$elite_components <- comp_data$no
-  if (vcount(ESTN_i) > 0) {
-    comp_membership <- comp_data$membership
-    comp_sizes <- table(comp_membership)
-    metrics$single_elite_components <- sum(comp_sizes == 1)
-    metrics$multiple_elite_components <- sum(comp_sizes > 1)
-  } else {
-    metrics$single_elite_components <- 0
-    metrics$multiple_elite_components <- 0
-  }
+  # comp_data <- components(ESTN_i)
+  # metrics$elite_components <- comp_data$no
+  # if (vcount(ESTN_i) > 0) {
+  #   comp_membership <- comp_data$membership
+  #   comp_sizes <- table(comp_membership)
+  #   metrics$single_elite_components <- sum(comp_sizes == 1)
+  #   metrics$multiple_elite_components <- sum(comp_sizes > 1)
+  # } else {
+  #   metrics$single_elite_components <- 0
+  #   metrics$multiple_elite_components <- 0
+  # }
+
+  # Compute distance-based component metrics (using diameters)
+  distances_data <- components_distances(ESTN_i)
+  metrics$elite_components <- distances_data$components
+  metrics$single_elite_components <- distances_data$single_components
+  metrics$multiple_elite_components <- distances_data$multiple_components
+  metrics$max_elite_distance <- distances_data$max_distance
+  metrics$mean_elite_distance <- distances_data$mean_distance
+  metrics$sd_elite_distance <- distances_data$sd_distance
+  metrics$min_nodes_multiple_elite_components <- distances_data$min_nodes_multiple_components
+  metrics$max_nodes_multiple_elite_components <- distances_data$max_nodes_multiple_components
+  metrics$mean_nodes_multiple_elite_components <- distances_data$mean_nodes_multiple_components
+  metrics$sd_nodes_multiple_elite_components <- distances_data$sd_nodes_multiple_components
 
   # Compute nodes quantity metrics
   metrics$elite_nodes <- vcount(ESTN_i)
