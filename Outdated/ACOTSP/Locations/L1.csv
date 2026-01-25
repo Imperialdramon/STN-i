@@ -1,0 +1,12 @@
+NAME;CONDITIONAL;TYPE;VALUES_ARRAY;LOCATIONS_ARRAY
+algorithm;FALSE;c;(as,mmas,eas,ras,acs);(as:0,mmas:1,eas:2,ras:3,acs:4)
+localsearch;FALSE;c;(0,1,2,3);(0:0,1:1,2:2,3:3)
+alpha;FALSE;r;(0.00,5.00);(0.05,2)
+beta;FALSE;r;(0.00,10.00);(0.05,2)
+rho;FALSE;r;(0.01,1.00);(0.05,2)
+ants;FALSE;i;(5,100);(5,0)
+q0;TRUE;r;(0.0,1.0);(0.05,2)
+rasrank;TRUE;i;(1,100);(5,0)
+elitistants;TRUE;i;(1,750);(5,0)
+nnls;TRUE;i;(5,50);(5,0)
+dlb;TRUE;c;(0,1);(0:0,1:1)
