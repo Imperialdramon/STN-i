@@ -76,12 +76,12 @@ run_generate_rdata() {
 # Define algorithms and experiments
 declare -A experiments
 experiments["ACOTSP"]="BL BL-45 BH BH-90"
-experiments["PSO-X"]="BL BL-32 BH BH-65"
+#experiments["PSO-X"]="BL BL-32 BH BH-65"
 
 # Define optimum files per algorithm
 declare -A optimum_files
 optimum_files["ACOTSP"]="Optimum.csv"
-optimum_files["PSO-X"]="Optimum.csv"
+#optimum_files["PSO-X"]="Optimum.csv"
 
 # For Individuals-Elites mode, check if Results directory exists
 if [[ "$MODE" == "Individuals-Elites" ]]; then
