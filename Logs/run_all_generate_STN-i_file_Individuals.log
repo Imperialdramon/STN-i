@@ -1,8 +1,24 @@
-=== STN-i data generation started at Sun Jan 25 17:03:52 -03 2026 ===
+=== STN-i data generation started at Sun Jan 25 17:07:27 -03 2026 ===
 Mode: Individuals
 === Processing algorithm: ACOTSP ===
-    Skipping: Input directory not found: Experiments/ACOTSP/Individuals/BL/Data
-    Skipping: Input directory not found: Experiments/ACOTSP/Individuals/BL-45/Data
-    Skipping: Input directory not found: Experiments/ACOTSP/Individuals/BH/Data
-    Skipping: Input directory not found: Experiments/ACOTSP/Individuals/BH-90/Data
-=== STN-i files generation finished at Sun Jan 25 17:03:52 -03 2026 ===
+>> Generating: 
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 526802 28.2    1555396 83.1  1555396 83.1
+Vcells 946919  7.3    8658397 66.1  8658397 66.1
+Success: Generated 
+>> Generating: 
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 526802 28.2    1644406 87.9  1644406 87.9
+Vcells 946919  7.3    8453956 64.5  8453956 64.5
+Success: Generated 
+>> Generating: 
+          used (Mb) gc trigger (Mb) max used  (Mb)
+Ncells  526802 28.2    1767832 94.5  2260192 120.8
+Vcells 1012455  7.8    8868290 67.7 11085362  84.6
+Success: Generated 
+>> Generating: 
+          used (Mb) gc trigger (Mb) max used  (Mb)
+Ncells  526802 28.2    1661261 88.8  2076576 111.0
+Vcells 1012455  7.8    8498593 64.9 10623241  81.1
+Success: Generated 
+=== STN-i files generation finished at Sun Jan 25 17:47:05 -03 2026 ===

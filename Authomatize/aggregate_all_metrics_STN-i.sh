@@ -46,12 +46,13 @@ fi
 echo "Running with mode: $MODE"
 
 # Define algorithms to process
-algorithms=("ACOTSP" "PSO-X")
+#algorithms=("ACOTSP" "PSO-X")
+algorithms=("ACOTSP")
 
 # Define experiments per algorithm
 declare -A experiments
 experiments["ACOTSP"]="BH BH-90 BL BL-45"
-experiments["PSO-X"]="BH BH-65 BL BL-32"
+#experiments["PSO-X"]="BH BH-65 BL BL-32"
 
 # Define levels for each algorithm
 levels="L0 L1 L2 L3 L4 L5"

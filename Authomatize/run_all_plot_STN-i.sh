@@ -84,7 +84,7 @@ run_plot_stn_i() {
 # Note: Add or remove experiments as needed (space-separated)
 declare -A experiments
 experiments["ACOTSP"]="BL BL-45 BH BH-90"
-experiments["PSO-X"]="BL BL-32 BH BH-65"
+#experiments["PSO-X"]="BL BL-32 BH BH-65"
 
 # Define location types for each algorithm
 # Note: Add or remove location types as needed (space-separated)
@@ -92,7 +92,7 @@ declare -A locations_type
 #locations_type["ACOTSP"]="L0 L1 L2 L3 L4 L5"
 #locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
 locations_type["ACOTSP"]="L0"
-locations_type["PSO-X"]="L0"
+#locations_type["PSO-X"]="L0"
 
 # List of valid graph layouts
 # Note: Change layout function based on different criteria

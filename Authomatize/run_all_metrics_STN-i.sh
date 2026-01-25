@@ -71,12 +71,12 @@ run_generate_rdata() {
 # Define algorithms and experiments
 declare -A experiments
 experiments["ACOTSP"]="BL BL-45 BH BH-90"
-experiments["PSO-X"]="BL BL-32 BH BH-65"
+#experiments["PSO-X"]="BL BL-32 BH BH-65"
 
 # Define locations type per algorithm
 declare -A locations_type
 locations_type["ACOTSP"]="L0 L1 L2 L3 L4 L5"
-locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
+#locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
 
 # Loop over all combinations of algorithm, experiment, and level
 for alg in "${!experiments[@]}"; do
