@@ -1,6 +1,6 @@
-=== STN-i data generation started at Sun Jan 25 17:53:59 -03 2026 ===
+=== STN-i data generation started at Tue Jan 27 20:34:04 -03 2026 ===
 Mode: Individuals
-=== Processing algorithm: ACOTSP ===
+=== Processing algorithm: PSO-X ===
 >> Generating: 
 
 Attaching package: ‘igraph’
@@ -33,153 +33,9 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  701928 37.5    2057457 109.9  2057457 109.9
-Vcells 1332815 10.2    8388608  64.0  8384560  64.0
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  701928 37.5    2057428 109.9  2057428 109.9
-Vcells 1332815 10.2    8388608  64.0  8385036  64.0
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  701847 37.5    2053408 109.7  2053408 109.7
-Vcells 1332335 10.2    8388608  64.0  8386163  64.0
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  701019 37.5    2035782 108.8  2035782 108.8
-Vcells 1327436 10.2    8388608  64.0  8384908  64.0
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  698763 37.4    1996031 106.6  1996031 106.6
-Vcells 1314003 10.1    8388608  64.0  5795358  44.3
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  679023 36.3    1299428 69.4  1299428 69.4
+Vcells 1212506  9.3    8388608 64.0  5325973 40.7
 Success: Generated 
 >> Generating: 
 
@@ -214,8 +70,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  695292 37.2    1299428 69.4  1299428 69.4
-Vcells 1292364  9.9    8388608 64.0  7916684 60.4
+Ncells  679008 36.3    1299428 69.4  1299428 69.4
+Vcells 1212422  9.3    8388608 64.0  5308604 40.6
 Success: Generated 
 >> Generating: 
 
@@ -250,8 +106,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  694611 37.1    1299428 69.4  1299428 69.4
-Vcells 1290819  9.9    8388608 64.0  7780896 59.4
+Ncells  678321 36.3    1299428 69.4  1299428 69.4
+Vcells 1208295  9.3    8388608 64.0  5650356 43.2
 Success: Generated 
 >> Generating: 
 
@@ -286,8 +142,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  694605 37.1    1299428 69.4  1299428 69.4
-Vcells 1290787  9.9    8388608 64.0  7780051 59.4
+Ncells  676134 36.2    1299428 69.4  1299428 69.4
+Vcells 1195362  9.2    8388608 64.0  4921112 37.6
 Success: Generated 
 >> Generating: 
 
@@ -322,8 +178,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  693873 37.1    1299428 69.4  1299428 69.4
-Vcells 1286759  9.9    8388608 64.0  7685358 58.7
+Ncells  673881 36.0    1299428 69.4  1299428 69.4
+Vcells 1182100  9.1    8388608 64.0  4605772 35.2
 Success: Generated 
 >> Generating: 
 
@@ -358,8 +214,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  690861 36.9    1695197 90.6  1695197 90.6
-Vcells 1269715  9.7    8388608 64.0  7098164 54.2
+Ncells  670815 35.9    1299428 69.4  1299428 69.4
+Vcells 1163762  8.9    8388608 64.0  4030272 30.8
 Success: Generated 
 >> Generating: 
 
@@ -394,8 +250,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  687132 36.7    1642305 87.8  1642305 87.8
-Vcells 1248500  9.6    8388608 64.0  6867345 52.4
+Ncells  675285 36.1    1299428 69.4  1299428 69.4
+Vcells 1189903  9.1    8388608 64.0  4888653 37.3
 Success: Generated 
 >> Generating: 
 
@@ -430,188 +286,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  683274 36.5    1299428 69.4  1299428 69.4
-Vcells 1226320  9.4    8388608 64.0  5691639 43.5
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  743715 39.8    1978917 105.7  1978917 105.7
-Vcells 1556965 11.9    8388608  64.0  8380111  64.0
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  743697 39.8    1978934 105.7  1978934 105.7
-Vcells 1556860 11.9    8388608  64.0  8385424  64.0
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  742719 39.7    1980148 105.8  1980148 105.8
-Vcells 1551201 11.9    8388608  64.0  8383565  64.0
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  737970 39.5    1981928 105.9  1981928 105.9
-Vcells 1524092 11.7    8388608  64.0  8373664  63.9
-Success: Generated 
->> Generating: 
-
-Attaching package: ‘igraph’
-
-The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-
-The following object is masked from ‘package:base’:
-
-    union
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:plyr’:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from ‘package:igraph’:
-
-    as_data_frame, groups, union
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  729954 39.0    1989228 106.3  1989228 106.3
-Vcells 1477342 11.3    8388608  64.0  8387785  64.0
+Ncells  675240 36.1    1299428 69.4  1299428 69.4
+Vcells 1189641  9.1    8388608 64.0  4835296 36.9
 Success: Generated 
 >> Generating: 
 
@@ -646,8 +322,188 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  721287 38.6    2209448  118  2209448  118
-Vcells 1426110 10.9    8388608   64  8386967   64
+Ncells  673869 36.0    1299428 69.4  1299428 69.4
+Vcells 1181471  9.1    8388608 64.0  4656712 35.6
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  670896 35.9    1299428 69.4  1299428 69.4
+Vcells 1164902  8.9    8388608 64.0  3894719 29.8
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  668721 35.8    1299428 69.4  1299428 69.4
+Vcells 1152826  8.8    8388608 64.0  3500740 26.8
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  666669 35.7    1299428 69.4  1299428 69.4
+Vcells 1141403  8.8    8388608 64.0  3286223 25.1
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  703191 37.6    1863208 99.6  1863208 99.6
+Vcells 1343300 10.3    8388608 64.0  8385549 64.0
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  703065 37.6    1863677 99.6  1863677 99.6
+Vcells 1342535 10.3    8388608 64.0  8385649 64.0
 Success: Generated 
 >> Generating: 
 
@@ -682,8 +538,116 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  731802 39.1    1990788 106.4  1990788 106.4
-Vcells 1486883 11.4    8388608  64.0  8381573  64.0
+Ncells  698919 37.4    1994237 106.6  1994237 106.6
+Vcells 1318087 10.1    8388608  64.0  8382128  64.0
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  691608 37.0    1299428 69.4  1299428 69.4
+Vcells 1276507  9.8    8388608 64.0  7484374 57.2
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  686235 36.7    1636854 87.5  1636854 87.5
+Vcells 1245286  9.6    8388608 64.0  6769362 51.7
+Success: Generated 
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  680007 36.4    1299428 69.4  1299428 69.4
+Vcells 1208582  9.3    8388608 64.0  5486658 41.9
 Success: Generated 
 >> Generating: 
 
@@ -718,8 +682,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  731724 39.1    1990362 106.3  1990362 106.3
-Vcells 1486460 11.4    8388608  64.0  8386365  64.0
+Ncells  696828 37.3    1967588 105.1  1967588 105.1
+Vcells 1304249 10.0    8388608  64.0  8270056  63.1
 Success: Generated 
 >> Generating: 
 
@@ -753,9 +717,9 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  727896 38.9    1993494 106.5  1993494 106.5
-Vcells 1464832 11.2    8395391  64.1  8395391  64.1
+          used (Mb) gc trigger  (Mb) max used (Mb)
+Ncells  696414 37.2    1969388 105.2  1684120   90
+Vcells 1301852 10.0    8388608  64.0  8382920   64
 Success: Generated 
 >> Generating: 
 
@@ -789,9 +753,9 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  717510 38.4    2155925 115.2  2155925 115.2
-Vcells 1407658 10.8    8388608  64.0  8381281  64.0
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  689469 36.9    1678042 89.7  1678042 89.7
+Vcells 1262098  9.7    8388608 64.0  4814423 36.8
 Success: Generated 
 >> Generating: 
 
@@ -825,9 +789,9 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  709119 37.9    1894240 101.2  1894240 101.2
-Vcells 1361366 10.4    8388608  64.0  8383571  64.0
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  682182 36.5    1299428 69.4  1299428 69.4
+Vcells 1222706  9.4    8388608 64.0  5885758 45.0
 Success: Generated 
 >> Generating: 
 
@@ -861,8 +825,44 @@ The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  702450 37.6    2068742 110.5  2068742 110.5
-Vcells 1323155 10.1    8388608  64.0  8378910  64.0
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  677790 36.2    1299428 69.4  1299428 69.4
+Vcells 1198742  9.2    8388608 64.0  5124466 39.1
 Success: Generated 
-=== STN-i files generation finished at Sun Jan 25 17:59:03 -03 2026 ===
+>> Generating: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:igraph’:
+
+    as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  673905   36    1299428 69.4  1299428 69.4
+Vcells 1176784    9    8388608 64.0  4342224 33.2
+Success: Generated 
+=== STN-i files generation finished at Tue Jan 27 20:36:32 -03 2026 ===

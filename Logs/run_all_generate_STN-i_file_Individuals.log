@@ -1,24 +1,24 @@
-=== STN-i data generation started at Sun Jan 25 17:07:27 -03 2026 ===
+=== STN-i data generation started at Tue Jan 27 20:20:23 -03 2026 ===
 Mode: Individuals
-=== Processing algorithm: ACOTSP ===
+=== Processing algorithm: PSO-X ===
 >> Generating: 
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 526802 28.2    1555396 83.1  1555396 83.1
-Vcells 946919  7.3    8658397 66.1  8658397 66.1
+Ncells 526540 28.2    1192172 63.7  1192172 63.7
+Vcells 946663  7.3    8388696 64.1  8388696 64.1
 Success: Generated 
 >> Generating: 
          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells 526802 28.2    1644406 87.9  1644406 87.9
-Vcells 946919  7.3    8453956 64.5  8453956 64.5
+Ncells 526535 28.2    1193449 63.8  1193449 63.8
+Vcells 946658  7.3    8389753 64.1  8389753 64.1
 Success: Generated 
 >> Generating: 
-          used (Mb) gc trigger (Mb) max used  (Mb)
-Ncells  526802 28.2    1767832 94.5  2260192 120.8
-Vcells 1012455  7.8    8868290 67.7 11085362  84.6
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 526796 28.2    1563833 83.6  1563833 83.6
+Vcells 946919  7.3    8614961 65.8  8614961 65.8
 Success: Generated 
 >> Generating: 
-          used (Mb) gc trigger (Mb) max used  (Mb)
-Ncells  526802 28.2    1661261 88.8  2076576 111.0
-Vcells 1012455  7.8    8498593 64.9 10623241  81.1
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 526711 28.2    1650819 88.2  1650819 88.2
+Vcells 946834  7.3    8456030 64.6  8456030 64.6
 Success: Generated 
-=== STN-i files generation finished at Sun Jan 25 17:47:05 -03 2026 ===
+=== STN-i files generation finished at Tue Jan 27 20:33:12 -03 2026 ===

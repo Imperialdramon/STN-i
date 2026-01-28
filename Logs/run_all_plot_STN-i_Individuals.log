@@ -1,6 +1,6 @@
-=== STN-i plot generation started at Sun Jan 25 18:56:05 -03 2026 ===
+=== STN-i plot generation started at Tue Jan 27 20:43:39 -03 2026 ===
 Mode: Individuals
-=== Processing algorithm: ACOTSP ===
+=== Processing algorithm: PSO-X ===
 >> Plotting: 
 
 Attaching package: ‘igraph’
@@ -15,11 +15,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  549160 29.4    1249514 66.8  1249514 66.8
-Vcells 1154951  8.9    8388608 64.0  5515921 42.1
+Ncells  544898 29.2    1238708 66.2  1238708 66.2
+Vcells 1057565  8.1    8388608 64.0  4072983 31.1
 Success: Generated 
 >> Plotting: 
 
@@ -35,11 +35,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  549197 29.4    1250388 66.8  1250388 66.8
-Vcells 1155974  8.9    8388608 64.0  5949503 45.4
+Ncells  544987 29.2    1238462 66.2  1238462 66.2
+Vcells 1059044  8.1    8388608 64.0  5268308 40.2
 Success: Generated 
 >> Plotting: 
 
@@ -55,11 +55,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  550969 29.5    1255431 67.1  1255431 67.1
-Vcells 1161757  8.9    8388608 64.0  5797525 44.3
+Ncells  546495 29.2    1243725 66.5  1243725 66.5
+Vcells 1063523  8.2    8388608 64.0  3824572 29.2
 Success: Generated 
 >> Plotting: 
 
@@ -75,11 +75,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  551150 29.5    1256445 67.2  1256445 67.2
-Vcells 1163356  8.9    8388608 64.0  6223621 47.5
+Ncells  546780 29.3    1242557 66.4  1242557 66.4
+Vcells 1065786  8.2    8388608 64.0  4874402 37.2
 Success: Generated 
 >> Plotting: 
 
@@ -95,11 +95,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Plots/L0/BL-32-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  547761 29.3    1245520 66.6  1245520 66.6
-Vcells 1121168  8.6    8388608 64.0  5902369 45.1
+Ncells  544269 29.1    1235551   66  1235551 66.0
+Vcells 1040424  8.0    8388608   64  5411758 41.3
 Success: Generated 
 >> Plotting: 
 
@@ -115,11 +115,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Plots/L0/BL-32-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  547726 29.3    1246420 66.6  1246420 66.6
-Vcells 1121561  8.6    8388608 64.0  6019861 46.0
+Ncells  544378 29.1    1237425 66.1  1237425 66.1
+Vcells 1042077  8.0    8388608 64.0  6387440 48.8
 Success: Generated 
 >> Plotting: 
 
@@ -135,11 +135,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Plots/L0/BL-32-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  549854 29.4    1252308 66.9  1252308 66.9
-Vcells 1129110  8.7    8388608 64.0  5950933 45.5
+Ncells  546214 29.2    1242277 66.4  1242277 66.4
+Vcells 1047774  8.0    8388608 64.0  5740246 43.8
 Success: Generated 
 >> Plotting: 
 
@@ -155,11 +155,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BL-32/STN-i-Plots/L0/BL-32-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  549891 29.4    1252831   67  1252831 67.0
-Vcells 1129791  8.7    8388608   64  6206293 47.4
+Ncells  546539 29.2    1243114 66.4  1243114 66.4
+Vcells 1050291  8.1    8388608 64.0  6165229 47.1
 Success: Generated 
 >> Plotting: 
 
@@ -175,11 +175,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  557258 29.8    1272357   68  1272357 68.0
-Vcells 1338919 10.3    8388608   64  6032236 46.1
+Ncells  549709 29.4    1252634 66.9  1252634 66.9
+Vcells 1166036  8.9    8388608 64.0  5031526 38.4
 Success: Generated 
 >> Plotting: 
 
@@ -195,11 +195,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  557267 29.8    1272731   68  1272731   68
-Vcells 1339696 10.3    8388608   64  6288389   48
+Ncells  549798 29.4    1252082 66.9  1252082 66.9
+Vcells 1167515  9.0    8388608 64.0  6026041 46.0
 Success: Generated 
 >> Plotting: 
 
@@ -215,11 +215,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  559283 29.9    1277702 68.3  1277702 68.3
-Vcells 1346589 10.3    8388608 64.0  5840061 44.6
+Ncells  551426 29.5    1257491 67.2  1257491 67.2
+Vcells 1172474  9.0    8388608 64.0  4988367 38.1
 Success: Generated 
 >> Plotting: 
 
@@ -235,11 +235,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  559408 29.9    1235365   66  1235365 66.0
-Vcells 1347830 10.3    8388608   64  6729698 51.4
+Ncells  551711 29.5    1258391 67.3  1258391 67.3
+Vcells 1174737  9.0    8388608 64.0  6067561 46.3
 Success: Generated 
 >> Plotting: 
 
@@ -255,11 +255,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Plots/L0/BH-65-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  554775 29.7    1266191 67.7  1266191 67.7
-Vcells 1280744  9.8    8388608 64.0  8025688 61.3
+Ncells  548261 29.3    1247182 66.7  1247182 66.7
+Vcells 1132610  8.7    8388608 64.0  5687559 43.4
 Success: Generated 
 >> Plotting: 
 
@@ -275,11 +275,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Plots/L0/BH-65-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  554828 29.7    1265697 67.6  1265697 67.6
-Vcells 1281907  9.8    8388608 64.0  7836907 59.8
+Ncells  548334 29.3    1247960 66.7  1247960 66.7
+Vcells 1133949  8.7    8388608 64.0  6375799 48.7
 Success: Generated 
 >> Plotting: 
 
@@ -295,11 +295,11 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Plots/L0/BH-65-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  557244 29.8    1271877   68  1271877   68
-Vcells 1290190  9.9    8388608   64  7591942   58
+Ncells  550274 29.4    1253388   67  1253388 67.0
+Vcells 1140232  8.7    8388608   64  5989275 45.7
 Success: Generated 
 >> Plotting: 
 
@@ -315,10 +315,10 @@ The following object is masked from ‘package:base’:
 
 Warning message:
 In value[[3L]](cond) : double expected, got “NA”
-STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/PSO-X/Individuals/BH-65/STN-i-Plots/L0/BH-65-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
 There were 50 or more warnings (use warnings() to see the first 50)
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  557457 29.8    1256817 67.2  1256817 67.2
-Vcells 1291993  9.9    8388608 64.0  7776519 59.4
+Ncells  550527 29.5    1254231   67  1254231 67.0
+Vcells 1142291  8.8    8388608   64  6442519 49.2
 Success: Generated 
-=== STN-i plot generation finished at Sun Jan 25 18:56:28 -03 2026 ===
+=== STN-i plot generation finished at Tue Jan 27 20:44:01 -03 2026 ===
