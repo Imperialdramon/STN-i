@@ -7,8 +7,16 @@ This repository contains the implementation of Search Trajectory Networks (STN) 
 - [Project Structure](#project-structure)
 - [Scripts Description](#scripts-description)
   - [Data Generation Scripts](#data-generation-scripts)
+    - [generate_STN-i_file.R](#generate_stn-i_filer)
+    - [generate_STN-i_Rdata.R](#generate_stn-i_rdatar)
+    - [plot_STN-i.R](#plot_stn-ir)
+    - [generate_elite_optimum_file.R](#generate_elite_optimum_filer)
+    - [generate_elite_STN-i_file.R](#generate_elite_stn-i_filer)
   - [Metric Calculation Scripts](#metric-calculation-scripts)
 - [Automation Scripts](#automation-scripts)
+  - [run_all_generate_STN-i_file.sh](#run_all_generate_stn-i_filesh)
+  - [run_all_generate_elite_STN-i_file.sh](#run_all_generate_elite_stn-i_filesh)
+  - [run_all_generate_STN-i_Rdata.sh](#run_all_generate_stn-i_rdatash)
 - [Location Code Generation Algorithm](#location-code-generation-algorithm)
 - [Additional Data](#additional-data)
 
@@ -325,6 +333,109 @@ Rscript R/plot_STN-i.R \
   --size_type="equals" \
   --zoom_quantile=NA \
   --verbose=FALSE
+```
+
+---
+
+#### `generate_elite_optimum_file.R`
+Extracts the best value found across all elite testing matrices for each instance and generates an optimum file used as reference for STN-i quality calculations.
+
+**Usage:**
+```bash
+Rscript R/generate_elite_optimum_file.R \
+  --elites_dir=<elites_directory> \
+  --output=<output_file> \
+  [--verbose=<TRUE|FALSE>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -e | --elites_dir | Directory containing All_Elites testing .Rdata files | - | Yes |
+| -o | --output | Output path for optimum CSV file | - | Yes |
+| -v | --verbose | Show progress information | FALSE | No |
+
+**Output Format:**
+- **INSTANCE**: Instance name
+- **BEST**: Best value found across all elite matrices for that instance
+
+**Complete Example:**
+```bash
+Rscript R/generate_elite_optimum_file.R \
+  --elites_dir="Experiments/ACOTSP/Individuals-Elites/General-Data/All-Elites" \
+  --output="Experiments/ACOTSP/Others/Optimum_Elite.csv" \
+  --verbose=FALSE
+```
+
+---
+
+#### `generate_elite_STN-i_file.R`
+Processes elite testing .Rdata files to generate STN-i trace files for elite configurations across multiple locations. Unlike the regular STN-i generation, this script calculates MMNRG (Mean across all matrices of Mean Normalized Ranking Gap) from elite testing matrices and uses trajectory data from multiple scenario runs to reconstruct elite movements.
+
+**Architecture:**
+The script uses a 3-step approach:
+1. **Calculate MMNRG**: Load all elite testing matrices and compute Mean of Means Normalized Ranking Gap for each configuration
+2. **Load Scenario Data**: Combine configurations and trajectories from all Results/{SEED}/ subdirectories
+3. **Generate STN-i per Location**: For each location parameter file, create STN-i files using elite configurations and MMNRG as quality metric
+
+**Usage:**
+```bash
+Rscript R/generate_elite_STN-i_file.R \
+  --elites_dir=<elites_directory> \
+  --scenario_dir=<scenario_directory> \
+  --general_parameters=<general_params_file> \
+  --parameters=<params_directory> \
+  --output=<output_directory> \
+  --optimum_file=<optimum_file> \
+  [--name=<output_name>] \
+  [--best_criteria=<min|max>] \
+  [--quality_criteria=<criteria>] \
+  [--significance=<int>] \
+  [--representative_criteria=<criteria>] \
+  [--verbose=<TRUE|FALSE>]
+```
+
+**Parameters:**
+
+| Short | Long Parameter | Description | Default | Required |
+|-------|---------------|-------------|---------|----------|
+| -e | --elites_dir | Directory with All_Elites testing .Rdata files | - | Yes |
+| -s | --scenario_dir | Scenario directory with Results/{SEED}/ subdirectories | - | Yes |
+| -g | --general_parameters | General parameters CSV file | - | Yes |
+| -p | --parameters | Directory with location parameter files (L0.csv-L5.csv) | - | Yes |
+| -o | --output | Output directory for STN-i files | - | Yes |
+| -m | --optimum_file | Path to optimum CSV file (Optimum_Elite.csv) | - | Yes |
+| -n | --name | Output file base name | scenario_name | No |
+| -b | --best_criteria | Criterion for best value ('min' or 'max') | min | No |
+| -c | --quality_criteria | Quality criterion for elite configs | mean | No |
+| -t | --significance | Significance level for numerical parameters | 2 | No |
+| -r | --representative_criteria | Representative criterion for locations | mean | No |
+| -v | --verbose | Show detailed processing information | FALSE | No |
+
+**MMNRG Calculation:**
+Mean across all matrices of Mean Normalized Ranking Gap:
+1. Per matrix: GAP → Horizontal Ranking → Horizontal Normalization [0,1] → Vertical Mean per Config
+2. Final: Mean of Means across all elite testing matrices
+
+**Output Files:**
+For each location parameter file (L0.csv, L1.csv, ..., L5.csv), generates:
+- `{scenario_name}-L0.csv`, `{scenario_name}-L1.csv`, ..., `{scenario_name}-L5.csv`
+
+**Complete Example:**
+```bash
+Rscript R/generate_elite_STN-i_file.R \
+  --elites_dir="Experiments/ACOTSP/Individuals-Elites/General-Data/All-Elites" \
+  --scenario_dir="Experiments/ACOTSP/Individuals/BH" \
+  --general_parameters="Experiments/ACOTSP/Others/Parameters.csv" \
+  --parameters="Experiments/ACOTSP/Locations" \
+  --output="Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Files" \
+  --optimum_file="Experiments/ACOTSP/Others/Optimum_Elite.csv" \
+  --name="BH.csv" \
+  --quality_criteria="mean" \
+  --representative_criteria="mean" \
+  --significance=2 \
+  --verbose=TRUE
 ```
 
 ---
@@ -808,11 +919,6 @@ Rscript R/box_plot_best_elite_STN-i.R \
 
 ---
 
-#### `generate_elite_STN-i_file.R`
-**TODO:** Processes elite configurations from irace testing results and generates STN-i files for each scenario.
-
----
-
 ## Automation Scripts
 
 The repository includes bash scripts to automate common workflows. All scripts should be run from the repository root.
@@ -835,6 +941,83 @@ Generates STN-i trace files for all experiments and locations.
 **Output:**
 - Log file in `Logs/run_all_generate_STN-i_file_<MODE>.log`
 - Generated STN-i .csv files in `Experiments/<ALG>/<MODE>/<EXP>/STN-i-Files/`
+
+---
+
+### `run_all_generate_elite_STN-i_file.sh`
+Generates elite STN-i trace files for all scenarios and locations across all algorithms. This script automates the elite STN-i generation workflow for batch processing.
+
+**Features:**
+- Processes all configured algorithms and scenarios
+- Generates separate STN-i files for each location (L0-L5)
+- Validates all required input files and directories before execution
+- Centralized logging for error tracking
+- Supports both ACOTSP and PSO-X algorithms
+
+**Usage:**
+```bash
+# From repository root
+chmod +x ./Authomatize/run_all_generate_elite_STN-i_file.sh
+./Authomatize/run_all_generate_elite_STN-i_file.sh
+```
+
+**Configuration:**
+Edit the script to adjust which algorithms and scenarios are processed:
+```bash
+declare -A scenarios
+scenarios["ACOTSP"]="BL BL-45 BH BH-90"
+scenarios["PSO-X"]="BL BL-32 BH BH-65"
+```
+
+**Required Files:**
+For each algorithm, the script expects:
+- `Experiments/<ALG>/Individuals-Elites/General-Data/All-Elites/` - Elite testing .Rdata files
+- `Experiments/<ALG>/Individuals/<SCENARIO>/Results/{SEED}/` - Scenario run data
+- `Experiments/<ALG>/Others/Parameters.csv` - General parameters
+- `Experiments/<ALG>/Locations/` - Location parameter files (L0.csv-L5.csv)
+- `Experiments/<ALG>/Others/Optimum_Elite.csv` - Elite optimum reference
+
+**Output:**
+- Log file: `Logs/run_all_generate_elite_STN-i_file.log`
+- Generated STN-i files: `Experiments/<ALG>/Individuals-Elites/<SCENARIO>/STN-i-Files/{SCENARIO}-L*.csv`
+
+**Validation:**
+Before executing, the script validates:
+- Elites directory exists and contains .Rdata files
+- Scenario directory exists and has Results/ subdirectories
+- General parameters file is present
+- Parameters directory contains location files
+- Optimum Elite file exists
+
+If any validation fails, the scenario is skipped with an error message in the log.
+
+**Performance Notes:**
+- Processing time depends on:
+  - Number of elite testing matrices (typically 20 for full ensembles)
+  - Number of configurations in the scenario
+  - Number of location parameter files (typically 6: L0-L5)
+- Each scenario typically takes 2-5 minutes depending on data size
+- All locations for a scenario are processed sequentially
+
+**Troubleshooting:**
+```bash
+# Check if R scripts have proper permissions
+ls -la R/generate_elite_STN-i_file.R
+
+# View the generated log file
+cat Logs/run_all_generate_elite_STN-i_file.log
+
+# Test a single scenario manually
+Rscript R/generate_elite_STN-i_file.R \
+  --elites_dir="Experiments/ACOTSP/Individuals-Elites/General-Data/All-Elites" \
+  --scenario_dir="Experiments/ACOTSP/Individuals/BH" \
+  --general_parameters="Experiments/ACOTSP/Others/Parameters.csv" \
+  --parameters="Experiments/ACOTSP/Locations" \
+  --output="Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Files" \
+  --optimum_file="Experiments/ACOTSP/Others/Optimum_Elite.csv" \
+  --name="BH.csv" \
+  --verbose=TRUE
+```
 
 ---
 
