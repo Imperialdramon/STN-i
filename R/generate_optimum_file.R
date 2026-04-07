@@ -1,6 +1,8 @@
 # nolint start
+
 #########################################################################
 # Optimum File Generation Script
+# Author: Pablo Estobar
 #
 # Description:
 # This script processes multiple Rdata files containing irace results
@@ -8,7 +10,8 @@
 # for each instance across all files.
 #
 # Usage:
-# Rscript generate_optimum_file.R --input=<input_directory> --output=<output_directory> 
+# Rscript generate_optimum_file.R --output=<output_directory>
+#                                [--input=<input_directory>|--directories=<dir1,dir2,...>]
 #                                [--name=<output_file_name>] 
 #                                [--best=<min|max>]
 #
