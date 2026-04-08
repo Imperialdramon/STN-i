@@ -1042,6 +1042,106 @@ Converts all STN-i trace files (.csv) to graph objects (.Rdata).
 
 ---
 
+## Elite STN-i Workflow
+
+The complete elite STN-i generation and visualization workflow consists of three automated steps:
+
+### Step 1: Generate Elite STN-i CSV Files
+Extract elite configurations from testing matrices and create STN-i trace files using MMNRG quality metric.
+
+```bash
+./Authomatize/run_all_generate_elite_STN-i_file.sh
+```
+
+**Output:** `Experiments/<ALG>/Individuals-Elites/<SCENARIO>/STN-i-Files/{SCENARIO}-L*.csv`
+
+### Step 2: Convert CSV to RData Graph Objects
+Convert STN-i CSV trace files to igraph objects for visualization and analysis.
+
+```bash
+./Authomatize/run_all_generate_STN-i_Rdata.sh --mode=Individuals-Elites
+```
+
+**Output:** `Experiments/<ALG>/Individuals-Elites/<SCENARIO>/STN-i-RData/{SCENARIO}-L*_stn_i.Rdata`
+
+### Step 3: Generate PDF Visualizations
+Create publication-quality network visualizations from the Rdata graph objects.
+
+```bash
+./Authomatize/run_all_plot_STN-i.sh --mode=Individuals-Elites --size_factor=1.0
+```
+
+**Output:** `Experiments/<ALG>/Individuals-Elites/<SCENARIO>/STN-i-Plots/{SCENARIO}-L*-*.pdf`
+
+### Complete Elite STN-i Pipeline
+
+Run all three steps in sequence:
+
+```bash
+# Step 1: Generate elite STN-i CSV files (requires Optimum_Elite.csv)
+./Authomatize/run_all_generate_elite_STN-i_file.sh
+
+# Step 2: Convert CSV to RData graphs (for Individuals-Elites mode)
+./Authomatize/run_all_generate_STN-i_Rdata.sh --mode=Individuals-Elites
+
+# Step 3: Generate visualization plots
+./Authomatize/run_all_plot_STN-i.sh --mode=Individuals-Elites
+
+# Optional: Calculate metrics
+./Authomatize/run_all_metrics_STN-i.sh --mode=Individuals-Elites
+
+# Optional: Aggregate all metrics
+./Authomatize/aggregate_all_metrics_STN-i.sh --mode=Individuals-Elites
+```
+
+### Directory Structure After Elite STN-i Workflow
+
+```
+Experiments/<ALGORITHM>/Individuals-Elites/
+├── <SCENARIO>/
+│   ├── STN-i-Files/              # Step 1 output: CSV trace files
+│   │   ├── <SCENARIO>-L0.csv
+│   │   ├── <SCENARIO>-L1.csv
+│   │   ├── <SCENARIO>-L2.csv
+│   │   ├── <SCENARIO>-L3.csv
+│   │   ├── <SCENARIO>-L4.csv
+│   │   └── <SCENARIO>-L5.csv
+│   ├── STN-i-RData/              # Step 2 output: Graph objects
+│   │   ├── <SCENARIO>-L0_stn_i.Rdata
+│   │   ├── <SCENARIO>-L1_stn_i.Rdata
+│   │   ├── <SCENARIO>-L2_stn_i.Rdata
+│   │   ├── <SCENARIO>-L3_stn_i.Rdata
+│   │   ├── <SCENARIO>-L4_stn_i.Rdata
+│   │   └── <SCENARIO>-L5_stn_i.Rdata
+│   ├── STN-i-Plots/              # Step 3 output: PDF visualizations
+│   │   ├── L0/
+│   │   │   └── <SCENARIO>-L0-P_*-L_*-W_*-T_*-*.pdf
+│   │   ├── L1/
+│   │   │   └── <SCENARIO>-L1-P_*-L_*-W_*-T_*-*.pdf
+│   │   ... (L2 through L5)
+│   ├── STN-i-Metrics/            # Optional: Network metrics
+│   │   ├── <SCENARIO>-L0_stn_i_metrics_nodes.csv
+│   │   ├── <SCENARIO>-L0_stn_i_metrics_elite_nodes.csv
+│   │   ├── <SCENARIO>-L0_stn_i_metrics_configurations.csv
+│   │   ... (L1 through L5)
+├── General-Data/
+│   ├── All-Elites/              # Input: Elite testing .Rdata files
+│   └── Best-Elites/
+├── General-Metrics/             # Optional: Aggregated metrics
+```
+
+### Key Differences: Individuals vs Individuals-Elites
+
+| Aspect | Individuals | Individuals-Elites |
+|--------|-------------|-------------------|
+| **Input Data** | Individual irace execution results (Data/*.Rdata) | Elite testing matrices (All-Elites/*.Rdata) |
+| **Quality Metric** | QUALITY = MNRG × (2 - i/N) from single runs | MMNRG calculated across all testing matrices |
+| **Configurations** | All configs tested in that run (regular + elite) | Only elite configurations across all runs |
+| **Use Case** | Analyze search behavior within single runs | Compare elite performance across ensemble |
+| **Output** | 6 files per scenario (L0-L5 for each run) | 6 files per scenario (L0-L5 aggregated) |
+
+---
+
 ### `run_all_plot_STN-i.sh`
 Generates PDF visualizations for all STN-i networks.
 

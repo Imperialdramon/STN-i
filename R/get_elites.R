@@ -233,7 +233,7 @@ for (parent_dir in directories) {
                                     
                                     if (opt$verbose) {
                                         cat(sprintf("    Selected best elite: CONFIG_ID=%s (marked as IS_BEST=TRUE)\n",
-                                                   best_configs$CONFIG_ID[1]))
+                                            best_configs$CONFIG_ID[1]))
                                     }
                                 } else {
                                     if (opt$verbose) {

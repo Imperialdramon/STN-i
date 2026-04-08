@@ -47,13 +47,12 @@ echo "Running with mode: $MODE"
 
 # Define algorithms to process
 #algorithms=("ACOTSP" "PSO-X")
-#algorithms=("ACOTSP")
-algorithms=("PSO-X")
+algorithms=("ACOTSP")
 
 # Define experiments per algorithm
 declare -A experiments
-#experiments["ACOTSP"]="BH BH-90 BL BL-45"
-experiments["PSO-X"]="BH BH-65 BL BL-32"
+experiments["ACOTSP"]="BH BH-90 BL BL-45"
+#experiments["PSO-X"]="BH BH-65 BL BL-32"
 
 # Define levels for each algorithm
 levels="L0 L1 L2 L3 L4 L5"
@@ -63,9 +62,9 @@ metric_types=("_nodes" "_elite_nodes" "_configurations")
 
 # Determine output suffix based on mode
 if [[ "$MODE" == "Individuals-Elites" ]]; then
-  output_suffix="_Elites"
+  output_suffix="Elite"
 else
-  output_suffix=""
+  output_suffix="Individuals"
 fi
 
 # Process each algorithm
@@ -80,15 +79,15 @@ for alg in "${algorithms[@]}"; do
     for metric_type in "${metric_types[@]}"; do
         # Define output file based on metric type
         if [[ "$metric_type" == "_nodes" ]]; then
-            output_file="$metrics_dir/All_Metrics${output_suffix}_nodes.csv"
+            output_file="$metrics_dir/All_Metrics_${output_suffix}_nodes.csv"
             file_suffix="_stn_i_metrics_nodes.csv"
             echo "  Processing node-focused metrics..."
         elif [[ "$metric_type" == "_elite_nodes" ]]; then
-            output_file="$metrics_dir/All_Metrics${output_suffix}_elite_nodes.csv"
+            output_file="$metrics_dir/All_Metrics_${output_suffix}_elite_nodes.csv"
             file_suffix="_stn_i_metrics_elite_nodes.csv"
             echo "  Processing elite node-focused metrics..."
         elif [[ "$metric_type" == "_configurations" ]]; then
-            output_file="$metrics_dir/All_Metrics${output_suffix}_configurations.csv"
+            output_file="$metrics_dir/All_Metrics_${output_suffix}_configurations.csv"
             file_suffix="_stn_i_metrics_configurations.csv"
             echo "  Processing configuration-focused metrics..."
         fi

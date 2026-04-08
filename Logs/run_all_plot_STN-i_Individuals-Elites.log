@@ -1,0 +1,1924 @@
+=== STN-i plot generation started at Wed Apr  8 11:06:39 -04 2026 ===
+Mode: Individuals-Elites
+=== Processing algorithm: ACOTSP ===
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540645 28.9    1226948 65.6  1226948 65.6
+Vcells 961069  7.4    8388608 64.0  5545294 42.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540794 28.9    1226431 65.5  1226431 65.5
+Vcells 954146  7.3    8388608 64.0  5500886 42.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542620 29.0    1232288 65.9  1232288 65.9
+Vcells 968205  7.4    8388608 64.0  5600171 42.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L0/BL-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542747 29.0    1232422 65.9  1232422 65.9
+Vcells 961528  7.4    8388608 64.0  5809428 44.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L1/BL-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540811 28.9    1226948 65.6  1226948 65.6
+Vcells 961399  7.4    8388608 64.0  5545294 42.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L1/BL-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540794 28.9    1226431 65.5  1226431 65.5
+Vcells 954146  7.3    8388608 64.0  5500886 42.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L1/BL-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542620 29.0    1232305 65.9  1232305 65.9
+Vcells 968205  7.4    8388608 64.0  5600122 42.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L1/BL-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542747 29.0    1232425 65.9  1232425 65.9
+Vcells 961528  7.4    8388608 64.0  5809431 44.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L2/BL-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540806 28.9    1226882 65.6  1226882 65.6
+Vcells 961342  7.4    8388608 64.0  5547623 42.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L2/BL-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540789 28.9    1226542 65.6  1226542 65.6
+Vcells 954106  7.3    8388608 64.0  5489675 41.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L2/BL-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542611 29.0    1232302 65.9  1232302 65.9
+Vcells 968132  7.4    8388608 64.0  5572234 42.6
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L2/BL-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542504 29.0    1232522 65.9  1232522 65.9
+Vcells 960570  7.4    8388608 64.0  5814297 44.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L3/BL-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540801 28.9    1226822 65.6  1226822 65.6
+Vcells 961289  7.4    8388608 64.0  5530949 42.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L3/BL-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540784 28.9    1226497 65.6  1226497 65.6
+Vcells 954068  7.3    8388608 64.0  5482231 41.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L3/BL-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542602 29.0    1232385 65.9  1232385 65.9
+Vcells 968063  7.4    8388608 64.0  5556440 42.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L3/BL-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542729 29.0    1232482 65.9  1232482 65.9
+Vcells 961418  7.4    8388608 64.0  5797246 44.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L4/BL-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540741 28.9    1227017 65.6  1227017 65.6
+Vcells 960569  7.4    8388608 64.0  5067635 38.7
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L4/BL-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540724 28.9    1226585 65.6  1226585 65.6
+Vcells 953564  7.3    8388608 64.0  5359456 40.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L4/BL-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542260 29.0    1231422 65.8  1231422 65.8
+Vcells 966249  7.4    8388608 64.0  5104196 39.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L4/BL-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542621 29.0    1232628 65.9  1232628 65.9
+Vcells 960722  7.4    8388608 64.0  5398438 41.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L5/BL-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540636 28.9    1227045 65.6  1227045 65.6
+Vcells 959362  7.4    8388608 64.0  4774080 36.5
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L5/BL-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540619 28.9    1226500 65.6  1226500 65.6
+Vcells 952714  7.3    8388608 64.0  5472158 41.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L5/BL-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542305 29.0    1231971 65.8  1231971 65.8
+Vcells 965608  7.4    8388608 64.0  4697685 35.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL/STN-i-Plots/L5/BL-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542432 29.0    1231945 65.8  1231945 65.8
+Vcells 959536  7.4    8388608 64.0  5501730 42.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541148 29.0    1226668 65.6  1226668 65.6
+Vcells 965682  7.4    8388608 64.0  5936388 45.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541059 28.9    1228631 65.7  1228631 65.7
+Vcells 956656  7.3    8388608 64.0  6149385 47.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543241 29.1    1234025   66  1234025   66
+Vcells 973624  7.5    8388608   64  5765766   44
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L0/BL-45-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543224 29.1    1233471 65.9  1233471 65.9
+Vcells 964886  7.4    8388608 64.0  5780398 44.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L1/BL-45-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541148 29.0    1226668 65.6  1226668 65.6
+Vcells 965682  7.4    8388608 64.0  5936388 45.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L1/BL-45-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541059 28.9    1228620 65.7  1228620 65.7
+Vcells 956656  7.3    8388608 64.0  6149208 47.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L1/BL-45-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543241 29.1    1234014   66  1234014   66
+Vcells 973624  7.5    8388608   64  5765715   44
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L1/BL-45-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543224 29.1    1233397 65.9  1233397 65.9
+Vcells 964886  7.4    8388608 64.0  5780284 44.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L2/BL-45-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541133 28.9    1226651 65.6  1226651 65.6
+Vcells 965499  7.4    8388608 64.0  5767341 44.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L2/BL-45-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541044 28.9    1228697 65.7  1228697 65.7
+Vcells 956528  7.3    8388608 64.0  6119499 46.7
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L2/BL-45-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543214 29.1    1234271   66  1234271 66.0
+Vcells 973393  7.5    8388608   64  5978614 45.7
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L2/BL-45-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543197 29.1    1233631 65.9  1233631 65.9
+Vcells 964710  7.4    8388608 64.0  5739831 43.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L3/BL-45-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541053 28.9    1226622 65.6  1226622 65.6
+Vcells 964519  7.4    8388608 64.0  5112225 39.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L3/BL-45-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540964 28.9    1226408 65.5  1226408 65.5
+Vcells 955844  7.3    8388608 64.0  5607206 42.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L3/BL-45-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543070 29.1    1233194 65.9  1233194 65.9
+Vcells 972157  7.5    8388608 64.0  5620346 42.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L3/BL-45-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543053 29.1    1233925 65.9  1233925 65.9
+Vcells 963770  7.4    8388608 64.0  5978870 45.7
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L4/BL-45-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540918 28.9    1226848 65.6  1226848 65.6
+Vcells 962902  7.4    8388608 64.0  5211221 39.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L4/BL-45-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540829 28.9    1226491 65.6  1226491 65.6
+Vcells 954712  7.3    8388608 64.0  5351014 40.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L4/BL-45-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542827 29.0    1232742 65.9  1232742 65.9
+Vcells 970108  7.5    8388608 64.0  5532216 42.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L4/BL-45-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542810 29.0    1232148 65.9  1232148 65.9
+Vcells 962206  7.4    8388608 64.0  5386180 41.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L5/BL-45-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540777 28.9    1226834 65.6  1226834 65.6
+Vcells 961313  7.4    8388608 64.0  5201556 39.7
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L5/BL-45-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540642 28.9    1226508 65.6  1226508 65.6
+Vcells 953468  7.3    8388608 64.0  5318471 40.6
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L5/BL-45-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542574 29.0    1232228 65.9  1232228 65.9
+Vcells 968071  7.4    8388608 64.0  5233081 40.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BL-45/STN-i-Plots/L5/BL-45-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542549 29.0    1231671 65.8  1231671 65.8
+Vcells 960594  7.4    8388608 64.0  5238749 40.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541074 28.9    1226697 65.6  1226697 65.6
+Vcells 964678  7.4    8388608 64.0  5416822 41.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541029 28.9    1226325 65.5  1226325 65.5
+Vcells 956248  7.3    8388608 64.0  5731608 43.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543099 29.1    1233274 65.9  1233274 65.9
+Vcells 972348  7.5    8388608 64.0  5831049 44.5
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L0/BH-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543170 29.1    1233580 65.9  1233580 65.9
+Vcells 964382  7.4    8388608 64.0  6042306 46.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L1/BH-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541074 28.9    1226688 65.6  1226688 65.6
+Vcells 964678  7.4    8388608 64.0  5416941 41.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L1/BH-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541029 28.9    1226325 65.5  1226325 65.5
+Vcells 956248  7.3    8388608 64.0  5731608 43.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L1/BH-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543099 29.1    1233308 65.9  1233308 65.9
+Vcells 972348  7.5    8388608 64.0  5831044 44.5
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L1/BH-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543170 29.1    1233640 65.9  1233640 65.9
+Vcells 964382  7.4    8388608 64.0  6023948 46.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L2/BH-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541049 28.9    1226731 65.6  1226731 65.6
+Vcells 964353  7.4    8388608 64.0  5412466 41.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L2/BH-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541004 28.9    1226317 65.5  1226317 65.5
+Vcells 956024  7.3    8388608 64.0  5481575 41.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L2/BH-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543054 29.1    1233400 65.9  1233400 65.9
+Vcells 971943  7.5    8388608 64.0  5793458 44.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L2/BH-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543125 29.1    1233797 65.9  1233797 65.9
+Vcells 964078  7.4    8388608 64.0  5991365 45.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L3/BH-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541004 28.9    1226728 65.6  1226728 65.6
+Vcells 963818  7.4    8388608 64.0  5459807 41.7
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L3/BH-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540959 28.9    1226468 65.6  1226468 65.6
+Vcells 955648  7.3    8388608 64.0  5534002 42.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L3/BH-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542973 29.0    1233660 65.9  1233660 65.9
+Vcells 971264  7.5    8388608 64.0  6036480 46.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L3/BH-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543044 29.1    1233945 65.9  1233945 65.9
+Vcells 963558  7.4    8388608 64.0  6273287 47.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L4/BH-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540913 28.9    1226797 65.6  1226797 65.6
+Vcells 962737  7.4    8388608 64.0  5438070 41.5
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L4/BH-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540868 28.9    1226511 65.6  1226511 65.6
+Vcells 954891  7.3    8388608 64.0  5635558 43.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L4/BH-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542810 29.0    1232831 65.9  1232831 65.9
+Vcells 969895  7.4    8388608 64.0  5814850 44.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L4/BH-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542881 29.0    1233128 65.9  1233128 65.9
+Vcells 962513  7.4    8388608 64.0  6020688 46.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L5/BH-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540707 28.9    1227002 65.6  1227002 65.6
+Vcells 960301  7.4    8388608 64.0  4985146 38.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L5/BH-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540658 28.9    1226437 65.5  1226437 65.5
+Vcells 953157  7.3    8388608 64.0  5217339 39.9
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L5/BH-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542440 29.0    1231502 65.8  1231502 65.8
+Vcells 966803  7.4    8388608 64.0  5006374 38.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH/STN-i-Plots/L5/BH-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542503 29.0    1231791 65.8  1231791 65.8
+Vcells 960107  7.4    8388608 64.0  5233959 40.0
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541638 29.0    1229717 65.7  1229717 65.7
+Vcells 972210  7.5    8388608 64.0  7505361 57.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541637 29.0    1229228 65.7  1229228 65.7
+Vcells 961730  7.4    8388608 64.0  7496184 57.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 544107 29.1    1235508   66  1235508 66.0
+Vcells 981656  7.5    8388608   64  7041571 53.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L0/BH-90-L0-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 544266 29.1    1236520 66.1  1236520 66.1
+Vcells 971816  7.5    8388608 64.0  7415840 56.6
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L1/BH-90-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541638 29.0    1229697 65.7  1229697 65.7
+Vcells 972210  7.5    8388608 64.0  7505361 57.3
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L1/BH-90-L1-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541637 29.0    1229231 65.7  1229231 65.7
+Vcells 961730  7.4    8388608 64.0  7496199 57.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L1/BH-90-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 544011 29.1    1235514   66  1235514 66.0
+Vcells 981397  7.5    8388608   64  7041576 53.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L1/BH-90-L1-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 544266 29.1    1236525 66.1  1236525 66.1
+Vcells 971816  7.5    8388608 64.0  7415842 56.6
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L2/BH-90-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541558 29.0    1229774 65.7  1229774 65.7
+Vcells 971220  7.5    8388608 64.0  7340375 56.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L2/BH-90-L2-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541557 29.0    1229482 65.7  1229482 65.7
+Vcells 961040  7.4    8388608 64.0  7663546 58.5
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L2/BH-90-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543963 29.1    1235814   66  1235814 66.0
+Vcells 980410  7.5    8388608   64  7383194 56.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L2/BH-90-L2-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 544122 29.1    1235874 66.1  1235874 66.1
+Vcells 970870  7.5    8388608 64.0  7360027 56.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L3/BH-90-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541324 29.0    1228934 65.7  1228934 65.7
+Vcells 968338  7.4    8388608 64.0  6171402 47.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L3/BH-90-L3-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541322 29.0    1228328 65.6  1228328 65.6
+Vcells 959028  7.4    8388608 64.0  6635446 50.7
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L3/BH-90-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543541 29.1    1234617   66  1234617 66.0
+Vcells 976776  7.5    8388608   64  6386489 48.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L3/BH-90-L3-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543699 29.1    1234594   66  1234594 66.0
+Vcells 968106  7.4    8388608   64  6698479 51.2
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L4/BH-90-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541129 28.9    1226631 65.6  1226631 65.6
+Vcells 965991  7.4    8388608 64.0  6292401 48.1
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L4/BH-90-L4-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 541128 28.9    1228568 65.7  1228568 65.7
+Vcells 957387  7.4    8388608 64.0  6095219 46.6
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L4/BH-90-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543190 29.1    1233202 65.9  1233202 65.9
+Vcells 973805  7.5    8388608 64.0  5818602 44.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L4/BH-90-L4-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 543349 29.1    1234325   66  1234325   66
+Vcells 965841  7.4    8388608   64  6547287   50
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L5/BH-90-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540894 28.9    1226857 65.6  1226857 65.6
+Vcells 963168  7.4    8388608 64.0  5074023 38.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L5/BH-90-L5-P_1-L_fr-W_1-T_equals-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 540893 28.9    1226460 65.6  1226460 65.6
+Vcells 955411  7.3    8388608 64.0  5083983 38.8
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L5/BH-90-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_FALSE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542767 29.0    1233094 65.9  1233094 65.9
+Vcells 970230  7.5    8388608 64.0  5160134 39.4
+Success: Generated 
+>> Plotting: 
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Warning message:
+In value[[3L]](cond) : double expected, got “NA”
+STN-i plot saved to: /home/imperialdramon/Tesis/STN-i/Experiments/ACOTSP/Individuals-Elites/BH-90/STN-i-Plots/L5/BH-90-L5-P_1-L_fr-W_1-T_elite_out_degree-SR_FALSE-SSR_FALSE-SN_TRUE-Z_NA.pdf
+There were 50 or more warnings (use warnings() to see the first 50)
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 542926 29.0    1233031 65.9  1233031 65.9
+Vcells 963113  7.4    8388608 64.0  5640192 43.1
+Success: Generated 
+=== STN-i plot generation finished at Wed Apr  8 11:08:46 -04 2026 ===
