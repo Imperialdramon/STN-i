@@ -5,6 +5,9 @@ This repository contains the implementation of Search Trajectory Networks (STN) 
 ## Table of Contents
 - [Overview](#overview)
 - [Project Structure](#project-structure)
+- [Data Provenance](#data-provenance)
+- [Function Pipeline](#function-pipeline)
+- [Repository Data Commands](#repository-data-commands)
 - [Scripts Description](#scripts-description)
   - [Data Generation Scripts](#data-generation-scripts)
     - [generate_STN-i_file.R](#generate_stn-i_filer)
@@ -59,6 +62,278 @@ STN-i/
 │   └── PSO-X/              # PSO-X algorithm data
 ├── Authomatize/            # Bash automation scripts
 └── Logs/                   # Execution logs
+```
+
+```mermaid
+flowchart TD
+  Root["STN-i repository"] --> R["R/"]
+  Root --> Exp["Experiments/"]
+  Root --> Auto["Authomatize/"]
+  Root --> Logs["Logs/"]
+
+  R --> MainScripts["Main R scripts"]
+  R --> Funcs["Functions/"]
+  MainScripts --> DataGen["STN-i generation"]
+  MainScripts --> EliteGen["Elite extraction and elite STN-i"]
+  MainScripts --> VizMetrics["Plots and metrics"]
+
+  Exp --> ACOTSP["ACOTSP/"]
+  Exp --> PSOX["PSO-X/"]
+  ACOTSP --> AInd["Individuals/"]
+  ACOTSP --> AElite["Individuals-Elites/"]
+  ACOTSP --> ALoc["Locations/"]
+  ACOTSP --> AOther["Others/"]
+  ACOTSP --> AMetrics["General-Metrics/"]
+  PSOX --> PInd["Individuals/"]
+  PSOX --> PElite["Individuals-Elites/"]
+  PSOX --> PLoc["Locations/"]
+  PSOX --> POther["Others/"]
+  PSOX --> PMetrics["General-Metrics/"]
+
+  AInd --> AScen["BH, BH-90, BL, BL-45"]
+  PInd --> PScen["BH, BH-65, BL, BL-32"]
+  AElite --> AEliteData["General-Data, Configurations, STN-i outputs"]
+  PElite --> PEliteData["General-Data, Configurations, STN-i outputs"]
+
+  Auto --> Batch["Batch workflows over Experiments/"]
+```
+
+## Data Provenance
+
+The training and testing executions used by this repository were run with a modified irace version that stores additional race data needed by the STN-i scripts:
+
+- Modified irace version: [Imperialdramon/irace-with-raceData](https://github.com/Imperialdramon/irace-with-raceData)
+- Execution repository: [Imperialdramon/irace-executions](https://github.com/Imperialdramon/irace-executions)
+
+The `Experiments/` directory in this repository contains the processed inputs and outputs used by the STN-i workflows for `ACOTSP` and `PSO-X`.
+
+## Function Pipeline
+
+The main pipeline has two related paths: the individual path, which uses each scenario's irace execution data, and the elite path, which uses elite configurations and testing matrices.
+
+```mermaid
+flowchart LR
+  subgraph External["External irace executions"]
+    E1["irace .Rdata logs"]
+    E2["Results/{seed}/configurations.csv"]
+    E3["Results/{seed}/trajectories.csv"]
+    E4["Elite testing .Rdata"]
+  end
+
+  subgraph Static["Static repository inputs"]
+    P["Others/Parameters.csv"]
+    L["Locations/L*.csv"]
+  end
+
+  E1 --> Opt["generate_optimum_file.R"]
+  Opt --> OptCSV["Others/Optimum.csv"]
+
+  E1 --> STNCSV["generate_STN-i_file.R"]
+  P --> STNCSV
+  L --> STNCSV
+  OptCSV --> STNCSV
+  STNCSV --> CSVOut["Individuals/<scenario>/STN-i-Files/*.csv"]
+
+  E2 --> Elites["get_elites.R"]
+  P --> Elites
+  Elites --> EliteCfg["Individuals-Elites/Configurations/*"]
+
+  E4 --> EliteOpt["generate_elite_optimum_file.R"]
+  EliteOpt --> EliteOptCSV["Others/Optimum_Elite.csv"]
+
+  E4 --> EliteSTN["generate_elite_STN-i_file.R"]
+  E2 --> EliteSTN
+  E3 --> EliteSTN
+  P --> EliteSTN
+  L --> EliteSTN
+  EliteOptCSV --> EliteSTN
+  EliteSTN --> EliteCSV["Individuals-Elites/<scenario>/STN-i-Files/*.csv"]
+
+  CSVOut --> RData["generate_STN-i_Rdata.R"]
+  EliteCSV --> RData
+  RData --> Graphs["STN-i-RData/*.Rdata"]
+  Graphs --> Plots["plot_STN-i.R"]
+  Graphs --> Metrics["metrics_STN-i.R"]
+  Plots --> PDF["STN-i-Plots/*.pdf"]
+  Metrics --> MetricCSV["STN-i-Metrics/*.csv"]
+  MetricCSV --> Aggregate["aggregate_all_metrics_STN-i.sh"]
+  Aggregate --> GeneralMetrics["General-Metrics/All_Metrics_*.csv"]
+
+  E4 --> Summary["generate_summarize_testing.R"]
+  E2 --> Summary
+  Summary --> SummaryCSV["Individuals-Elites/Summarize/*.csv"]
+  SummaryCSV --> BoxPlot["box_plot_best_elite_STN-i.R"]
+  BoxPlot --> BoxPDF["Summarize/Box_Plot_*.pdf"]
+```
+
+## Repository Data Commands
+
+This is the workflow used to generate the information stored under `Experiments/`. Run commands from the repository root. The batch scripts in `Authomatize/` use internal arrays for algorithms, scenarios, and locations, so check those arrays before running if you need to switch between `ACOTSP`, `PSO-X`, or both.
+
+### 1. Start from Training Results
+
+The first input is the training output produced by irace, already organized as:
+
+```text
+Experiments/<ALG>/Individuals/<SCENARIO>/Data/*.Rdata
+Experiments/<ALG>/Individuals/<SCENARIO>/Results/<SEED>/
+```
+
+The training and testing executions came from [Imperialdramon/irace-executions](https://github.com/Imperialdramon/irace-executions) and were run with [Imperialdramon/irace-with-raceData](https://github.com/Imperialdramon/irace-with-raceData).
+
+### 2. Generate Training Optimum Files
+
+Use `generate_optimum_file.R` once per algorithm to create the optimum reference used by the training STN-i workflow.
+
+```bash
+Rscript R/generate_optimum_file.R \
+  --directories="Experiments/ACOTSP/Individuals/BH/Data,Experiments/ACOTSP/Individuals/BH-90/Data,Experiments/ACOTSP/Individuals/BL/Data,Experiments/ACOTSP/Individuals/BL-45/Data" \
+  --output="Experiments/ACOTSP/Others" \
+  --name="Optimum.csv" \
+  --best="min"
+
+Rscript R/generate_optimum_file.R \
+  --directories="Experiments/PSO-X/Individuals/BH/Data,Experiments/PSO-X/Individuals/BH-65/Data,Experiments/PSO-X/Individuals/BL/Data,Experiments/PSO-X/Individuals/BL-32/Data" \
+  --output="Experiments/PSO-X/Others" \
+  --name="Optimum.csv" \
+  --best="min"
+```
+
+### 3. Extract All and Best Elite Configurations
+
+Use `get_elites.R` on each algorithm's training `Results/` directories. `All_Elites` is used to test all elite configurations later; `Best_Elites` is used to summarize the best elite per run.
+
+```bash
+Rscript R/get_elites.R \
+  -d "Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
+  -o "Experiments/ACOTSP/Individuals-Elites/Configurations" \
+  -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -n "All_Elites" \
+  -v TRUE
+
+Rscript R/get_elites.R \
+  -d "Experiments/ACOTSP/Individuals/BH/Results,Experiments/ACOTSP/Individuals/BH-90/Results,Experiments/ACOTSP/Individuals/BL/Results,Experiments/ACOTSP/Individuals/BL-45/Results" \
+  -o "Experiments/ACOTSP/Individuals-Elites/Configurations" \
+  -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -n "Best_Elites" \
+  -b TRUE \
+  -v TRUE
+
+Rscript R/get_elites.R \
+  -d "Experiments/PSO-X/Individuals/BH/Results,Experiments/PSO-X/Individuals/BH-65/Results,Experiments/PSO-X/Individuals/BL/Results,Experiments/PSO-X/Individuals/BL-32/Results" \
+  -o "Experiments/PSO-X/Individuals-Elites/Configurations" \
+  -p "Experiments/PSO-X/Others/Parameters.csv" \
+  -n "All_Elites" \
+  -v TRUE
+
+Rscript R/get_elites.R \
+  -d "Experiments/PSO-X/Individuals/BH/Results,Experiments/PSO-X/Individuals/BH-65/Results,Experiments/PSO-X/Individuals/BL/Results,Experiments/PSO-X/Individuals/BL-32/Results" \
+  -o "Experiments/PSO-X/Individuals-Elites/Configurations" \
+  -p "Experiments/PSO-X/Others/Parameters.csv" \
+  -n "Best_Elites" \
+  -b TRUE \
+  -v TRUE
+```
+
+### 4. Generate Training STN-i Data
+
+For the training data, run the automation scripts in `Individuals` mode.
+
+```bash
+./Authomatize/run_all_generate_STN-i_file.sh --mode=Individuals
+./Authomatize/run_all_generate_STN-i_Rdata.sh --mode=Individuals
+./Authomatize/run_all_plot_STN-i.sh --mode=Individuals
+./Authomatize/run_all_metrics_STN-i.sh --mode=Individuals
+```
+
+### 5. Add Elite Testing Results
+
+After extracting `All_Elites` and `Best_Elites`, those configuration sets are tested externally with irace and copied into:
+
+```text
+Experiments/<ALG>/Individuals-Elites/General-Data/All-Elites/*.Rdata
+Experiments/<ALG>/Individuals-Elites/General-Data/Best-Elites/*.Rdata
+```
+
+`Best-Elites` is used for testing summaries and box plots. `All-Elites` is used for the elite STN-i networks.
+
+### 6. Summarize Best-Elites Testing Results
+
+Use `generate_summarize_testing.R` on the `Best-Elites` testing outputs to compare the best elite per training run.
+
+```bash
+Rscript R/generate_summarize_testing.R \
+  -t "Experiments/ACOTSP/Individuals-Elites/General-Data/Best-Elites" \
+  -s "Experiments/ACOTSP/Individuals" \
+  -o "Experiments/ACOTSP/Individuals-Elites/Summarize" \
+  -p "Experiments/ACOTSP/Others/Parameters.csv" \
+  -m "min" \
+  -v TRUE
+
+Rscript R/generate_summarize_testing.R \
+  -t "Experiments/PSO-X/Individuals-Elites/General-Data/Best-Elites" \
+  -s "Experiments/PSO-X/Individuals" \
+  -o "Experiments/PSO-X/Individuals-Elites/Summarize" \
+  -p "Experiments/PSO-X/Others/Parameters.csv" \
+  -m "min" \
+  -v TRUE
+```
+
+Generate the summary box plots after the per-scenario summary CSV files exist.
+
+```bash
+Rscript R/box_plot_best_elite_STN-i.R \
+  --input="Experiments/ACOTSP/Individuals-Elites/Summarize/BH.csv,Experiments/ACOTSP/Individuals-Elites/Summarize/BH-90.csv,Experiments/ACOTSP/Individuals-Elites/Summarize/BL.csv,Experiments/ACOTSP/Individuals-Elites/Summarize/BL-45.csv" \
+  --output="Experiments/ACOTSP/Individuals-Elites/Summarize" \
+  --filename="Box_Plot_BH_BH-90_BL_BL-45" \
+  --show_points=TRUE \
+  --show_outliers=TRUE \
+  --verbose=TRUE
+
+Rscript R/box_plot_best_elite_STN-i.R \
+  --input="Experiments/PSO-X/Individuals-Elites/Summarize/BH.csv,Experiments/PSO-X/Individuals-Elites/Summarize/BH-65.csv,Experiments/PSO-X/Individuals-Elites/Summarize/BL.csv,Experiments/PSO-X/Individuals-Elites/Summarize/BL-32.csv" \
+  --output="Experiments/PSO-X/Individuals-Elites/Summarize" \
+  --filename="Box_Plot_BH_BH-65_BL_BL-32" \
+  --show_points=TRUE \
+  --show_outliers=TRUE \
+  --width=12 \
+  --height=8 \
+  --dpi=300 \
+  --verbose=TRUE
+```
+
+### 7. Generate All-Elites STN-i Data
+
+Use the `All-Elites` testing outputs to generate the elite optimum reference and then run the elite STN-i workflow in `Individuals-Elites` mode.
+
+```bash
+Rscript R/generate_elite_optimum_file.R \
+  --input="Experiments/ACOTSP/Individuals-Elites/General-Data/All-Elites" \
+  --output="Experiments/ACOTSP/Others" \
+  --name="Optimum_Elite.csv" \
+  --best="min"
+
+Rscript R/generate_elite_optimum_file.R \
+  --input="Experiments/PSO-X/Individuals-Elites/General-Data/All-Elites" \
+  --output="Experiments/PSO-X/Others" \
+  --name="Optimum_Elite.csv" \
+  --best="min"
+```
+
+```bash
+./Authomatize/run_all_generate_elite_STN-i_file.sh
+./Authomatize/run_all_generate_STN-i_Rdata.sh --mode=Individuals-Elites
+./Authomatize/run_all_plot_STN-i.sh --mode=Individuals-Elites
+./Authomatize/run_all_metrics_STN-i.sh --mode=Individuals-Elites
+```
+
+### 8. Aggregate Metrics
+
+After plots and individual metric CSV files have been generated for the corresponding mode, aggregate the metrics into `Experiments/<ALG>/General-Metrics/`.
+
+```bash
+./Authomatize/aggregate_all_metrics_STN-i.sh --mode=Individuals
+./Authomatize/aggregate_all_metrics_STN-i.sh --mode=Individuals-Elites
 ```
 
 ## Quality Metric (QUALITY)
@@ -163,6 +438,8 @@ Using MNRG alone would unfairly compare configurations with different levels of 
 In **testing scenarios** (e.g., `generate_summarize_testing.R`), all elite configurations are evaluated on the **same complete set of testing instances**. Since i = N for all configurations, the instance penalty factor becomes 1.0 for everyone, making QUALITY = MNRG. In this case, using MNRG directly is appropriate and avoids unnecessary computation.
 
 ## Scripts Description
+
+The examples in this section show how to call each script in isolation. The commands that reproduce the data layout currently present in `Experiments/` are grouped in [Repository Data Commands](#repository-data-commands).
 
 ### Data Generation Scripts
 
