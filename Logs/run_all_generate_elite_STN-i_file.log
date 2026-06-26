@@ -1,9 +1,9 @@
-=== Elite STN-i generation started at Wed Apr  8 09:50:22 -04 2026 ===
+=== Elite STN-i generation started at Thu Jun 25 19:55:20 -04 2026 ===
 
 ============================================
-Processing algorithm: ACOTSP
+Processing algorithm: PSO-X
 ============================================
->> Generating elite STN-i for ACOTSP / BL...
+>> Generating elite STN-i for PSO-X / BL...
 
 Attaching package: ‘igraph’
 
@@ -18,7 +18,7 @@ The following object is masked from ‘package:base’:
 === Elite STN-i Generation ===
 
 Step 1: Loading elite testing matrices and calculating MMNRG...
-  Calculated MMNRG for 1889 configurations
+  Calculated MMNRG for 1667 configurations
   MMNRG range: [Inf, -Inf]
 
 Warning messages:
@@ -27,109 +27,109 @@ Warning messages:
 2: In max(final_mmnrg, na.rm = TRUE) :
   no non-missing arguments to max; returning -Inf
 Step 2: Filtering scenario configurations to elite status per run...
-    100003: 18 elite configs, 49 trajectories
-    1000193: 23 elite configs, 58 trajectories
-    1100211: 25 elite configs, 60 trajectories
-    1200239: 22 elite configs, 61 trajectories
-    1300277: 22 elite configs, 55 trajectories
-    1400299: 19 elite configs, 55 trajectories
-    1500311: 20 elite configs, 70 trajectories
-    1600333: 26 elite configs, 69 trajectories
-    1700359: 26 elite configs, 61 trajectories
-    1800371: 22 elite configs, 59 trajectories
-    1900393: 25 elite configs, 65 trajectories
-    200009: 21 elite configs, 52 trajectories
-    2000419: 17 elite configs, 56 trajectories
-    300017: 20 elite configs, 54 trajectories
-    400031: 18 elite configs, 49 trajectories
-    500057: 17 elite configs, 48 trajectories
-    600083: 23 elite configs, 57 trajectories
-    700099: 28 elite configs, 68 trajectories
-    800123: 18 elite configs, 53 trajectories
-    900149: 15 elite configs, 48 trajectories
-  Total elite configs across all runs: 425
+    100003: 16 elite configs, 36 trajectories
+    1000193: 19 elite configs, 39 trajectories
+    1100211: 17 elite configs, 37 trajectories
+    1200239: 18 elite configs, 48 trajectories
+    1300277: 25 elite configs, 50 trajectories
+    1400299: 22 elite configs, 47 trajectories
+    1500311: 21 elite configs, 46 trajectories
+    1600333: 17 elite configs, 37 trajectories
+    1700359: 16 elite configs, 36 trajectories
+    1800371: 19 elite configs, 49 trajectories
+    1900393: 15 elite configs, 40 trajectories
+    200009: 20 elite configs, 45 trajectories
+    2000419: 19 elite configs, 44 trajectories
+    300017: 22 elite configs, 47 trajectories
+    400031: 17 elite configs, 37 trajectories
+    500057: 19 elite configs, 39 trajectories
+    600083: 22 elite configs, 47 trajectories
+    700099: 20 elite configs, 45 trajectories
+    800123: 19 elite configs, 44 trajectories
+    900149: 22 elite configs, 42 trajectories
+  Total elite configs across all runs: 385
 
 Step 3: Generating STN-i files per location...
 
   Generating: BL-L0.csv
-Procesamiento completado. Total configuraciones únicas: 425 
+Procesamiento completado. Total configuraciones únicas: 385 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 425 Trayectorias: 1147 
+Conversión completada. Configuraciones: 385 Trayectorias: 855 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 425 
+Total configuraciones procesadas: 385 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 425 
-Suma de CONFIG_COUNT: 425 
-Total configuraciones únicas: 425 
+Total locaciones creadas: 385 
+Suma de CONFIG_COUNT: 385 
+Total configuraciones únicas: 385 
 Actualizando trayectorias con información de locaciones...
   Generating: BL-L1.csv
-Procesamiento completado. Total configuraciones únicas: 425 
+Procesamiento completado. Total configuraciones únicas: 385 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 425 Trayectorias: 1147 
+Conversión completada. Configuraciones: 385 Trayectorias: 855 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 425 
+Total configuraciones procesadas: 385 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 425 
-Suma de CONFIG_COUNT: 425 
-Total configuraciones únicas: 425 
+Total locaciones creadas: 384 
+Suma de CONFIG_COUNT: 385 
+Total configuraciones únicas: 385 
 Actualizando trayectorias con información de locaciones...
   Generating: BL-L2.csv
-Procesamiento completado. Total configuraciones únicas: 425 
+Procesamiento completado. Total configuraciones únicas: 385 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 425 Trayectorias: 1147 
+Conversión completada. Configuraciones: 385 Trayectorias: 855 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 425 
+Total configuraciones procesadas: 385 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 424 
-Suma de CONFIG_COUNT: 425 
-Total configuraciones únicas: 425 
+Total locaciones creadas: 370 
+Suma de CONFIG_COUNT: 385 
+Total configuraciones únicas: 385 
 Actualizando trayectorias con información de locaciones...
   Generating: BL-L3.csv
-Procesamiento completado. Total configuraciones únicas: 425 
+Procesamiento completado. Total configuraciones únicas: 385 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 425 Trayectorias: 1147 
+Conversión completada. Configuraciones: 385 Trayectorias: 855 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 425 
+Total configuraciones procesadas: 385 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 423 
-Suma de CONFIG_COUNT: 425 
-Total configuraciones únicas: 425 
+Total locaciones creadas: 334 
+Suma de CONFIG_COUNT: 385 
+Total configuraciones únicas: 385 
 Actualizando trayectorias con información de locaciones...
   Generating: BL-L4.csv
-Procesamiento completado. Total configuraciones únicas: 425 
+Procesamiento completado. Total configuraciones únicas: 385 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 425 Trayectorias: 1147 
+Conversión completada. Configuraciones: 385 Trayectorias: 855 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 425 
+Total configuraciones procesadas: 385 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 411 
-Suma de CONFIG_COUNT: 425 
-Total configuraciones únicas: 425 
+Total locaciones creadas: 300 
+Suma de CONFIG_COUNT: 385 
+Total configuraciones únicas: 385 
 Actualizando trayectorias con información de locaciones...
   Generating: BL-L5.csv
-Procesamiento completado. Total configuraciones únicas: 425 
+Procesamiento completado. Total configuraciones únicas: 385 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 425 Trayectorias: 1147 
+Conversión completada. Configuraciones: 385 Trayectorias: 855 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 425 
+Total configuraciones procesadas: 385 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 390 
-Suma de CONFIG_COUNT: 425 
-Total configuraciones únicas: 425 
+Total locaciones creadas: 258 
+Suma de CONFIG_COUNT: 385 
+Total configuraciones únicas: 385 
 Actualizando trayectorias con información de locaciones...
 
 === Generation Complete ===
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  602086 32.2    1345269 71.9  1345269 71.9
-Vcells 1001596  7.7    8388608 64.0  8388600 64.0
-Success: Elite STN-i generated for ACOTSP / BL
->> Generating elite STN-i for ACOTSP / BL-45...
+Ncells  602083 32.2    1345325 71.9  1345325 71.9
+Vcells 1001598  7.7    8424850 64.3  8424850 64.3
+Success: Elite STN-i generated for PSO-X / BL
+>> Generating elite STN-i for PSO-X / BL-32...
 
 Attaching package: ‘igraph’
 
@@ -144,7 +144,7 @@ The following object is masked from ‘package:base’:
 === Elite STN-i Generation ===
 
 Step 1: Loading elite testing matrices and calculating MMNRG...
-  Calculated MMNRG for 1889 configurations
+  Calculated MMNRG for 1667 configurations
   MMNRG range: [Inf, -Inf]
 
 Warning messages:
@@ -153,109 +153,109 @@ Warning messages:
 2: In max(final_mmnrg, na.rm = TRUE) :
   no non-missing arguments to max; returning -Inf
 Step 2: Filtering scenario configurations to elite status per run...
-    100003: 23 elite configs, 61 trajectories
-    1000193: 25 elite configs, 67 trajectories
-    1100211: 28 elite configs, 65 trajectories
-    1200239: 28 elite configs, 69 trajectories
-    1300277: 28 elite configs, 78 trajectories
-    1400299: 29 elite configs, 69 trajectories
-    1500311: 17 elite configs, 56 trajectories
-    1600333: 27 elite configs, 74 trajectories
-    1700359: 23 elite configs, 75 trajectories
-    1800371: 23 elite configs, 66 trajectories
-    1900393: 27 elite configs, 70 trajectories
-    200009: 20 elite configs, 63 trajectories
-    2000419: 22 elite configs, 74 trajectories
-    300017: 27 elite configs, 76 trajectories
-    400031: 22 elite configs, 67 trajectories
-    500057: 20 elite configs, 70 trajectories
-    600083: 19 elite configs, 64 trajectories
-    700099: 23 elite configs, 75 trajectories
-    800123: 20 elite configs, 72 trajectories
-    900149: 27 elite configs, 66 trajectories
-  Total elite configs across all runs: 478
+    100003: 25 elite configs, 60 trajectories
+    1000193: 23 elite configs, 53 trajectories
+    1100211: 19 elite configs, 49 trajectories
+    1200239: 27 elite configs, 62 trajectories
+    1300277: 24 elite configs, 64 trajectories
+    1400299: 28 elite configs, 63 trajectories
+    1500311: 22 elite configs, 52 trajectories
+    1600333: 26 elite configs, 56 trajectories
+    1700359: 19 elite configs, 49 trajectories
+    1800371: 25 elite configs, 59 trajectories
+    1900393: 24 elite configs, 54 trajectories
+    200009: 26 elite configs, 56 trajectories
+    2000419: 22 elite configs, 52 trajectories
+    300017: 28 elite configs, 68 trajectories
+    400031: 22 elite configs, 57 trajectories
+    500057: 22 elite configs, 57 trajectories
+    600083: 25 elite configs, 55 trajectories
+    700099: 25 elite configs, 55 trajectories
+    800123: 23 elite configs, 53 trajectories
+    900149: 22 elite configs, 57 trajectories
+  Total elite configs across all runs: 477
 
 Step 3: Generating STN-i files per location...
 
-  Generating: BL-45-L0.csv
-Procesamiento completado. Total configuraciones únicas: 478 
+  Generating: BL-32-L0.csv
+Procesamiento completado. Total configuraciones únicas: 477 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 478 Trayectorias: 1377 
+Conversión completada. Configuraciones: 477 Trayectorias: 1131 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 478 
+Total configuraciones procesadas: 477 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 478 
-Suma de CONFIG_COUNT: 478 
-Total configuraciones únicas: 478 
+Total locaciones creadas: 477 
+Suma de CONFIG_COUNT: 477 
+Total configuraciones únicas: 477 
 Actualizando trayectorias con información de locaciones...
-  Generating: BL-45-L1.csv
-Procesamiento completado. Total configuraciones únicas: 478 
+  Generating: BL-32-L1.csv
+Procesamiento completado. Total configuraciones únicas: 477 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 478 Trayectorias: 1377 
+Conversión completada. Configuraciones: 477 Trayectorias: 1131 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 478 
-Agrupando configuraciones por locaciones...
-Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 478 
-Suma de CONFIG_COUNT: 478 
-Total configuraciones únicas: 478 
-Actualizando trayectorias con información de locaciones...
-  Generating: BL-45-L2.csv
-Procesamiento completado. Total configuraciones únicas: 478 
-Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 478 Trayectorias: 1377 
-Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 478 
+Total configuraciones procesadas: 477 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
 Total locaciones creadas: 475 
-Suma de CONFIG_COUNT: 478 
-Total configuraciones únicas: 478 
+Suma de CONFIG_COUNT: 477 
+Total configuraciones únicas: 477 
 Actualizando trayectorias con información de locaciones...
-  Generating: BL-45-L3.csv
-Procesamiento completado. Total configuraciones únicas: 478 
+  Generating: BL-32-L2.csv
+Procesamiento completado. Total configuraciones únicas: 477 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 478 Trayectorias: 1377 
+Conversión completada. Configuraciones: 477 Trayectorias: 1131 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 478 
+Total configuraciones procesadas: 477 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 459 
-Suma de CONFIG_COUNT: 478 
-Total configuraciones únicas: 478 
+Total locaciones creadas: 450 
+Suma de CONFIG_COUNT: 477 
+Total configuraciones únicas: 477 
 Actualizando trayectorias con información de locaciones...
-  Generating: BL-45-L4.csv
-Procesamiento completado. Total configuraciones únicas: 478 
+  Generating: BL-32-L3.csv
+Procesamiento completado. Total configuraciones únicas: 477 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 478 Trayectorias: 1377 
+Conversión completada. Configuraciones: 477 Trayectorias: 1131 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 478 
+Total configuraciones procesadas: 477 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 432 
-Suma de CONFIG_COUNT: 478 
-Total configuraciones únicas: 478 
+Total locaciones creadas: 392 
+Suma de CONFIG_COUNT: 477 
+Total configuraciones únicas: 477 
 Actualizando trayectorias con información de locaciones...
-  Generating: BL-45-L5.csv
-Procesamiento completado. Total configuraciones únicas: 478 
+  Generating: BL-32-L4.csv
+Procesamiento completado. Total configuraciones únicas: 477 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 478 Trayectorias: 1377 
+Conversión completada. Configuraciones: 477 Trayectorias: 1131 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 478 
+Total configuraciones procesadas: 477 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 403 
-Suma de CONFIG_COUNT: 478 
-Total configuraciones únicas: 478 
+Total locaciones creadas: 347 
+Suma de CONFIG_COUNT: 477 
+Total configuraciones únicas: 477 
+Actualizando trayectorias con información de locaciones...
+  Generating: BL-32-L5.csv
+Procesamiento completado. Total configuraciones únicas: 477 
+Convirtiendo listas a data.frames...
+Conversión completada. Configuraciones: 477 Trayectorias: 1131 
+Aplicando quality_criteria a cada configuración...
+Total configuraciones procesadas: 477 
+Agrupando configuraciones por locaciones...
+Aplicando representative_criteria a cada locación...
+Total locaciones creadas: 291 
+Suma de CONFIG_COUNT: 477 
+Total configuraciones únicas: 477 
 Actualizando trayectorias con información de locaciones...
 
 === Generation Complete ===
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  602086 32.2    1345311 71.9  1345311 71.9
-Vcells 1001596  7.7    8388608 64.0  8388599 64.0
-Success: Elite STN-i generated for ACOTSP / BL-45
->> Generating elite STN-i for ACOTSP / BH...
+Ncells  602083 32.2    1345325 71.9  1345325 71.9
+Vcells 1001598  7.7    8424851 64.3  8424851 64.3
+Success: Elite STN-i generated for PSO-X / BL-32
+>> Generating elite STN-i for PSO-X / BH...
 
 Attaching package: ‘igraph’
 
@@ -270,7 +270,7 @@ The following object is masked from ‘package:base’:
 === Elite STN-i Generation ===
 
 Step 1: Loading elite testing matrices and calculating MMNRG...
-  Calculated MMNRG for 1889 configurations
+  Calculated MMNRG for 1667 configurations
   MMNRG range: [Inf, -Inf]
 
 Warning messages:
@@ -279,109 +279,109 @@ Warning messages:
 2: In max(final_mmnrg, na.rm = TRUE) :
   no non-missing arguments to max; returning -Inf
 Step 2: Filtering scenario configurations to elite status per run...
-    100003: 23 elite configs, 63 trajectories
-    1000193: 23 elite configs, 67 trajectories
-    1100211: 22 elite configs, 61 trajectories
-    1200239: 22 elite configs, 62 trajectories
-    1300277: 24 elite configs, 59 trajectories
-    1400299: 19 elite configs, 57 trajectories
-    1500311: 24 elite configs, 57 trajectories
-    1600333: 27 elite configs, 62 trajectories
-    1700359: 26 elite configs, 61 trajectories
-    1800371: 18 elite configs, 56 trajectories
-    1900393: 29 elite configs, 64 trajectories
-    200009: 26 elite configs, 64 trajectories
-    2000419: 27 elite configs, 62 trajectories
-    300017: 31 elite configs, 71 trajectories
-    400031: 20 elite configs, 59 trajectories
-    500057: 22 elite configs, 62 trajectories
-    600083: 19 elite configs, 52 trajectories
-    700099: 23 elite configs, 61 trajectories
-    800123: 18 elite configs, 55 trajectories
-    900149: 29 elite configs, 74 trajectories
-  Total elite configs across all runs: 472
+    100003: 24 elite configs, 44 trajectories
+    1000193: 19 elite configs, 44 trajectories
+    1100211: 15 elite configs, 40 trajectories
+    1200239: 21 elite configs, 46 trajectories
+    1300277: 22 elite configs, 42 trajectories
+    1400299: 21 elite configs, 46 trajectories
+    1500311: 21 elite configs, 51 trajectories
+    1600333: 20 elite configs, 45 trajectories
+    1700359: 20 elite configs, 50 trajectories
+    1800371: 25 elite configs, 55 trajectories
+    1900393: 20 elite configs, 50 trajectories
+    200009: 19 elite configs, 49 trajectories
+    2000419: 23 elite configs, 53 trajectories
+    300017: 19 elite configs, 44 trajectories
+    400031: 22 elite configs, 47 trajectories
+    500057: 24 elite configs, 54 trajectories
+    600083: 23 elite configs, 53 trajectories
+    700099: 20 elite configs, 45 trajectories
+    800123: 19 elite configs, 44 trajectories
+    900149: 18 elite configs, 38 trajectories
+  Total elite configs across all runs: 415
 
 Step 3: Generating STN-i files per location...
 
   Generating: BH-L0.csv
-Procesamiento completado. Total configuraciones únicas: 472 
+Procesamiento completado. Total configuraciones únicas: 415 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 472 Trayectorias: 1229 
+Conversión completada. Configuraciones: 415 Trayectorias: 940 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 472 
+Total configuraciones procesadas: 415 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 472 
-Suma de CONFIG_COUNT: 472 
-Total configuraciones únicas: 472 
+Total locaciones creadas: 415 
+Suma de CONFIG_COUNT: 415 
+Total configuraciones únicas: 415 
 Actualizando trayectorias con información de locaciones...
   Generating: BH-L1.csv
-Procesamiento completado. Total configuraciones únicas: 472 
+Procesamiento completado. Total configuraciones únicas: 415 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 472 Trayectorias: 1229 
+Conversión completada. Configuraciones: 415 Trayectorias: 940 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 472 
+Total configuraciones procesadas: 415 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 472 
-Suma de CONFIG_COUNT: 472 
-Total configuraciones únicas: 472 
+Total locaciones creadas: 413 
+Suma de CONFIG_COUNT: 415 
+Total configuraciones únicas: 415 
 Actualizando trayectorias con información de locaciones...
   Generating: BH-L2.csv
-Procesamiento completado. Total configuraciones únicas: 472 
+Procesamiento completado. Total configuraciones únicas: 415 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 472 Trayectorias: 1229 
+Conversión completada. Configuraciones: 415 Trayectorias: 940 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 472 
+Total configuraciones procesadas: 415 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 467 
-Suma de CONFIG_COUNT: 472 
-Total configuraciones únicas: 472 
+Total locaciones creadas: 389 
+Suma de CONFIG_COUNT: 415 
+Total configuraciones únicas: 415 
 Actualizando trayectorias con información de locaciones...
   Generating: BH-L3.csv
-Procesamiento completado. Total configuraciones únicas: 472 
+Procesamiento completado. Total configuraciones únicas: 415 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 472 Trayectorias: 1229 
+Conversión completada. Configuraciones: 415 Trayectorias: 940 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 472 
+Total configuraciones procesadas: 415 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 458 
-Suma de CONFIG_COUNT: 472 
-Total configuraciones únicas: 472 
+Total locaciones creadas: 309 
+Suma de CONFIG_COUNT: 415 
+Total configuraciones únicas: 415 
 Actualizando trayectorias con información de locaciones...
   Generating: BH-L4.csv
-Procesamiento completado. Total configuraciones únicas: 472 
+Procesamiento completado. Total configuraciones únicas: 415 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 472 Trayectorias: 1229 
+Conversión completada. Configuraciones: 415 Trayectorias: 940 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 472 
+Total configuraciones procesadas: 415 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 440 
-Suma de CONFIG_COUNT: 472 
-Total configuraciones únicas: 472 
+Total locaciones creadas: 258 
+Suma de CONFIG_COUNT: 415 
+Total configuraciones únicas: 415 
 Actualizando trayectorias con información de locaciones...
   Generating: BH-L5.csv
-Procesamiento completado. Total configuraciones únicas: 472 
+Procesamiento completado. Total configuraciones únicas: 415 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 472 Trayectorias: 1229 
+Conversión completada. Configuraciones: 415 Trayectorias: 940 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 472 
+Total configuraciones procesadas: 415 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 398 
-Suma de CONFIG_COUNT: 472 
-Total configuraciones únicas: 472 
+Total locaciones creadas: 214 
+Suma de CONFIG_COUNT: 415 
+Total configuraciones únicas: 415 
 Actualizando trayectorias con información de locaciones...
 
 === Generation Complete ===
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  602086 32.2    1345269 71.9  1345269 71.9
-Vcells 1067132  8.2    8388608 64.0  8388602 64.0
-Success: Elite STN-i generated for ACOTSP / BH
->> Generating elite STN-i for ACOTSP / BH-90...
+Ncells  602083 32.2    1345325 71.9  1345325 71.9
+Vcells 1001598  7.7    8424850 64.3  8424850 64.3
+Success: Elite STN-i generated for PSO-X / BH
+>> Generating elite STN-i for PSO-X / BH-65...
 
 Attaching package: ‘igraph’
 
@@ -396,7 +396,7 @@ The following object is masked from ‘package:base’:
 === Elite STN-i Generation ===
 
 Step 1: Loading elite testing matrices and calculating MMNRG...
-  Calculated MMNRG for 1889 configurations
+  Calculated MMNRG for 1667 configurations
   MMNRG range: [Inf, -Inf]
 
 Warning messages:
@@ -405,107 +405,107 @@ Warning messages:
 2: In max(final_mmnrg, na.rm = TRUE) :
   no non-missing arguments to max; returning -Inf
 Step 2: Filtering scenario configurations to elite status per run...
-    100003: 29 elite configs, 78 trajectories
-    1000193: 27 elite configs, 77 trajectories
-    1100211: 30 elite configs, 77 trajectories
-    1200239: 29 elite configs, 77 trajectories
-    1300277: 35 elite configs, 74 trajectories
-    1400299: 31 elite configs, 79 trajectories
-    1500311: 28 elite configs, 83 trajectories
-    1600333: 30 elite configs, 80 trajectories
-    1700359: 30 elite configs, 79 trajectories
-    1800371: 31 elite configs, 86 trajectories
-    1900393: 28 elite configs, 71 trajectories
-    200009: 33 elite configs, 83 trajectories
-    2000419: 28 elite configs, 70 trajectories
-    300017: 30 elite configs, 75 trajectories
-    400031: 26 elite configs, 62 trajectories
-    500057: 30 elite configs, 74 trajectories
-    600083: 30 elite configs, 80 trajectories
-    700099: 26 elite configs, 72 trajectories
-    800123: 32 elite configs, 87 trajectories
-    900149: 31 elite configs, 80 trajectories
-  Total elite configs across all runs: 594
+    100003: 23 elite configs, 53 trajectories
+    1000193: 23 elite configs, 48 trajectories
+    1100211: 20 elite configs, 45 trajectories
+    1200239: 27 elite configs, 57 trajectories
+    1300277: 24 elite configs, 54 trajectories
+    1400299: 29 elite configs, 59 trajectories
+    1500311: 28 elite configs, 63 trajectories
+    1600333: 24 elite configs, 54 trajectories
+    1700359: 21 elite configs, 51 trajectories
+    1800371: 29 elite configs, 59 trajectories
+    1900393: 26 elite configs, 56 trajectories
+    200009: 22 elite configs, 52 trajectories
+    2000419: 21 elite configs, 56 trajectories
+    300017: 21 elite configs, 51 trajectories
+    400031: 24 elite configs, 54 trajectories
+    500057: 26 elite configs, 56 trajectories
+    600083: 25 elite configs, 55 trajectories
+    700099: 23 elite configs, 53 trajectories
+    800123: 26 elite configs, 56 trajectories
+    900149: 23 elite configs, 58 trajectories
+  Total elite configs across all runs: 485
 
 Step 3: Generating STN-i files per location...
 
-  Generating: BH-90-L0.csv
-Procesamiento completado. Total configuraciones únicas: 594 
+  Generating: BH-65-L0.csv
+Procesamiento completado. Total configuraciones únicas: 485 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 594 Trayectorias: 1544 
+Conversión completada. Configuraciones: 485 Trayectorias: 1090 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 594 
+Total configuraciones procesadas: 485 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 594 
-Suma de CONFIG_COUNT: 594 
-Total configuraciones únicas: 594 
+Total locaciones creadas: 485 
+Suma de CONFIG_COUNT: 485 
+Total configuraciones únicas: 485 
 Actualizando trayectorias con información de locaciones...
-  Generating: BH-90-L1.csv
-Procesamiento completado. Total configuraciones únicas: 594 
+  Generating: BH-65-L1.csv
+Procesamiento completado. Total configuraciones únicas: 485 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 594 Trayectorias: 1544 
+Conversión completada. Configuraciones: 485 Trayectorias: 1090 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 594 
+Total configuraciones procesadas: 485 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 594 
-Suma de CONFIG_COUNT: 594 
-Total configuraciones únicas: 594 
+Total locaciones creadas: 485 
+Suma de CONFIG_COUNT: 485 
+Total configuraciones únicas: 485 
 Actualizando trayectorias con información de locaciones...
-  Generating: BH-90-L2.csv
-Procesamiento completado. Total configuraciones únicas: 594 
+  Generating: BH-65-L2.csv
+Procesamiento completado. Total configuraciones únicas: 485 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 594 Trayectorias: 1544 
+Conversión completada. Configuraciones: 485 Trayectorias: 1090 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 594 
+Total configuraciones procesadas: 485 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 578 
-Suma de CONFIG_COUNT: 594 
-Total configuraciones únicas: 594 
+Total locaciones creadas: 441 
+Suma de CONFIG_COUNT: 485 
+Total configuraciones únicas: 485 
 Actualizando trayectorias con información de locaciones...
-  Generating: BH-90-L3.csv
-Procesamiento completado. Total configuraciones únicas: 594 
+  Generating: BH-65-L3.csv
+Procesamiento completado. Total configuraciones únicas: 485 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 594 Trayectorias: 1544 
+Conversión completada. Configuraciones: 485 Trayectorias: 1090 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 594 
+Total configuraciones procesadas: 485 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 531 
-Suma de CONFIG_COUNT: 594 
-Total configuraciones únicas: 594 
+Total locaciones creadas: 336 
+Suma de CONFIG_COUNT: 485 
+Total configuraciones únicas: 485 
 Actualizando trayectorias con información de locaciones...
-  Generating: BH-90-L4.csv
-Procesamiento completado. Total configuraciones únicas: 594 
+  Generating: BH-65-L4.csv
+Procesamiento completado. Total configuraciones únicas: 485 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 594 Trayectorias: 1544 
+Conversión completada. Configuraciones: 485 Trayectorias: 1090 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 594 
+Total configuraciones procesadas: 485 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 492 
-Suma de CONFIG_COUNT: 594 
-Total configuraciones únicas: 594 
+Total locaciones creadas: 289 
+Suma de CONFIG_COUNT: 485 
+Total configuraciones únicas: 485 
 Actualizando trayectorias con información de locaciones...
-  Generating: BH-90-L5.csv
-Procesamiento completado. Total configuraciones únicas: 594 
+  Generating: BH-65-L5.csv
+Procesamiento completado. Total configuraciones únicas: 485 
 Convirtiendo listas a data.frames...
-Conversión completada. Configuraciones: 594 Trayectorias: 1544 
+Conversión completada. Configuraciones: 485 Trayectorias: 1090 
 Aplicando quality_criteria a cada configuración...
-Total configuraciones procesadas: 594 
+Total configuraciones procesadas: 485 
 Agrupando configuraciones por locaciones...
 Aplicando representative_criteria a cada locación...
-Total locaciones creadas: 445 
-Suma de CONFIG_COUNT: 594 
-Total configuraciones únicas: 594 
+Total locaciones creadas: 245 
+Suma de CONFIG_COUNT: 485 
+Total configuraciones únicas: 485 
 Actualizando trayectorias con información de locaciones...
 
 === Generation Complete ===
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  602086 32.2    1345311 71.9  1345311 71.9
-Vcells 1067132  8.2    8388608 64.0  8388599 64.0
-Success: Elite STN-i generated for ACOTSP / BH-90
+Ncells  602083 32.2    1345325 71.9  1345325 71.9
+Vcells 1001598  7.7    8424851 64.3  8424851 64.3
+Success: Elite STN-i generated for PSO-X / BH-65
 
-=== Elite STN-i generation finished at Wed Apr  8 09:51:19 -04 2026 ===
+=== Elite STN-i generation finished at Thu Jun 25 19:56:15 -04 2026 ===

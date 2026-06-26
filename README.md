@@ -248,8 +248,8 @@ Rscript R/generate_STN-i_Rdata.R \
 | -f | --output_file | Name of the output file | input_name_stn_i.Rdata | No |
 | -p | --problem_type | Optimization objective ('min' or 'max') | min | No |
 | -b | --best_known_solution | Best-known solution value | computed from data | No |
-| -n | --number_of_runs | Number of independent runs to include | max found | No |
-| -m | --network_name | Name for the network | input file name | No |
+| -r | --number_of_runs | Number of independent runs to include | max found | No |
+| -n | --network_name | Name for the network | input file name | No |
 
 **Complete Example:**
 ```bash
@@ -343,18 +343,20 @@ Extracts the best value found across all elite testing matrices for each instanc
 **Usage:**
 ```bash
 Rscript R/generate_elite_optimum_file.R \
-  --elites_dir=<elites_directory> \
-  --output=<output_file> \
-  [--verbose=<TRUE|FALSE>]
+  --input=<input_directory> \
+  --output=<output_directory> \
+  [--name=<output_file_name>] \
+  [--best=<min|max>]
 ```
 
 **Parameters:**
 
 | Short | Long Parameter | Description | Default | Required |
 |-------|---------------|-------------|---------|----------|
-| -e | --elites_dir | Directory containing All_Elites testing .Rdata files | - | Yes |
-| -o | --output | Output path for optimum CSV file | - | Yes |
-| -v | --verbose | Show progress information | FALSE | No |
+| -i | --input | Directory containing elite testing .Rdata files | - | Yes |
+| -o | --output | Output directory where the optimum CSV file will be written | - | Yes |
+| -n | --name | Name of the output CSV file | Optimum_Elite.csv | No |
+| -b | --best | Criteria for best value ('min' or 'max') | min | No |
 
 **Output Format:**
 - **INSTANCE**: Instance name
@@ -363,9 +365,17 @@ Rscript R/generate_elite_optimum_file.R \
 **Complete Example:**
 ```bash
 Rscript R/generate_elite_optimum_file.R \
-  --elites_dir="Experiments/ACOTSP/Individuals-Elites/General-Data/All-Elites" \
-  --output="Experiments/ACOTSP/Others/Optimum_Elite.csv" \
-  --verbose=FALSE
+  --input="Experiments/ACOTSP/Individuals-Elites/General-Data/All-Elites" \
+  --output="Experiments/ACOTSP/Others" \
+  --name="Optimum_Elite.csv" \
+  --best="min"
+```
+```bash
+Rscript R/generate_elite_optimum_file.R \
+  --input="Experiments/PSO-X/Individuals-Elites/General-Data/All-Elites" \
+  --output="Experiments/PSO-X/Others" \
+  --name="Optimum_Elite.csv" \
+  --best="min"
 ```
 
 ---
@@ -409,7 +419,7 @@ Rscript R/generate_elite_STN-i_file.R \
 | -n | --name | Output file base name | scenario_name | No |
 | -b | --best_criteria | Criterion for best value ('min' or 'max') | min | No |
 | -c | --quality_criteria | Quality criterion for elite configs | mean | No |
-| -t | --significance | Significance level for numerical parameters | 2 | No |
+| -x | --significance | Significance level for numerical parameters | 2 | No |
 | -r | --representative_criteria | Representative criterion for locations | mean | No |
 | -v | --verbose | Show detailed processing information | FALSE | No |
 
@@ -921,7 +931,7 @@ Rscript R/box_plot_best_elite_STN-i.R \
 
 ## Automation Scripts
 
-The repository includes bash scripts to automate common workflows. All scripts should be run from the repository root.
+The repository includes bash scripts to automate common workflows. All scripts should be run from the repository root. The checked-in `Authomatize/` scripts use internal arrays to choose algorithms, scenarios, and locations; inspect or edit those arrays before batch runs if you need both `ACOTSP` and `PSO-X`.
 
 ### `run_all_generate_STN-i_file.sh`
 Generates STN-i trace files for all experiments and locations.
@@ -962,10 +972,10 @@ chmod +x ./Authomatize/run_all_generate_elite_STN-i_file.sh
 ```
 
 **Configuration:**
-Edit the script to adjust which algorithms and scenarios are processed:
+Edit the script to adjust which algorithms and scenarios are processed. The checked-in script enables `PSO-X` and leaves the `ACOTSP` line commented; uncomment or add entries as needed:
 ```bash
 declare -A scenarios
-scenarios["ACOTSP"]="BL BL-45 BH BH-90"
+#scenarios["ACOTSP"]="BL BL-45 BH BH-90"
 scenarios["PSO-X"]="BL BL-32 BH BH-65"
 ```
 
@@ -983,10 +993,10 @@ For each algorithm, the script expects:
 
 **Validation:**
 Before executing, the script validates:
-- Elites directory exists and contains .Rdata files
-- Scenario directory exists and has Results/ subdirectories
+- Elites directory exists
+- Scenario directory exists
 - General parameters file is present
-- Parameters directory contains location files
+- Parameters directory exists
 - Optimum Elite file exists
 
 If any validation fails, the scenario is skipped with an error message in the log.
@@ -1215,11 +1225,9 @@ Aggregates all metrics from individual experiments into consolidated CSV files p
 
 **Output:**
 For each algorithm (ACOTSP, PSO-X) in `Experiments/<ALG>/General-Metrics/`:
-- `All_Metrics_nodes.csv`: Node-focused metrics from all experiments
-- `All_Metrics_elite_nodes.csv`: Elite-specific metrics from all experiments
-- `All_Metrics_configurations.csv`: Configuration-focused metrics from all experiments
-
-(Add `_Elites` suffix when using Individuals-Elites mode)
+- `All_Metrics_Individuals_nodes.csv` or `All_Metrics_Elite_nodes.csv`: Node-focused metrics from all experiments
+- `All_Metrics_Individuals_elite_nodes.csv` or `All_Metrics_Elite_elite_nodes.csv`: Elite-specific metrics from all experiments
+- `All_Metrics_Individuals_configurations.csv` or `All_Metrics_Elite_configurations.csv`: Configuration-focused metrics from all experiments
 
 ---
 

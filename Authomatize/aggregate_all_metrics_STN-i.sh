@@ -4,9 +4,9 @@
 # Script: aggregate_all_metrics_STN-i.sh
 # Description: Aggregates ALL individual experiment metrics into three files
 #              per algorithm, stored in General-Metrics/:
-#              - All_Metrics.csv (complete metrics)
-#              - All_Metrics_nodes.csv (node-focused metrics)
-#              - All_Metrics_configurations.csv (configuration-focused metrics)
+#              - All_Metrics_<Individuals|Elite>_nodes.csv
+#              - All_Metrics_<Individuals|Elite>_elite_nodes.csv
+#              - All_Metrics_<Individuals|Elite>_configurations.csv
 #
 # Usage:
 #   1. Run with Individuals (default):
@@ -16,43 +16,44 @@
 #        ./aggregate_all_metrics_STN-i.sh --mode=Individuals-Elites
 #
 # Output:
-#   Experiments/<Algorithm>/General-Metrics/All_Metrics.csv
-#   Experiments/<Algorithm>/General-Metrics/All_Metrics_nodes.csv
-#   Experiments/<Algorithm>/General-Metrics/All_Metrics_configurations.csv
-#   (or with _Elites suffix if using Individuals-Elites mode)
+#   Experiments/<Algorithm>/General-Metrics/All_Metrics_Individuals_nodes.csv
+#   Experiments/<Algorithm>/General-Metrics/All_Metrics_Individuals_elite_nodes.csv
+#   Experiments/<Algorithm>/General-Metrics/All_Metrics_Individuals_configurations.csv
+#   Uses All_Metrics_Elite_* names when --mode=Individuals-Elites.
 # ==============================================================================
 
 # Parse command line arguments
 MODE="Individuals"  # Default mode
 for arg in "$@"; do
-  case $arg in
-    --mode=*)
-      MODE="${arg#--mode=}"
-      ;;
-    *)
-      echo "Unknown argument: $arg"
-      echo "Usage: $0 [--mode=Individuals|Individuals-Elites]"
-      exit 1
-      ;;
-  esac
+    case $arg in
+        --mode=*)
+        MODE="${arg#--mode=}"
+        ;;
+        *)
+        echo "Unknown argument: $arg"
+        echo "Usage: $0 [--mode=Individuals|Individuals-Elites]"
+        exit 1
+        ;;
+    esac
 done
 
 # Validate mode
 if [[ "$MODE" != "Individuals" && "$MODE" != "Individuals-Elites" ]]; then
-  echo "Error: Invalid mode '$MODE'. Must be 'Individuals' or 'Individuals-Elites'"
-  exit 1
+    echo "Error: Invalid mode '$MODE'. Must be 'Individuals' or 'Individuals-Elites'"
+    exit 1
 fi
 
 echo "Running with mode: $MODE"
 
 # Define algorithms to process
-#algorithms=("ACOTSP" "PSO-X")
-algorithms=("ACOTSP")
+algorithms=("ACOTSP" "PSO-X")
+#algorithms=("ACOTSP")
+#algorithms=("PSO-X")
 
 # Define experiments per algorithm
 declare -A experiments
 experiments["ACOTSP"]="BH BH-90 BL BL-45"
-#experiments["PSO-X"]="BH BH-65 BL BL-32"
+experiments["PSO-X"]="BH BH-65 BL BL-32"
 
 # Define levels for each algorithm
 levels="L0 L1 L2 L3 L4 L5"
@@ -62,9 +63,9 @@ metric_types=("_nodes" "_elite_nodes" "_configurations")
 
 # Determine output suffix based on mode
 if [[ "$MODE" == "Individuals-Elites" ]]; then
-  output_suffix="Elite"
+    output_suffix="Elite"
 else
-  output_suffix="Individuals"
+    output_suffix="Individuals"
 fi
 
 # Process each algorithm

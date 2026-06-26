@@ -14,8 +14,11 @@
 #   3. Run the script with Individuals-Elites:
 #        ./run_all_plot_STN-i.sh --mode=Individuals-Elites
 #
-#   4. Run with custom options:
-#        ./run_all_plot_STN-i.sh --palette=2 --layout=kk --size_factor=1.5
+#   4. Run with custom size factor:
+#        ./run_all_plot_STN-i.sh --size_factor=1.5
+#
+#   To customize palettes, layouts, shape options, size types, visibility
+#   combinations, or zoom levels, edit the VALID_* arrays below.
 #
 #   Output:
 #     - Log file in Logs/run_all_plot_STN-i_{MODE}.log
@@ -84,13 +87,13 @@ run_plot_stn_i() {
 # Note: Add or remove experiments as needed (space-separated)
 declare -A experiments
 experiments["ACOTSP"]="BL BL-45 BH BH-90"
-#experiments["PSO-X"]="BL BL-32 BH BH-65"
+experiments["PSO-X"]="BL BL-32 BH BH-65"
 
 # Define location types for each algorithm
 # Note: Add or remove location types as needed (space-separated)
 declare -A locations_type
 locations_type["ACOTSP"]="L0 L1 L2 L3 L4 L5"
-#locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
+locations_type["PSO-X"]="L0 L1 L2 L3 L4 L5"
 #locations_type["ACOTSP"]="L0"
 #locations_type["PSO-X"]="L0"
 

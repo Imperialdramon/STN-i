@@ -8,6 +8,10 @@
 #   1. Make executable: chmod +x run_all_generate_elite_STN-i_file.sh
 #   2. Run: ./run_all_generate_elite_STN-i_file.sh
 #
+# Configuration:
+#   Edit the scenarios array below to choose algorithms and scenarios.
+#   The checked-in configuration enables PSO-X and leaves ACOTSP commented.
+#
 # Output:
 #     - Log file: Logs/run_all_generate_elite_STN-i_file.log
 #     - STN-i files: Experiments/<algorithm>/Individuals-Elites/<scenario>/STN-i-Files/
@@ -22,7 +26,7 @@ echo "=== Elite STN-i generation started at $(date) ===" > "$LOG_FILE"
 # Define algorithms and scenarios
 declare -A scenarios
 scenarios["ACOTSP"]="BL BL-45 BH BH-90"
-#scenarios["PSO-X"]="BL BL-32 BH BH-65"
+scenarios["PSO-X"]="BL BL-32 BH BH-65"
 
 run_generate_elite_stn_i() {
   local alg=$1

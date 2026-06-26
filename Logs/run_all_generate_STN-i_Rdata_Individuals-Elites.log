@@ -1,6 +1,6 @@
-=== STN-i data generation started at Wed Apr  8 10:33:19 -04 2026 ===
+=== STN-i data generation started at Thu Jun 25 20:01:57 -04 2026 ===
 Mode: Individuals-Elites
-=== Processing algorithm: ACOTSP ===
+=== Processing algorithm: PSO-X ===
 >> Generating: 
 
 Attaching package: ‘igraph’
@@ -34,8 +34,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657018 35.1    1299428 69.4  1299428 69.4
-Vcells 1092954  8.4    8388608 64.0  1819238 13.9
+Ncells  656604 35.1    1299428 69.4  1299428 69.4
+Vcells 1091199  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -70,8 +70,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657018 35.1    1299428 69.4  1299428 69.4
-Vcells 1092954  8.4    8388608 64.0  1819238 13.9
+Ncells  656598 35.1    1299428 69.4  1299428 69.4
+Vcells 1091167  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -106,8 +106,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657015 35.1    1299428 69.4  1299428 69.4
-Vcells 1092933  8.4    8388608 64.0  1819238 13.9
+Ncells  656541 35.1    1299428 69.4  1299428 69.4
+Vcells 1090832  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -142,8 +142,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657012 35.1    1299428 69.4  1299428 69.4
-Vcells 1092914  8.4    8388608 64.0  1819238 13.9
+Ncells  656373 35.1    1299428 69.4  1299428 69.4
+Vcells 1089883  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -178,8 +178,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  656949 35.1    1299428 69.4  1299428 69.4
-Vcells 1092584  8.4    8388608 64.0  1819238 13.9
+Ncells  656271 35.1    1299428 69.4  1299428 69.4
+Vcells 1089188  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -214,8 +214,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  656865 35.1    1299428 69.4  1299428 69.4
-Vcells 1092080  8.4    8388608 64.0  1819238 13.9
+Ncells  656052 35.1    1299428 69.4  1299428 69.4
+Vcells 1088019  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -250,8 +250,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657420 35.2    1299428 69.4  1299428 69.4
-Vcells 1094883  8.4    8388608 64.0  1835261 14.1
+Ncells  657258 35.2    1299428 69.4  1299428 69.4
+Vcells 1094323  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -286,8 +286,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657420 35.2    1299428 69.4  1299428 69.4
-Vcells 1094883  8.4    8388608 64.0  1835277 14.1
+Ncells  657249 35.2    1299428 69.4  1299428 69.4
+Vcells 1094272  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -322,8 +322,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657408 35.2    1299428 69.4  1299428 69.4
-Vcells 1094810  8.4    8388608 64.0  1835266 14.1
+Ncells  657126 35.1    1299428 69.4  1299428 69.4
+Vcells 1093574  8.4    8388608 64.0  1850065 14.2
 Success: Generated 
 >> Generating: 
 
@@ -358,8 +358,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657333 35.2    1299428 69.4  1299428 69.4
-Vcells 1094388  8.4    8388608 64.0  1835292 14.1
+Ncells  656838 35.1    1299428 69.4  1299428 69.4
+Vcells 1091999  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -394,8 +394,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657204 35.1    1299428 69.4  1299428 69.4
-Vcells 1093680  8.4    8388608 64.0  1842180 14.1
+Ncells  656637 35.1    1299428 69.4  1299428 69.4
+Vcells 1090873  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -430,8 +430,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657108 35.1    1299428 69.4  1299428 69.4
-Vcells 1093068  8.4    8388608 64.0  1835500 14.1
+Ncells  656367 35.1    1299428 69.4  1299428 69.4
+Vcells 1089397  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -466,8 +466,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657284 35.2    1299428 69.4  1299428 69.4
-Vcells 1094412  8.4    8388608 64.0  1819238 13.9
+Ncells  656814 35.1    1299428 69.4  1299428 69.4
+Vcells 1092197  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -502,8 +502,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657303 35.2    1299428 69.4  1299428 69.4
-Vcells 1094412  8.4    8388608 64.0  1819238 13.9
+Ncells  656808 35.1    1299428 69.4  1299428 69.4
+Vcells 1092154  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -538,8 +538,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657270 35.2    1299428 69.4  1299428 69.4
-Vcells 1094250  8.4    8388608 64.0  1819238 13.9
+Ncells  656703 35.1    1299428 69.4  1299428 69.4
+Vcells 1091550  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -574,8 +574,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657219 35.1    1299428 69.4  1299428 69.4
-Vcells 1093981  8.4    8388608 64.0  1819238 13.9
+Ncells  656349 35.1    1299428 69.4  1299428 69.4
+Vcells 1089538  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -610,8 +610,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657141 35.1    1299428 69.4  1299428 69.4
-Vcells 1093542  8.4    8388608 64.0  1835305 14.1
+Ncells  656154 35.1    1299428 69.4  1299428 69.4
+Vcells 1088393  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -646,8 +646,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  656949 35.1    1299428 69.4  1299428 69.4
-Vcells 1092466  8.4    8388608 64.0  1819238 13.9
+Ncells  655881 35.1    1299428 69.4  1299428 69.4
+Vcells 1087017  8.3    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -682,8 +682,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  658098 35.2    1299428 69.4  1299428 69.4
-Vcells 1098359  8.4    8388608 64.0  1930335 14.8
+Ncells  657267 35.2    1299428 69.4  1299428 69.4
+Vcells 1094467  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -718,8 +718,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  658098 35.2    1299428 69.4  1299428 69.4
-Vcells 1098359  8.4    8388608 64.0  1930390 14.8
+Ncells  657267 35.2    1299428 69.4  1299428 69.4
+Vcells 1094467  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -754,8 +754,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  658020 35.2    1299428 69.4  1299428 69.4
-Vcells 1097926  8.4    8388608 64.0  1865827 14.3
+Ncells  657078 35.1    1299428 69.4  1299428 69.4
+Vcells 1093360  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -790,8 +790,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657780 35.2    1299428 69.4  1299428 69.4
-Vcells 1096633  8.4    8388608 64.0  1856534 14.2
+Ncells  656589 35.1    1299428 69.4  1299428 69.4
+Vcells 1090621  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -826,8 +826,8 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657588 35.2    1299428 69.4  1299428 69.4
-Vcells 1095580  8.4    8388608 64.0  1918516 14.7
+Ncells  656364 35.1    1299428 69.4  1299428 69.4
+Vcells 1089368  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
 >> Generating: 
 
@@ -862,7 +862,7 @@ The following objects are masked from ‘package:base’:
     intersect, setdiff, setequal, union
 
           used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  657393 35.2    1299428 69.4  1299428 69.4
-Vcells 1094437  8.4    8388608 64.0  1872063 14.3
+Ncells  656142 35.1    1299428 69.4  1299428 69.4
+Vcells 1088188  8.4    8388608 64.0  1819238 13.9
 Success: Generated 
-=== STN-i files generation finished at Wed Apr  8 10:33:46 -04 2026 ===
+=== STN-i files generation finished at Thu Jun 25 20:02:29 -04 2026 ===
