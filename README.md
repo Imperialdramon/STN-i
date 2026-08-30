@@ -260,6 +260,8 @@ Experiments/<ALG>/Individuals-Elites/General-Data/Best-Elites/*.Rdata
 ### 6. Summarize Best-Elites Testing Results
 
 Use `generate_summarize_testing.R` on the `Best-Elites` testing outputs to compare the best elite per training run.
+Besides the MNRG summary files, this step also stores the raw testing result
+obtained by each run's best elite on every testing instance.
 
 ```bash
 Rscript R/generate_summarize_testing.R \
@@ -1103,6 +1105,7 @@ Rscript R/generate_summarize_testing.R \
 1. **`Optimum_Testing.csv`**: Best values achieved across all elite configurations for each testing instance
 2. **`configurations_results.csv`**: Dictionary of all tested configurations with their parameters and MNRG values
 3. **`<scenario_name>.csv`**: Per-scenario mapping of training runs to their best configuration's testing performance (MNRG)
+4. **`<scenario_name>_executions_results.csv`**: Per-scenario raw testing results for each independent run's best elite, with `RUN_ID`, `INSTANCE`, `CONFIG_ID`, and `RESULT`
 
 **Processing Flow:**
 
@@ -1112,6 +1115,7 @@ Rscript R/generate_summarize_testing.R \
 4. Identifies the best configuration per run (marked as `IS_BEST=TRUE`)
 5. Matches training configurations with testing configurations by parameter values
 6. Outputs the testing MNRG value for each training run's best configuration
+7. Outputs the raw testing result obtained by that matched configuration for every testing instance in the corresponding independent run
 
 **Complete Example:**
 ```bash

@@ -31,7 +31,8 @@
 # Notes:
 # - Testing directory should contain .Rdata files with elite testing results
 # - Scenarios directory should have subdirectories with Data/ folders containing training .Rdata files
-# - Output files: Optimum_Testing.csv, configurations_results.csv, and per-scenario run files
+# - Output files: Optimum_Testing.csv, configurations_results.csv, per-scenario run
+#   files, and per-scenario raw execution result files
 #########################################################################
 
 # ---------- Validate required packages ----------
@@ -136,6 +137,7 @@ instance_best <- list()
 for (i in seq_along(testing_files)) {
     file_path <- testing_files[i]
     file_name <- basename(file_path)
+    run_id <- sub("\\.Rdata$", "", file_name)
     
     if (opt$verbose) cat(sprintf("  [%d/%d] Processing: %s\n", i, length(testing_files), file_name))
     
@@ -194,7 +196,7 @@ for (i in seq_along(testing_files)) {
     }
     
     # Store matrix with metadata
-    all_matrices[[file_name]] <- list(
+    all_matrices[[run_id]] <- list(
         matrix = experiments,
         instances = instance_names,
         config_ids = colnames(experiments)
@@ -425,6 +427,13 @@ for (scenario_path in scenario_dirs) {
         MNRG = numeric(),
         stringsAsFactors = FALSE
     )
+    scenario_execution_results <- data.frame(
+        RUN_ID = character(),
+        INSTANCE = character(),
+        CONFIG_ID = character(),
+        RESULT = numeric(),
+        stringsAsFactors = FALSE
+    )
     
     # Process each run directory
     for (run_dir in run_dirs) {
@@ -517,16 +526,46 @@ for (scenario_path in scenario_dirs) {
             MNRG = mnrg_value,
             stringsAsFactors = FALSE
         ))
+
+        # Store raw testing results for this run's best elite before MNRG aggregation.
+        testing_run <- all_matrices[[run_name]]
+        if (is.null(testing_run)) {
+            if (opt$verbose) cat(sprintf("        Warning: Testing matrix not found for run %s, skipping raw results...\n", run_name))
+            next
+        }
+
+        if (!(matching_config_id %in% colnames(testing_run$matrix))) {
+            if (opt$verbose) {
+                cat(sprintf("        Warning: CONFIG_ID %s not found in testing matrix for run %s, skipping raw results...\n",
+                            matching_config_id, run_name))
+            }
+            next
+        }
+
+        scenario_execution_results <- rbind(scenario_execution_results, data.frame(
+            RUN_ID = run_name,
+            INSTANCE = testing_run$instances,
+            CONFIG_ID = matching_config_id,
+            RESULT = as.numeric(testing_run$matrix[, matching_config_id]),
+            stringsAsFactors = FALSE
+        ))
     }
     
     # Save scenario results
     scenario_output_file <- file.path(output_dir, paste0(scenario_name, ".csv"))
     write.table(scenario_results, file = scenario_output_file, sep = ";",
                row.names = FALSE, quote = FALSE)
+
+    # Save raw execution results for each run's best elite.
+    scenario_execution_output_file <- file.path(output_dir, paste0(scenario_name, "_executions_results.csv"))
+    write.table(scenario_execution_results, file = scenario_execution_output_file, sep = ";",
+               row.names = FALSE, quote = FALSE)
     
     if (opt$verbose) {
         cat(sprintf("    Saved %d records to: %s\n", nrow(scenario_results), 
                    basename(scenario_output_file)))
+        cat(sprintf("    Saved %d raw execution records to: %s\n", nrow(scenario_execution_results),
+                   basename(scenario_execution_output_file)))
     }
 }
 
@@ -568,9 +607,10 @@ if (opt$verbose) {
     cat(sprintf("  - Optimum_Testing.csv (%d instances)\n", nrow(instances_df)))
     cat(sprintf("  - configurations_results.csv (%d configurations)\n", nrow(config_data)))
     
-    scenario_files <- list.files(output_dir, pattern = "_runs\\.csv$")
+    scenario_files <- list.files(output_dir, pattern = "^[^_].*\\.csv$")
+    scenario_files <- setdiff(scenario_files, c("Optimum_Testing.csv", "configurations_results.csv"))
     if (length(scenario_files) > 0) {
-        cat(sprintf("  - %d scenario run files\n", length(scenario_files)))
+        cat(sprintf("  - %d scenario files\n", length(scenario_files)))
         for (sf in scenario_files) {
             cat(sprintf("    * %s\n", sf))
         }
