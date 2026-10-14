@@ -30,7 +30,7 @@
 #
 # Notes:
 # - Testing directory should contain .Rdata files with elite testing results
-# - Scenarios directory should have subdirectories with Data/ folders containing training .Rdata files
+# - Scenarios directory should have subdirectories with Results/<RUN_ID>/configurations.csv training files
 # - Output files: Optimum_Testing.csv, configurations_results.csv, per-scenario run
 #   files, and per-scenario raw execution result files
 #########################################################################
@@ -428,9 +428,11 @@ for (scenario_path in scenario_dirs) {
         stringsAsFactors = FALSE
     )
     scenario_execution_results <- data.frame(
-        RUN_ID = character(),
+        TRAINING_RUN_ID = character(),
+        TRAINING_CONFIG_ID = character(),
+        TESTING_RUN_ID = character(),
+        TESTING_CONFIG_ID = character(),
         INSTANCE = character(),
-        CONFIG_ID = character(),
         RESULT = numeric(),
         stringsAsFactors = FALSE
     )
@@ -527,28 +529,30 @@ for (scenario_path in scenario_dirs) {
             stringsAsFactors = FALSE
         ))
 
-        # Store raw testing results for this run's best elite before MNRG aggregation.
-        testing_run <- all_matrices[[run_name]]
-        if (is.null(testing_run)) {
-            if (opt$verbose) cat(sprintf("        Warning: Testing matrix not found for run %s, skipping raw results...\n", run_name))
-            next
-        }
+        # Save this training run's best elite for every independent testing run.
+        # TRAINING_RUN_ID identifies where the elite came from; TESTING_RUN_ID
+        # identifies the testing repetition whose matrix supplied RESULT.
+        for (testing_run_id in names(all_matrices)) {
+            testing_run <- all_matrices[[testing_run_id]]
 
-        if (!(matching_config_id %in% colnames(testing_run$matrix))) {
-            if (opt$verbose) {
-                cat(sprintf("        Warning: CONFIG_ID %s not found in testing matrix for run %s, skipping raw results...\n",
-                            matching_config_id, run_name))
+            if (!(matching_config_id %in% colnames(testing_run$matrix))) {
+                if (opt$verbose) {
+                    cat(sprintf("        Warning: testing CONFIG_ID %s not found in testing run %s; skipping raw results for this run...\n",
+                                matching_config_id, testing_run_id))
+                }
+                next
             }
-            next
-        }
 
-        scenario_execution_results <- rbind(scenario_execution_results, data.frame(
-            RUN_ID = run_name,
-            INSTANCE = testing_run$instances,
-            CONFIG_ID = matching_config_id,
-            RESULT = as.numeric(testing_run$matrix[, matching_config_id]),
-            stringsAsFactors = FALSE
-        ))
+            scenario_execution_results <- rbind(scenario_execution_results, data.frame(
+                TRAINING_RUN_ID = run_name,
+                TRAINING_CONFIG_ID = best_config_id,
+                TESTING_RUN_ID = testing_run_id,
+                TESTING_CONFIG_ID = matching_config_id,
+                INSTANCE = testing_run$instances,
+                RESULT = as.numeric(testing_run$matrix[, matching_config_id]),
+                stringsAsFactors = FALSE
+            ))
+        }
     }
     
     # Save scenario results
@@ -556,7 +560,7 @@ for (scenario_path in scenario_dirs) {
     write.table(scenario_results, file = scenario_output_file, sep = ";",
                row.names = FALSE, quote = FALSE)
 
-    # Save raw execution results for each run's best elite.
+    # Save raw results for each training best elite across all testing runs.
     scenario_execution_output_file <- file.path(output_dir, paste0(scenario_name, "_executions_results.csv"))
     write.table(scenario_execution_results, file = scenario_execution_output_file, sep = ";",
                row.names = FALSE, quote = FALSE)

@@ -1078,6 +1078,8 @@ This script bridges training and testing phases by:
 3. Identifying the best training configuration per run using `IS_BEST=TRUE` marker
 4. Generating summary files that map training runs to their representative testing performance
 
+The testing `.Rdata` files contain repeated evaluations of the full tested elite set. For a scenario output, the raw execution file crosses each selected training best elite with every available testing run and every testing instance. For example, PSO-X produces 20 selected elites × 20 testing runs × 50 instances = 20,000 data rows per scenario; ACOTSP has 40 instances and produces 16,000. `TRAINING_RUN_ID` identifies which training run selected the elite; `TESTING_RUN_ID` identifies the independent testing repetition. The per-scenario `<scenario_name>.csv` remains a compact table with one MNRG value per training run's selected elite.
+
 **Usage:**
 ```bash
 Rscript R/generate_summarize_testing.R \
@@ -1102,10 +1104,16 @@ Rscript R/generate_summarize_testing.R \
 
 **Output Files:**
 
-1. **`Optimum_Testing.csv`**: Best values achieved across all elite configurations for each testing instance
+1. **`Optimum_Testing.csv`**: Best values observed among the tested elite configurations for each testing instance; these are calculated from the testing matrices and are not external known optima
 2. **`configurations_results.csv`**: Dictionary of all tested configurations with their parameters and MNRG values
 3. **`<scenario_name>.csv`**: Per-scenario mapping of training runs to their best configuration's testing performance (MNRG)
-4. **`<scenario_name>_executions_results.csv`**: Per-scenario raw testing results for each independent run's best elite, with `RUN_ID`, `INSTANCE`, `CONFIG_ID`, and `RESULT`
+4. **`<scenario_name>_executions_results.csv`**: Raw testing results for every best elite selected by the scenario's training runs, evaluated in every independent testing run. Each row is one training elite × testing run × testing instance. Columns:
+   - `TRAINING_RUN_ID`: training run whose `IS_BEST` configuration is included
+   - `TRAINING_CONFIG_ID`: configuration ID in that training run's `configurations.csv`
+   - `TESTING_RUN_ID`: independent testing run, identified by the testing `.Rdata` filename
+   - `TESTING_CONFIG_ID`: ID of the matching configuration in the testing matrices
+   - `INSTANCE`: testing instance
+   - `RESULT`: value stored in that testing run's matrix for that configuration and instance; this is an individual observation, not an average
 
 **Processing Flow:**
 
@@ -1115,7 +1123,9 @@ Rscript R/generate_summarize_testing.R \
 4. Identifies the best configuration per run (marked as `IS_BEST=TRUE`)
 5. Matches training configurations with testing configurations by parameter values
 6. Outputs the testing MNRG value for each training run's best configuration
-7. Outputs the raw testing result obtained by that matched configuration for every testing instance in the corresponding independent run
+7. Outputs the raw result for that matched configuration on every testing instance in every independent testing run
+
+**Testing MNRG calculation:** For each testing matrix, the script takes the absolute difference between a configuration's result and the best value observed for that instance across the testing matrices. It ranks configurations horizontally per instance, normalizes the observed ranks to [0, 1], averages by configuration across instances, then averages those per-matrix means across the testing runs. The emitted metric is named `MNRG`. `Optimum_Testing.csv` records those best observed values; it is not a separate benchmark of known optima.
 
 **Complete Example:**
 ```bash
